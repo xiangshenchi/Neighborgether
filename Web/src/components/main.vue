@@ -29,7 +29,7 @@
       <br>
       <div class="yxj">忘记密码? <router-link to="/forgetPW" style="color: #4095E5">点击找回</router-link></div>
       <br>
-      <div class="yxj">遇到困难? <router-link to="/register" style="color: #4095E5">联系工作人员</router-link></div>
+      <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
     </div>
   </div>
 </template>
@@ -43,6 +43,11 @@ import type { Action } from 'element-plus'
 const errorAlert = (text) => {
   ElMessageBox.alert(text, '错误', {
     confirmButtonText: 'OK'
+  })
+}
+const contact = (text) => {
+  ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+    confirmButtonText: text
   })
 }
 export default defineComponent({
@@ -123,11 +128,17 @@ export default defineComponent({
     }
   },
   setup(){
+    const contact = (text) => {
+      ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+        confirmButtonText: text
+      });
+    };
     const { particlesInit, particlesLoaded, options } = useParticles()
     return {
       particlesInit,
       particlesLoaded,
-      options
+      options,
+      contact
     }
   }
 })
