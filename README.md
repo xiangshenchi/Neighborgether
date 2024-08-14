@@ -1,5 +1,5 @@
 # 邻聚·Neighborgether
-<img src="/iconFile/icon(FinalVersion-white).png" width="200px">
+<img src="./iconFile/icon(FinalVersion-white).png" width="200px" alt="图片无法加载">
 
 
 
