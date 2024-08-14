@@ -104,7 +104,7 @@ export default defineComponent({
   width: 85vw;
   height: 13vw;
   top: 5vh;
-  z-index: 9999;
+  z-index: 10;
   position: relative;
 }
 
