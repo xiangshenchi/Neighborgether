@@ -2,6 +2,7 @@ import { reactive } from 'vue'
 import { loadFull } from 'tsparticles'
 import type { Engine, Container, ISourceOptions } from 'tsparticles-engine'
 
+
 export function useParticles() {
   // 初始化粒子效果
   const particlesInit = async (engine: Engine) => {

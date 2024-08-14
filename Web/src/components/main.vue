@@ -7,6 +7,8 @@
       :options="options"
     />
     <div class="Loginbg">
+      <div class="lc1">
+      <el-card class="c1" shadow="always">
       <img src="/logo.jpg" height="width" width="17%" alt="logo">
       <br>
       <h1 class="biaoTi">欢迎使用·邻聚·智慧物业</h1>
@@ -25,6 +27,8 @@
         @mousedown="() => onMouseDown('button2')"
         @mouseup="() => onMouseUp('button2')" @click="jilu()">访客登记</button>
       <br>
+    </el-card>
+  </div>
       <div class="yxj">没有账号? <router-link to="/register" style="color: #4095E5">点击注册</router-link></div>
       <br>
       <div class="yxj">忘记密码? <router-link to="/forgetPW" style="color: #4095E5">点击找回</router-link></div>
@@ -40,6 +44,7 @@ import { loadFull } from 'tsparticles'
 import { useParticles } from './re'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
+import './style.css'
 const errorAlert = (text) => {
   ElMessageBox.alert(text, '错误', {
     confirmButtonText: 'OK'
@@ -145,81 +150,6 @@ export default defineComponent({
 </script>
  
 <style>
-.app-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  max-width: 100%;
-}
- 
-.Loginbg {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  text-align: center;
-  max-width: 100%;
-}
- 
-.biaoTi {
-  color: #22A637;
-  font-size: 5vh;
-  font-family: 'PingFang SC';
-  margin: 0;
-}
- 
-.ipt {
-  width: 19vw;
-  height: 6vh;
-  border: 2px solid #AADDB2;
-  border-radius: 1vw 0;
-  background-color: #FFF;
-  font-size: 3vh;
-  padding-left: 10px;
-  margin-top: 2vh;
-}
- 
-.btn {
-  cursor: pointer;
-  margin: 3vh;
-  margin-top: 1vh;
-  border-radius: 0.5vw;
-  border-width: 0;
-  box-shadow: 0 0 0.4vh 0.4vh #209432;
-  font-size: 4vh;
-  padding: 0.5vh 1vw;
-}
-
-.btn.button1-default {
-  background-color: #54BB64;
-  color: #FFF;
-}
- 
-.btn.button1-hovered {
-  background-color: green;
-}
- 
-.btn.button1-pressed {
-  background-color: red;
-}
- 
-.btn.button2-default {
-  background-color: #FFF;
-  color: #54BB64;
-}
- 
-.btn.button2-hovered {
-  background-color: green;
-}
- 
-.btn.button2-pressed {
-  background-color: red;
-}
- 
-.yxj {
-  color: #34AD47;
-  float: right;
-}
 
 </style>
 

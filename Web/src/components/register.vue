@@ -7,6 +7,8 @@
         <p class="title">邻聚·账号注册</p>
         <button class="btn btn-back" @click="returnToLogin">返回</button>
       </div>
+      <div class="lc3">
+        <el-card class="c3" shadow="always">
       <div id="form-container1">
         <el-form :model="form" ref="form" label-width="0">
           <el-form-item prop="account" :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' }]">
@@ -23,6 +25,8 @@
           </div>
         </el-form>
       </div>
+    </el-card>
+    </div>
       <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
     </div>
   </div>
@@ -33,6 +37,7 @@ import { defineComponent, reactive } from 'vue'
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
 import { c } from 'vite/dist/node/types.d-aGj9QkWt';
+import './style.css'
 
 export default defineComponent({
   data() {
@@ -84,87 +89,5 @@ export default defineComponent({
 </script>
 
 <style>
-.web-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  max-width: 100%;
-}
 
-.ys-container {
-  position: absolute;
-  width: 100vw;
-  height: 35vh;
-  max-width: 100%;
-}
-
-.header {
-  padding: 0 7.5vw;
-  width: 85vw;
-  height: 13vw;
-  top: 5vh;
-  z-index: 10;
-  position: relative;
-}
-
-.logo {
-  float: left;
-  height: 100%;
-}
-
-.title {
-  top: 35%;
-  position: relative;
-  margin: 0;
-  height: 30%;
-  float: left;
-  font-size: 2.7vw;
-  font-family: 'PingFang SC';
-  font-weight: 600;
-  text-shadow: 10px 10px 10px #BDE5C3;
-  color: #22A637;
-}
-
-
-.btn.btn-back {
-  background-color: #FFF;
-  color: #54BB64;
-  float: right;
-  top: 35%;
-  position: relative;
-  margin: 0;
-}
-
-.btn-register {
-  background-color: #54BB64;
-  color: #FFF;
-}
-
-#form-container1 {
-  margin-top: 25vh;
-  height:40vh;
-  padding: 20px;
-  width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.el-input__wrapper {
-  border: 2px solid #AADDB2 !important;
-  border-radius: 1vw 0 !important;
-}
-
-.el-input__wrapper.is-focus {
-  border-color: inherit !important;
-  box-shadow: none !important;
-}
 </style>

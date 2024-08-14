@@ -1,0 +1,254 @@
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.Loginbg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  max-width: 100%;
+}
+
+.biaoTi {
+  color: #22A637;
+  font-size: 5vh;
+  font-family: 'PingFang SC';
+  margin: 0;
+}
+
+.ipt {
+  width: 19vw;
+  height: 6vh;
+  border: 2px solid #AADDB2;
+  border-radius: 1vw 0;
+  background-color: #FFF;
+  font-size: 3vh;
+  padding-left: 10px;
+  margin-top: 2vh;
+}
+
+.btn {
+  cursor: pointer;
+  margin: 3vh;
+  margin-top: 1vh;
+  border-radius: 0.5vw;
+  border-width: 0;
+  box-shadow: 0 0 0.4vh 0.4vh #209432;
+  font-size: 4vh;
+  padding: 0.5vh 1vw;
+}
+
+.btn.button1-default {
+  background-color: #54BB64;
+  color: #FFF;
+}
+
+.btn.button1-hovered {
+  background-color: green;
+}
+
+.btn.button1-pressed {
+  background-color: red;
+}
+
+.btn.button2-default {
+  background-color: #FFF;
+  color: #54BB64;
+}
+
+.btn.button2-hovered {
+  background-color: green;
+}
+
+.btn.button2-pressed {
+  background-color: red;
+}
+
+.yxj {
+  color: #34AD47;
+  float: right;
+}
+
+.web-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.ys-container {
+  position: absolute;
+  width: 100vw;
+  height: 35vh;
+  max-width: 100%;
+}
+
+.header {
+  padding: 0 7.5vw;
+  width: 85vw;
+  height: 13vw;
+  top: 5vh;
+  z-index: 10;
+  position: relative;
+}
+
+.logo {
+  float: left;
+  height: 100%;
+}
+
+.title {
+  top: 35%;
+  position: relative;
+  margin: 0;
+  height: 30%;
+  float: left;
+  font-size: 2.7vw;
+  font-family: 'PingFang SC';
+  font-weight: 600;
+  text-shadow: 10px 10px 10px #BDE5C3;
+  color: #22A637;
+}
+
+
+.btn.btn-back {
+  background-color: #FFF;
+  color: #54BB64;
+  float: right;
+  top: 35%;
+  position: relative;
+  margin: 0;
+}
+
+.btn-register {
+  background-color: #54BB64;
+  color: #FFF;
+}
+
+#form-container1 {
+  margin-top: 25vh;
+  height: 40vh;
+  padding: 20px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.el-input__wrapper {
+  border: 2px solid #AADDB2 !important;
+  border-radius: 1vw 0 !important;
+}
+
+.el-input__wrapper.is-focus {
+  border-color: inherit !important;
+  box-shadow: none !important;
+}
+
+#form-container2 {
+  margin-top: 15vh;
+  height: 40vh;
+  padding: 20px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.cp1 {
+  color: #209432;
+  width: auto;
+  font-family: 'PingFang SC';
+  margin: 0;
+  size: large;
+}
+
+.container {
+  display: flex;
+}
+
+.form-container {
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+}
+
+.lc1 {
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  height: 85vh;
+}
+
+
+
+.lc2 {
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  height: 75vh;
+}
+
+.lc3 {
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  height: 75vh;
+}
+
+.c1 {
+  backdrop-filter: blur(5px);
+  width: 40%;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.c2 {
+  backdrop-filter: blur(5px);
+  width: 30%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+}
+
+.c3 {
+  backdrop-filter: blur(5px);
+  width: 30%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+}
+
+.bt1 {
+  background-color: #54BB64;
+  color: #FFF;
+}

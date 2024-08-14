@@ -45,6 +45,8 @@ import { defineComponent, reactive } from 'vue'
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
 import { ref } from 'vue'
+import './style.css'
+
 export default defineComponent({
     data() {
         return {
@@ -82,14 +84,5 @@ export default defineComponent({
 </script>
 
 <style>
-#form-container2 {
-  margin-top: 15vh;
-  height:40vh;
-  padding: 20px;
-  width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
-}
+
 </style>

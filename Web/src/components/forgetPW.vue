@@ -7,10 +7,12 @@
           <p class="title">邻聚·账号找回</p>
           <button class="btn btn-back" @click="returnToLogin">返回</button>
         </div>
-        <div class="form-container">
+        <div class="lc2">
+        <el-card class="c2" shadow="always">
+        <div class="form-container"> 
           <el-form :model="form" ref="form" label-width="0">
             <el-form-item prop="account" :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' }]">
-              <el-input v-model="form.account" placeholder="请输入手机号" />
+              <el-input v-model="form.account" placeholder="请输入手机号" style="width: auto; " />
             </el-form-item>
             <el-form-item prop="password" :rules="[{ required: true, message: '请输入修改后的密码', trigger: 'blur' }]">
               <el-input v-model="form.password" placeholder="请输入修改后的密码" show-password />
@@ -19,10 +21,12 @@
               <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
             </el-form-item>
             <div class="button-container">
-              <el-button type="primary" @click="onSubmit" size="30%" color="green">修改密码</el-button>
+              <el-button type="primary" @click="onSubmit" size="30%" >修改密码</el-button>
             </div>
           </el-form>
         </div>
+      </el-card>
+      </div>
         <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
       </div>
     </div>
@@ -32,7 +36,8 @@
   import { defineComponent, reactive } from 'vue'
   import { useParticles } from './re'
   import { ElMessageBox } from 'element-plus'
-  
+  import './style.css'
+
   export default defineComponent({
     data() {
       return {
