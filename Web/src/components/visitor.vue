@@ -35,7 +35,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div class="yxj">遇到困难? <router-link to="/contact" style="color: #4095E5">联系工作人员</router-link></div>
+            <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
         </div>
     </div>
 </template>
@@ -70,8 +70,13 @@ export default defineComponent({
         const onSubmit = () => {
             console.log('表单数据:', form.value)
         }
+        const contact = (text) => {
+      ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+        confirmButtonText: text
+      });
+    };
         const { particlesInit, particlesLoaded, options } = useParticles();
-        return { particlesInit, particlesLoaded, options,form, onSubmit };
+        return { particlesInit, particlesLoaded, options,form, onSubmit,contact };
     }
 })
 </script>
