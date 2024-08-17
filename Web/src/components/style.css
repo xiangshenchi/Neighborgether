@@ -277,3 +277,17 @@
 .i {
   width: 100%;
 }
+
+#btn1 {
+
+
+  cursor: pointer;
+  margin: 3vh;
+  margin-top: 1vh;
+  border-radius: 0.5vb;
+  border-width: 0;
+  box-shadow: 0 0 0.4vb 0.4vb #209432;
+  font-size: 4;
+  padding: 5px 10px;
+
+}
