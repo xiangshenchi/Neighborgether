@@ -10,6 +10,17 @@ import UW1 from '../UserWeb/UW1.vue';
 import UW2_1 from '../UserWeb/UW2-1.vue';
 import UW2_2 from '../UserWeb/UW2-2.vue';
 import UW2_3 from '../UserWeb/UW2-3.vue';
+import UW3_1 from '../UserWeb/UW3-1.vue';
+import UW3_2 from '../UserWeb/UW3-2.vue';
+import UW3_3 from '../UserWeb/UW3-3.vue';
+import UW4_1 from '../UserWeb/UW4-1.vue';
+import UW4_2 from '../UserWeb/UW4-2.vue';
+import UW5_1 from '../UserWeb/UW5-1.vue';
+import UW5_2 from '../UserWeb/UW5-2.vue';
+import UW6_1 from '../UserWeb/UW6-1.vue';
+import UW6_2 from '../UserWeb/UW6-2.vue';
+import UW7 from '../UserWeb/UW7.vue';
+import UW8 from '../UserWeb/UW8.vue';
 import store from '../store'
 import welcome from '../components/welcome.vue'
 
@@ -24,10 +35,21 @@ const routes = [
   {
     path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true },
     children: [
-      { path: '/UM/UW1', name: 'UW1', component: UW1 },
-      { path: '/UM/UW2-1', name: 'UW2-1', component: UW2_1 },
-      { path: '/UM/UW2-2', name: 'UW2-2', component: UW2_2 },
-      { path: '/UM/UW2-3', name: 'UW2-3', component: UW2_3 }
+      { path: 'UW1', name: 'UW1', component: UW1 },
+      { path: 'UW2-1', name: 'UW2-1', component: UW2_1 },
+      { path: 'UW2-2', name: 'UW2-2', component: UW2_2 },
+      { path: 'UW2-3', name: 'UW2-3', component: UW2_3 },
+      { path: 'UW3-1', name: 'UW3-1', component: UW3_1 },
+      { path: 'UW3-2', name: 'UW3-2', component: UW3_2 },
+      { path: 'UW3-3', name: 'UW3-3', component: UW3_3 },
+      { path: 'UW4-1', name: 'UW4-1', component: UW4_1 },
+      { path: 'UW4-2', name: 'UW4-2', component: UW4_2 },
+      { path: 'UW5-1', name: 'UW5-1', component: UW5_1 },
+      { path: 'UW5-2', name: 'UW5-2', component: UW5_2 },
+      { path: 'UW6-1', name: 'UW6-1', component: UW6_1 },
+      { path: 'UW6-2', name: 'UW6-2', component: UW6_2 },
+      { path: 'UW7', name: 'UW7', component: UW7 },
+      { path: 'UW8', name: 'UW8', component: UW8 }
     ]
   }
 ]

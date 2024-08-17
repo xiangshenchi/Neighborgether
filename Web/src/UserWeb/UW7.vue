@@ -1,3 +1,3 @@
 <template>
-    <h1>UW2-2</h1>
+    <h1>UW7</h1>
 </template>

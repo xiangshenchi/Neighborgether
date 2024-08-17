@@ -35,68 +35,59 @@
         <el-aside style="width:18vw;height:100%">
           <el-scrollbar>
             <el-menu :default-openeds="['1', '7']" @select="handleMenuSelect">
-              <el-menu-item index="1">
-                <i class="el-icon-setting"></i>
-                <span slot="title">社区公告</span>
+              <el-menu-item index="/UM/UW1">
+                <span slot="title"><el-icon><ChatLineSquare /></el-icon>社区公告</span>
               </el-menu-item>
               <el-sub-menu index="2">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon>个人中心
+                  <el-icon><User /></el-icon>个人中心
                 </template>
-                <el-menu-item index="2-1">账号信息</el-menu-item>
-                <el-menu-item index="2-2">房产信息</el-menu-item>
-                <el-menu-item index="2-3">车辆信息</el-menu-item>
+                <el-menu-item index="/UM/UW2-1">账号信息</el-menu-item>
+                <el-menu-item index="/UM/UW2-2">房产信息</el-menu-item>
+                <el-menu-item index="/UM/UW2-3">车辆信息</el-menu-item>
               </el-sub-menu>
               <el-sub-menu index="3">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon>生活缴费
+                  <el-icon><Money /></el-icon>生活缴费
                 </template>
-                <el-menu-item index="3-1">我的水费</el-menu-item>
-                <el-menu-item index="3-2">我的电费</el-menu-item>
-                <el-menu-item index="3-3">我的物业费</el-menu-item>
+                <el-menu-item index="/UM/UW3-1">我的水费</el-menu-item>
+                <el-menu-item index="/UM/UW3-2">我的电费</el-menu-item>
+                <el-menu-item index="/UM/UW3-3">我的物业费</el-menu-item>
               </el-sub-menu>
               <el-sub-menu index="4">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon>报修登记
+                  <el-icon><Clock /></el-icon>报修登记
                 </template>
-                <el-menu-item index="4-1">我要报修</el-menu-item>
-                <el-menu-item index="4-2">报修记录</el-menu-item>
+                <el-menu-item index="/UM/UW4-1">我要报修</el-menu-item>
+                <el-menu-item index="/UM/UW4-2">报修记录</el-menu-item>
               </el-sub-menu>
               <el-sub-menu index="5">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon>建议&投诉
+                  <el-icon><MessageBox /></el-icon>建议&投诉
                 </template>
-                <el-menu-item index="5-1">我要投诉</el-menu-item>
-                <el-menu-item index="5-2">我要建议</el-menu-item>
+                <el-menu-item index="/UM/UW5-1">我要投诉</el-menu-item>
+                <el-menu-item index="/UM/UW5-2">我要建议</el-menu-item>
               </el-sub-menu>
               <el-sub-menu index="6">
                 <template #title>
-                  <el-icon><icon-menu /></el-icon>社区绿化
+                  <el-icon><Delete /></el-icon>社区绿化
                 </template>
-                <el-menu-item index="6-1">回收点分布图</el-menu-item>
-                <el-menu-item index="6-2">绿色科普</el-menu-item>
+                <el-menu-item index="/UM/UW6-1">回收点分布图</el-menu-item>
+                <el-menu-item index="/UM/UW6-2">绿色科普</el-menu-item>
               </el-sub-menu>
-              <el-menu-item index="7">
-                <i class="el-icon-setting"></i>
+              <el-menu-item index="/UM/UW7">
+                <el-icon><Service /></el-icon>
                 <span slot="title">联系方式</span>
               </el-menu-item>
-              <el-menu-item index="8">
-                <i class="el-icon-setting"></i>
+              <el-menu-item index="/UM/UW8">
+                <el-icon><More /></el-icon>
                 <span slot="title">关于</span>
               </el-menu-item>
             </el-menu>
           </el-scrollbar>
         </el-aside>
         <el-container style="border-left:3px solid #E2E2E2">
-          <div v-if="selectedMenu === '1-1'">
-            <p>Content for Option 1-1</p>
-          </div>
-          <div v-if="selectedMenu === '1-2'">
-            <p>Content for Option 1-2</p>
-          </div>
-          <div v-if="selectedMenu === '2-1'">
-            <p>Content for Option 2-1</p>
-          </div>
+          <router-view />
         </el-container>
       </el-container>
     </el-container>
@@ -108,6 +99,7 @@
   import { ref, onMounted, onBeforeUnmount } from 'vue'
   import { ElMessage } from 'element-plus'
   import { Menu as IconMenu, Message, Setting, ArrowDown } from '@element-plus/icons-vue'
+import router from '@/router/router';
   const selectedMenu = ref('')
   const newDate = ref(new Date())
   // 时间格式化函数
@@ -115,6 +107,9 @@
   const handleCommand = (command: string | number | object) => {
     ElMessage(`click on item ${command}`)
   }
+  function handleMenuSelect(index: string) {
+  router.push(index);
+}
   function dateFormat(date) {
     const year = date.getFullYear()
     const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
@@ -142,9 +137,6 @@
       clearInterval(timer)
     }
   })
-  function handleMenuSelect(index: string) {
-    selectedMenu.value = index
-  }
   function logout() {
     store.dispatch('logout');
     window.location.href = '/login';
