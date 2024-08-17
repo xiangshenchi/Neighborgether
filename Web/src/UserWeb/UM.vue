@@ -23,8 +23,8 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item command="a">退出账号</el-dropdown-item>
-                  <el-dropdown-item command="b">回到欢迎界面</el-dropdown-item>
+                  <el-dropdown-item @click="logout">退出账号</el-dropdown-item>
+                  <el-dropdown-item @click="gotoWelcome">回到欢迎界面</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -103,6 +103,8 @@
   </template>
   
   <script lang="ts" setup>
+  import { useStore } from 'vuex'
+  const store = useStore()
   import { ref, onMounted, onBeforeUnmount } from 'vue'
   import { ElMessage } from 'element-plus'
   import { Menu as IconMenu, Message, Setting, ArrowDown } from '@element-plus/icons-vue'
@@ -142,6 +144,13 @@
   })
   function handleMenuSelect(index: string) {
     selectedMenu.value = index
+  }
+  function logout() {
+    store.dispatch('logout');
+    window.location.href = '/login';
+  }
+  function gotoWelcome() {
+    window.location.href = '/welcome';
   }
   const item = {
     date: '2016-05-02',

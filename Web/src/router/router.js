@@ -34,10 +34,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters.isLoggedIn
-  if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
-    next('/login')  // 如果没有登录，则重定向到登录页面
+  if (to.path === '/login' && isLoggedIn) {
+    next('/UM') // 如果已经登录，访问 /login 时重定向到 /UM
+  } else if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
+    next('/login') // 如果需要授权访问但用户未登录，重定向到 /login
   } else {
-    next()
+    next() // 继续导航
   }
 })
 
