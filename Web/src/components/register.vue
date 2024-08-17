@@ -36,7 +36,6 @@
 import { defineComponent, reactive } from 'vue'
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 import './style.css'
 
 export default defineComponent({
