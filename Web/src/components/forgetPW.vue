@@ -21,7 +21,7 @@
               <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
             </el-form-item>
             <div class="button-container">
-              <el-button type="primary" @click="onSubmit" size="30%" >修改密码</el-button>
+              <el-button type="primary" @click="onSubmit" size="large" color="#1EB71E" >修改密码</el-button>
             </div>
           </el-form>
         </div>
