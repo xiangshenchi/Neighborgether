@@ -16,7 +16,7 @@
 
 .biaoTi {
   color: #22A637;
-  font-size: 5vh;
+  font-size: 50px;
   font-family: 'PingFang SC';
   margin: 0;
 }
@@ -34,13 +34,13 @@
 
 .btn {
   cursor: pointer;
-  margin: 3vh;
-  margin-top: 1vh;
-  border-radius: 0.5vw;
+  margin: 30px;
+  margin-top: 10px;
+  border-radius: 5px;
   border-width: 0;
-  box-shadow: 0 0 0.4vh 0.4vh #209432;
-  font-size: 4vh;
-  padding: 0.5vh 1vw;
+  box-shadow: 0 0 4px 4px #209432;
+  font-size: 40px;
+  padding: 5px 10px;
 }
 
 .btn.button1-default {
