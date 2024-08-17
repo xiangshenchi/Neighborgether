@@ -21,13 +21,13 @@
             <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
           </el-form-item>
           <div class="button-container">
-            <el-button type="primary" @click="onSubmit" size="30%">注册</el-button>
+            <el-button type="primary" color="#1EB71E" @click="onSubmit" size="30%">注册</el-button>
           </div>
         </el-form>
       </div>
     </el-card>
     </div>
-      <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
+      <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a></div>
     </div>
   </div>
 </template>
