@@ -58,7 +58,7 @@
         });
       },
       returnToLogin() {
-        window.location.href = "/";
+        window.location.href = "/login";
       },
     },
     setup() {

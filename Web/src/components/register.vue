@@ -64,7 +64,7 @@ export default defineComponent({
       });
     },
     returnToLogin() {
-      window.location.href = "/";
+      window.location.href = "/login";
     },
     getBtnClass(btn: string): string {
       return this.btnStates[btn].pressed ? `${btn}-pressed` : this.btnStates[btn].hovered ? `${btn}-hovered` : `${btn}-default`;

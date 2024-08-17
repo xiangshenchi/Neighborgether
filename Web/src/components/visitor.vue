@@ -59,7 +59,7 @@ export default defineComponent({
             });
         },
         returnToLogin() {
-            window.location.href = "/";
+            window.location.href = "/login";
         },
     },
     setup() {

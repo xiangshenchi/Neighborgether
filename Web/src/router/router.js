@@ -11,12 +11,16 @@ import UW2_1 from '../UserWeb/UW2-1.vue';
 import UW2_2 from '../UserWeb/UW2-2.vue';
 import UW2_3 from '../UserWeb/UW2-3.vue';
 import store from '../store'
+import welcome from '../components/welcome.vue'
 
 const routes = [
+  { path: '/', redirect: '/welcome' },
+  { path: '/:pathMatch(.*)*', redirect: '/welcome' },
   { path: '/login', name: 'login', component: login, meta: { requiresAuth: false } },
   { path: '/register', name: 'register', component: register },
   { path: '/forgetPW', name: 'forgetPW', component: forgetPW },
   { path: '/visitor', name: 'visitor', component: visitor },
+  { path: '/welcome', name: 'welcome', component: welcome },
   {
     path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true },
     children: [
