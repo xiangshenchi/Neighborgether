@@ -9,13 +9,13 @@
     <div class="Loginbg">
       <div class="lc1">
       <el-card class="c1" shadow="always">
-      <img src="/logo.jpg" height="width" width="17%" alt="logo">
+      <img src="/logo.jpg" height="width" width="150" alt="logo">
       <br>
       <h1 class="biaoTi">欢迎使用·邻聚·智慧物业</h1>
       <br>
       <input v-model="account" type="text" placeholder="请输入账号(手机号)" class="ipt">
       <br>
-      <input v-model="password" type="password" placeholder="请输入密码" class="ipt" style="margin-bottom: 5vh;">
+      <input v-model="password" type="password" placeholder="请输入密码" class="ipt" style="margin-bottom: 10px;">
       <br>
       <button type="submit" class="btn":class="button1Class" @mouseenter="() => onMouseEnter('button1')"
         @mouseleave="() => onMouseLeave('button1')"

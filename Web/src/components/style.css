@@ -22,14 +22,14 @@
 }
 
 .ipt {
-  width: 19vw;
-  height: 6vh;
+  width: 250px;
+  height: 39px;
   border: 2px solid #AADDB2;
-  border-radius: 1vw 0;
+  border-radius: 10px 0;
   background-color: #FFF;
-  font-size: 3vh;
+  font-size: 20px;
   padding-left: 10px;
-  margin-top: 2vh;
+  margin-top: 20px;
 }
 
 .btn {
@@ -195,7 +195,7 @@
   justify-content: center;
   /* 垂直居中 */
   align-items: center;
-  height: 85vh;
+  height: 850px;
 }
 
 
@@ -206,7 +206,7 @@
   justify-content: center;
   /* 垂直居中 */
   align-items: center;
-  height: 75vh;
+  height: 700px;
 }
 
 .lc3 {
@@ -215,7 +215,7 @@
   justify-content: center;
   /* 垂直居中 */
   align-items: center;
-  height: 75vh;
+  height: 750px;
 }
 
 .lc4 {
@@ -224,19 +224,19 @@
   justify-content: center;
   /* 垂直居中 */
   align-items: center;
-  height: 65vh;
+  height: 750px;
 }
 
 .c1 {
   backdrop-filter: blur(5px);
-  width: 40%;
+  width: 600px;
   background-color: rgba(255, 255, 255, 0);
 }
 
 .c2 {
   backdrop-filter: blur(5px);
-  width: 30%;
-  height: 60%;
+  width: 450px;
+  height: 500px;
   background-color: rgba(255, 255, 255, 0);
   display: flex;
   /* 内容居中 */
@@ -247,8 +247,8 @@
 
 .c3 {
   backdrop-filter: blur(5px);
-  width: 30%;
-  height: 60%;
+  width: 450px;
+  height: 500px;
   background-color: rgba(255, 255, 255, 0);
   display: flex;
   /* 内容居中 */
@@ -259,8 +259,8 @@
 
 .c4 {
   backdrop-filter: blur(5px);
-  width: 24%;
-  height: 60%;
+  width: 450px;
+  height: 500px;
   background-color: rgba(255, 255, 255, 0);
   display: flex;
   /* 内容居中 */
