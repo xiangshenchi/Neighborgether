@@ -39,6 +39,8 @@
 </template>
  
 <script lang="ts">
+import { useStore } from 'vuex'
+const store = useStore()
 import { defineComponent, reactive } from 'vue'
 import { loadFull } from 'tsparticles'
 import { useParticles } from './re'
@@ -124,6 +126,9 @@ export default defineComponent({
         errorAlert('账号不能为空！');
       } else {
         console.log('login');
+        const userInfo = { name: 'John Doe', email: 'john@example.com' }
+        this.$store.dispatch('login', userInfo)
+        window.location.href = "/UM";
       }
     },
     // 访客登记按钮点击处理
