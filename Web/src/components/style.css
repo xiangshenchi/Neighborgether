@@ -218,6 +218,15 @@
   height: 75vh;
 }
 
+.lc4 {
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  height: 65vh;
+}
+
 .c1 {
   backdrop-filter: blur(5px);
   width: 40%;
@@ -239,6 +248,18 @@
 .c3 {
   backdrop-filter: blur(5px);
   width: 30%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  /* 内容居中 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+}
+
+.c4 {
+  backdrop-filter: blur(5px);
+  width: 24%;
   height: 60%;
   background-color: rgba(255, 255, 255, 0);
   display: flex;

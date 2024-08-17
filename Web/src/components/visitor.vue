@@ -8,6 +8,8 @@
                 <p class="title">邻聚·访客登记</p>
                 <button class="btn btn-back" @click="returnToLogin">返回</button>
             </div>
+            <div class="lc4">
+            <el-card class="c4" shadow="always">
             <div id="form-container2">
                 <el-form :model="form" label-width="80px">
                     <el-form-item label="姓名">
@@ -35,6 +37,8 @@
                     </el-form-item>
                 </el-form>
             </div>
+        </el-card>
+        </div>
             <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
         </div>
     </div>
