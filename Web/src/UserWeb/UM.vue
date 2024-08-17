@@ -23,8 +23,8 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item command="a">Action 1</el-dropdown-item>
-                  <el-dropdown-item command="b">Action 2</el-dropdown-item>
+                  <el-dropdown-item command="a">退出账号</el-dropdown-item>
+                  <el-dropdown-item command="b">回到欢迎界面</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
