@@ -11,9 +11,9 @@
             <div class="lc4">
             <el-card class="c4" shadow="always">
             <div id="form-container2">
-                <el-form :model="form" label-width="80px">
+                <el-form :model="form" label-width="40%">
                     <el-form-item label="姓名">
-                        <el-input v-model="form.name" placeholder="请输入您的姓名"></el-input>
+                        <el-input v-model="form.name" placeholder="请输入您的姓名" ></el-input>
                     </el-form-item>
 
                     <el-form-item label="性别">
@@ -25,7 +25,7 @@
                     </el-form-item>
 
                     <el-form-item label="联系方式">
-                        <el-input v-model="form.phone" placeholder="请输入手机号"></el-input>
+                        <el-input v-model="form.phone" placeholder="请输入手机号"</el-input>
                     </el-form-item>
 
                     <el-form-item label="来访原因">
