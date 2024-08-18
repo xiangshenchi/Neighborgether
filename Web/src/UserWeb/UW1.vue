@@ -1,4 +1,5 @@
 <template>
+  <div style="display: flex; flex-direction: column; height: 100vh;align-items: center;">
   <!-- 时间选择器 -->
   <div class="date-picker">
     <div class="block">
@@ -14,10 +15,9 @@
       />
     </div>
   </div>
-  <br>
   <!-- 表格 -->
-  <div style="width: 100%; position: relative;">
-    <el-table :data="tableData" style="width: 100%; height: 80%;" size="100%"  :row-style="rowStyle">
+  <div style="width: 100%;height: 580px;overflow: hidden;">
+    <el-table :data="tableData" style="width: 100%;" size="100%"  :row-style="rowStyle">
       <el-table-column fixed prop="num" label="序号" width="60" />
       <el-table-column prop="date" label="发布时间" width="160" />
       <el-table-column prop="title" label="公告标题" width="160" />
@@ -39,8 +39,7 @@
   </div>
 
   <!-- 分页器 -->
-  <div class="pagination-block"
-       style="position: absolute; bottom: 12vh; left: 80vh ">
+  <div class="pagination-block">
     <el-pagination
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"
@@ -53,7 +52,7 @@
         @current-change="handleCurrentChange"
     />
   </div>
-
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -243,7 +242,6 @@ const shortcuts = [
 display: flex;
 width: 100%;
 padding: 0;
-height:10px;
 flex-wrap: wrap;
 }
 
