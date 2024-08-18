@@ -10,7 +10,7 @@
     <br>
     <!-- 表格 -->
     <div style="width: 100%; position: relative;">
-      <el-table :data="tableData" style="width: 100%; height: 80%;" size="100%" :row-style="rowStyle">
+      <el-table :data="tableData" style="width: 100%; height: 100%;" size="100%" :row-style="rowStyle">
         <el-table-column fixed prop="num" label="序号" width="60" />
         <el-table-column prop="date" label="发布时间" width="160" />
         <el-table-column prop="title" label="公告标题" width="160" />
@@ -227,6 +227,7 @@ const shortcuts = [
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .date-picker {
