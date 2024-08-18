@@ -1,34 +1,27 @@
 <template>
   <div class="app-container">
-    <Particles
-      id="tsparticles"
-      :particlesInit="particlesInit"
-      :particlesLoaded="particlesLoaded"
-      :options="options"
-    />
+    <Particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
     <div class="Loginbg">
       <div class="lc1">
-      <el-card class="c1" shadow="always">
-      <img src="/logo.jpg" height="width" width="150" alt="logo">
-      <br>
-      <h1 class="biaoTi">欢迎使用·邻聚·智慧物业</h1>
-      <br>
-      <input v-model="account" type="text" placeholder="请输入账号(手机号)" class="ipt">
-      <br>
-      <input v-model="password" type="password" placeholder="请输入密码" class="ipt" style="margin-bottom: 10px;">
-      <br>
-      <button type="submit" class="btn":class="button1Class" @mouseenter="() => onMouseEnter('button1')"
-        @mouseleave="() => onMouseLeave('button1')"
-        @mousedown="() => onMouseDown('button1')"
-        @mouseup="() => onMouseUp('button1')" @click="login()">登录</button>
-      <br>
-      <button type="submit" class="btn":class="button2Class" @mouseenter="() => onMouseEnter('button2')"
-        @mouseleave="() => onMouseLeave('button2')"
-        @mousedown="() => onMouseDown('button2')"
-        @mouseup="() => onMouseUp('button2')" @click="jilu()">访客登记</button>
-      <br>
-    </el-card>
-  </div>
+        <el-card class="c1" shadow="always">
+          <img src="/logo.jpg" height="width" width="150" alt="logo">
+          <br>
+          <h1 class="biaoTi">欢迎使用·邻聚·智慧物业</h1>
+          <br>
+          <input v-model="account" type="text" placeholder="请输入账号(手机号)" class="ipt">
+          <br>
+          <input v-model="password" type="password" placeholder="请输入密码" class="ipt" style="margin-bottom: 10px;">
+          <br>
+          <button type="submit" class="btn" :class="button1Class" @mouseenter="() => onMouseEnter('button1')"
+            @mouseleave="() => onMouseLeave('button1')" @mousedown="() => onMouseDown('button1')"
+            @mouseup="() => onMouseUp('button1')" @click="login()">登录</button>
+          <br>
+          <button type="submit" class="btn" :class="button2Class" @mouseenter="() => onMouseEnter('button2')"
+            @mouseleave="() => onMouseLeave('button2')" @mousedown="() => onMouseDown('button2')"
+            @mouseup="() => onMouseUp('button2')" @click="jilu()">访客登记</button>
+          <br>
+        </el-card>
+      </div>
       <div class="yxj">没有账号? <router-link to="/register" style="color: #4095E5">点击注册</router-link></div>
       <br>
       <div class="yxj">忘记密码? <router-link to="/forgetPW" style="color: #4095E5">点击找回</router-link></div>
@@ -37,10 +30,9 @@
     </div>
   </div>
 </template>
- 
+
 <script lang="ts">
 import { useStore } from 'vuex'
-const store = useStore()
 import { defineComponent, reactive } from 'vue'
 import { loadFull } from 'tsparticles'
 import { useParticles } from './re'
@@ -48,7 +40,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 import './style.css'
 import axios from 'axios'
-axios.defaults.baseURL = '/api'
+const store = useStore()
 const errorAlert = (text) => {
   ElMessageBox.alert(text, '错误', {
     confirmButtonText: 'OK'
@@ -61,10 +53,8 @@ const contact = (text) => {
 }
 getList()
 function getList() {
-  axios.get('/users/list').then(res => {
+  axios.get('http://localhost:8090/users/list').then(res => {
     console.log(res.data)
-  }).catch(err => {
-    console.log(err)
   })
 }
 export default defineComponent({
@@ -135,10 +125,22 @@ export default defineComponent({
       } else if (!this.account) {
         errorAlert('账号不能为空！');
       } else {
-        console.log('login');
-        const userInfo = { name: 'John Doe', email: 'john@example.com' }
-        this.$store.dispatch('login', userInfo)
-        window.location.href = "/UM";
+        axios.get('http://localhost:8090/users/showaccount', {
+          params: {
+            phonenumber: this.account,
+            password: this.password
+          }
+        }).then(res => {
+          if (res.data.status === 2) {
+            console.log('登录成功！');
+          }
+          else {
+            console.log('登录失败！');
+            errorAlert('账号或密码错误！');
+          }
+        }).catch(err => {
+          console.log(err)
+        })
       }
     },
     // 访客登记按钮点击处理
@@ -147,7 +149,7 @@ export default defineComponent({
       window.location.href = "/visitor";
     }
   },
-  setup(){
+  setup() {
     const contact = (text) => {
       ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
         confirmButtonText: text
@@ -163,8 +165,5 @@ export default defineComponent({
   }
 })
 </script>
- 
-<style>
 
-</style>
-
+<style></style>
