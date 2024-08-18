@@ -14,23 +14,23 @@
           :size="size"
       />
     </div>
-  </div>
-  <!-- 表格 -->
-  <div style="width: 100%;height: 580px;overflow: hidden;">
-    <el-table :data="tableData" style="width: 100%;" size="100%"  :row-style="rowStyle">
-      <el-table-column fixed prop="num" label="序号" width="60" />
-      <el-table-column prop="date" label="发布时间" width="160" />
-      <el-table-column prop="title" label="公告标题" width="160" />
-      <el-table-column prop="content" label="公告内容" width="250" />
-      <el-table-column prop="person" label="发布人" width="120" />
-      <el-table-column fixed="right" label="公告详情" min-width="100">
-        <template #default>
-          <!-- 详情按钮 -->
-          <el-button link type="primary" size="small" @click="handleClick">
-            详情
-          </el-button>
-          <!-- 编辑按钮 -->
-          <!-- <el-button link type="primary" size="small">
+    <br>
+    <!-- 表格 -->
+    <div style="width: 100%; position: relative;">
+      <el-table :data="tableData" style="width: 100%; height: 100%;" size="100%" :row-style="rowStyle">
+        <el-table-column fixed prop="num" label="序号" width="60" />
+        <el-table-column prop="date" label="发布时间" width="160" />
+        <el-table-column prop="title" label="公告标题" width="160" />
+        <el-table-column prop="content" label="公告内容" width="250" />
+        <el-table-column prop="person" label="发布人" width="120" />
+        <el-table-column fixed="right" label="公告详情" min-width="100">
+          <template #default>
+            <!-- 详情按钮 -->
+            <el-button link type="primary" size="small" @click="handleClick">
+              详情
+            </el-button>
+            <!-- 编辑按钮 -->
+            <!-- <el-button link type="primary" size="small">
             编辑按钮
           </el-button> -->
           </template>
@@ -242,6 +242,7 @@ const shortcuts = [
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .date-picker {
