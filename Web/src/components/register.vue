@@ -7,7 +7,9 @@
         <p class="title">邻聚·账号注册</p>
         <button class="btn btn-back" @click="returnToLogin">返回</button>
       </div>
-      <div class="lc3">
+      
+    </div>
+    <div class="lc3">
         <el-card class="c3" shadow="always">
       <div id="form-container1">
         <el-form :model="form" ref="form" label-width="0">
@@ -29,7 +31,6 @@
     </div>
       <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a></div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -87,6 +88,4 @@ export default defineComponent({
 })
 </script>
 
-<style>
-
-</style>
+<style></style>
