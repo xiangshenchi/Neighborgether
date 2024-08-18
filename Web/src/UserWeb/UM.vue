@@ -33,7 +33,7 @@
       </el-header>
       <el-container>
         <el-aside style="width:18vw;height:100%">
-          <el-scrollbar>
+          <!-- <el-scrollbar> -->
             <el-menu :default-openeds="['1', '7']" @select="handleMenuSelect">
               <el-menu-item index="/UM/UW1">
                 <span slot="title"><el-icon><ChatLineSquare /></el-icon>社区公告</span>
@@ -84,7 +84,7 @@
                 <span slot="title">关于</span>
               </el-menu-item>
             </el-menu>
-          </el-scrollbar>
+          <!-- </el-scrollbar> -->
         </el-aside>
         <el-container style="border-left:3px solid #E2E2E2">
           <router-view />

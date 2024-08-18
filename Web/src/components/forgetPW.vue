@@ -7,7 +7,9 @@
           <p class="title">邻聚·账号找回</p>
           <button class="btn btn-back" @click="returnToLogin">返回</button>
         </div>
-        <div class="lc2">
+      </div>
+      
+      <div class="lc2">
         <el-card class="c2" shadow="always">
         <div class="form-container"> 
           <el-form :model="form" ref="form" label-width="0">
@@ -27,8 +29,7 @@
         </div>
       </el-card>
       </div>
-        <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
-      </div>
+        <div class="yxj" style="z-index:100">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a></div>
     </div>
   </template>
   
