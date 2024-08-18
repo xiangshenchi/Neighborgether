@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neighbor.gether.mapper.PrppertyinfoMapper">
+    <select id="getPropertyinfoList" resultType="com.neighbor.gether.ing.Propertyinfo">
+        select * from neighborgether.Propertyinfo
+    </select>
+
+    <select id="getPropertyinfoLike" parameterType="map" resultType="com.neighbor.gether.ing.Propertyinfo">
+        select * from neighborgether.Propertyinfo where RoomNumber like "%"#{roomnumber}"%"
+    </select>
+
+    <select id="getPropertyinfoById" parameterType="int" resultType="com.neighbor.gether.ing.Propertyinfo">
+        select * from neighborgether.Propertyinfo where PropertyID=#{propertyid}
+    </select>
+
+    <select id="getPropertyinfoByIdMap" parameterType="map" resultType="com.neighbor.gether.ing.Propertyinfo">
+        select * from neighborgether.Propertyinfo where PropertyID=#{propertyid}
+    </select>
+
+    <insert id="addPropertyinfo" parameterType="com.neighbor.gether.ing.Propertyinfo">
+        insert into neighborgether.Propertyinfo(PropertyID,UserID,RoomNumber,BuildingNumber,UnitNumber,Area) values (#{propertyid},#{userid},#{roomnumber},#{buildingnumber},#{unitnumber},#{area});
+    </insert>
+
+    <insert id="addPropertyinfoMap" parameterType="map">
+        insert into neighborgether.Propertyinfo(PropertyID,UserID,RoomNumber,BuildingNumber,UnitNumber,Area) values (#{propertyid},#{userid},#{roomnumber},#{buildingnumber},#{unitnumber},#{area});
+    </insert>
+
+    <update id="updatePropertyinfo" parameterType="com.neighbor.gether.ing.Propertyinfo">
+        update neighborgether.Propertyinfo set Area=#{area} where PropertyID=#{propertyid};
+    </update>
+
+    <update id="updatePropertyinfoMap" parameterType="map">
+        update neighborgether.Propertyinfo set Area=#{area} where PropertyID=#{propertyid};
+    </update>
+
+    <delete id="deletePropertyinfo" parameterType="int">
+        delete from neighborgether.Propertyinfo where PropertyID=#{propertyid};
+    </delete>
+    <delete id="deletePropertyinfoMap" parameterType="map">
+        delete from neighborgether.Propertyinfo where PropertyID=#{propertyid};
+    </delete>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.VehiclesMapper">
+
+    <resultMap id="BaseResultMap" type="generator.pojo.Vehicles">
+            <id property="vehicleid" column="VehicleID" jdbcType="INTEGER"/>
+            <result property="userid" column="UserID" jdbcType="INTEGER"/>
+            <result property="licenseplate" column="LicensePlate" jdbcType="VARCHAR"/>
+            <result property="vehicletype" column="VehicleType" jdbcType="VARCHAR"/>
+            <result property="registrationdate" column="RegistrationDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        VehicleID,UserID,LicensePlate,
+        VehicleType,RegistrationDate
+    </sql>
+</mapper>
