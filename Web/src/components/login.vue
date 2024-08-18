@@ -59,14 +59,14 @@ const contact = (text) => {
     confirmButtonText: text
   })
 }
-// getList()
-// async function getList(){
-//   const res = await axios({
-//     url:'http://192.168.217.139:8090/users/list',
-//     methor: 'GET',
-//   })
-//   console.log(res)
-// }
+getList()
+function getList() {
+  axios.get('/users/list').then(res => {
+    console.log(res.data)
+  }).catch(err => {
+    console.log(err)
+  })
+}
 export default defineComponent({
   // 定义组件的数据
   data() {
