@@ -25,7 +25,7 @@
       <button type="submit" class="btn":class="button2Class" @mouseenter="() => onMouseEnter('button2')"
         @mouseleave="() => onMouseLeave('button2')"
         @mousedown="() => onMouseDown('button2')"
-        @mouseup="() => onMouseUp('button2')" @click="getList()">访客登记</button>
+        @mouseup="() => onMouseUp('button2')" @click="jilu()">访客登记</button>
       <br>
     </el-card>
   </div>
@@ -59,14 +59,14 @@ const contact = (text) => {
     confirmButtonText: text
   })
 }
-getList()
-async function getList(){
-  const res = await axios({
-    url:'http://192.168.217.139:8090/users/list',
-    methor: 'GET',
-  })
-  console.log(res)
-}
+// getList()
+// async function getList(){
+//   const res = await axios({
+//     url:'http://192.168.217.139:8090/users/list',
+//     methor: 'GET',
+//   })
+//   console.log(res)
+// }
 export default defineComponent({
   // 定义组件的数据
   data() {
