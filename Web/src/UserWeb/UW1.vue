@@ -2,22 +2,14 @@
   <!-- 时间选择器 -->
   <div class="date-picker">
     <div class="block">
-      <el-date-picker
-          v-model="value2"
-          type="daterange"
-          unlink-panels
-          range-separator="至"
-          start-placeholder="起始时间"
-          end-placeholder="截至时间"
-          :shortcuts="shortcuts"
-          :size="size"
-      />
+      <el-date-picker v-model="value2" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
+        end-placeholder="截至时间" :shortcuts="shortcuts" :size="size" />
     </div>
   </div>
   <br>
   <!-- 表格 -->
-  <div style="width: 100%; position: relative;">
-    <el-table :data="tableData" style="width: 100%; height: 80%;" size="100%"  :row-style="rowStyle">
+  <div style="width: 100%; position: column;">
+    <el-table :data="tableData" style="width: 100%; height: 80%;" size="100%" :row-style="rowStyle">
       <el-table-column fixed prop="num" label="序号" width="60" />
       <el-table-column prop="date" label="发布时间" width="160" />
       <el-table-column prop="title" label="公告标题" width="160" />
@@ -39,19 +31,10 @@
   </div>
 
   <!-- 分页器 -->
-  <div class="pagination-block"
-       style="position: absolute; bottom: 12vh; left: 80vh ">
-    <el-pagination
-        v-model:current-page="currentPage"
-        v-model:page-size="pageSize"
-        :page-sizes="[10, 20, 50]"
-        :disabled="disabled"
-        :background="background"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-    />
+  <div class="pagination-block" style="position: absolute; bottom: 12vh; left: 80vh ">
+    <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
+      :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" />
   </div>
 
 </template>
@@ -68,88 +51,88 @@ const background = ref(false)
 const disabled = ref(false)
 
 const handleSizeChange = (val: number) => {
-console.log(`${val} items per page`)
+  console.log(`${val} items per page`)
 }
 const handleCurrentChange = (val: number) => {
-console.log(`current page: ${val}`)
+  console.log(`current page: ${val}`)
 }
 
 
 // 2.数据表
 const handleClick = () => {
-console.log('click')
+  console.log('click')
 }
 const tableData = [
-{
-  num: 1,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 2,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 3,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 4,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 5,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 6,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 7,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 8,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 9,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
-{
-  num: 10,
-  date: '2016-05-02 18:50:21',
-  title: 'California',
-  content: 'Los Angeles',
-  person: 'XXX',
-},
+  {
+    num: 1,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 2,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 3,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 4,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 5,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 6,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 7,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 8,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 9,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
+  {
+    num: 10,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  },
 ]
 const rowStyle = () => {
   return {
@@ -162,33 +145,33 @@ const rowStyle = () => {
 // const size = ref<'default' | 'large' | 'small'>('default')
 const value2 = ref('')
 const shortcuts = [
-{
-  text: '过去一周',
-  value: () => {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    return [start, end]
+  {
+    text: '过去一周',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      return [start, end]
+    },
   },
-},
-{
-  text: '过去一月',
-  value: () => {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-    return [start, end]
+  {
+    text: '过去一月',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+      return [start, end]
+    },
   },
-},
-{
-  text: '过去三月',
-  value: () => {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-    return [start, end]
+  {
+    text: '过去三月',
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+      return [start, end]
+    },
   },
-},
 ]
 
 // export default {
@@ -240,28 +223,28 @@ const shortcuts = [
 </script>
 <style scoped>
 .date-picker {
-display: flex;
-width: 100%;
-padding: 0;
-height:10px;
-flex-wrap: wrap;
+  display: flex;
+  width: 100%;
+  padding: 0;
+  height: 10px;
+  flex-wrap: wrap;
 }
 
 .date-picker .block {
-padding: 30px 0;
-text-align: center;
-border-right: solid 1px var(--el-border-color);
-flex: 1;
+  padding: 30px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  flex: 1;
 }
 
 .date-picker .block:last-child {
-border-right: none;
+  border-right: none;
 }
 
 .date-picker .demonstration {
-display: block;
-color: var(--el-text-color-secondary);
-font-size: 14px;
-margin-bottom: 20px;
+  display: block;
+  color: var(--el-text-color-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 </style>
