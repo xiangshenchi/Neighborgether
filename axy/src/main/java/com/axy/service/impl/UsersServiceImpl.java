@@ -37,6 +37,8 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users>
         }
         //密码错误，返回1
         if(!pw.equals(password)){
+           // System.out.println(password+" "+pw);
+           // System.out.println(password);
             return 1;
         }
         //登录成功，返回2

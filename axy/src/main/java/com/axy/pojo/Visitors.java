@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -23,6 +24,11 @@ public class Visitors implements Serializable {
      * 
      */
     private String visitname;
+
+    /**
+     * 
+     */
+    private String sex;
 
     /**
      * 
@@ -68,6 +74,20 @@ public class Visitors implements Serializable {
      */
     public void setVisitname(String visitname) {
         this.visitname = visitname;
+    }
+
+    /**
+     * 
+     */
+    public String getSex() {
+        return sex;
+    }
+
+    /**
+     * 
+     */
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     /**
@@ -126,6 +146,7 @@ public class Visitors implements Serializable {
         Visitors other = (Visitors) that;
         return (this.getVisitid() == null ? other.getVisitid() == null : this.getVisitid().equals(other.getVisitid()))
             && (this.getVisitname() == null ? other.getVisitname() == null : this.getVisitname().equals(other.getVisitname()))
+            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getVisitphone() == null ? other.getVisitphone() == null : this.getVisitphone().equals(other.getVisitphone()))
             && (this.getVisitdate() == null ? other.getVisitdate() == null : this.getVisitdate().equals(other.getVisitdate()))
             && (this.getVisitreason() == null ? other.getVisitreason() == null : this.getVisitreason().equals(other.getVisitreason()));
@@ -137,6 +158,7 @@ public class Visitors implements Serializable {
         int result = 1;
         result = prime * result + ((getVisitid() == null) ? 0 : getVisitid().hashCode());
         result = prime * result + ((getVisitname() == null) ? 0 : getVisitname().hashCode());
+        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getVisitphone() == null) ? 0 : getVisitphone().hashCode());
         result = prime * result + ((getVisitdate() == null) ? 0 : getVisitdate().hashCode());
         result = prime * result + ((getVisitreason() == null) ? 0 : getVisitreason().hashCode());
@@ -151,6 +173,7 @@ public class Visitors implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", visitid=").append(visitid);
         sb.append(", visitname=").append(visitname);
+        sb.append(", sex=").append(sex);
         sb.append(", visitphone=").append(visitphone);
         sb.append(", visitdate=").append(visitdate);
         sb.append(", visitreason=").append(visitreason);
@@ -158,4 +181,6 @@ public class Visitors implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+
 }
