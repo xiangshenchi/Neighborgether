@@ -31,7 +31,7 @@
           </div>
         </div>
       </el-header>
-      <el-container>
+      <el-container style="width:100vw">
         <el-aside style="width:18vw;height:100%">
           <!-- <el-scrollbar> -->
             <el-menu :default-openeds="['1', '7']" @select="handleMenuSelect">
@@ -86,7 +86,7 @@
             </el-menu>
           <!-- </el-scrollbar> -->
         </el-aside>
-        <div style="border-left:3px solid #E2E2E2;width:100%;height:100%;">
+        <div style="border-left:3px solid #E2E2E2;height:100%;flex:1;box-sizing: border-box;">
           <router-view />
         </div>
       </el-container>
@@ -156,7 +156,7 @@ import router from '@/router/router';
   .layout-container-demo {
     position: relative;
     width: 100vw;
-    height: 97vh;
+    height: 100vh;
     overflow: hidden;
     max-width: 100%;
     max-height: 100%;

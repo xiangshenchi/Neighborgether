@@ -1,41 +1,40 @@
 <template>
-  <div style="display: flex; flex-direction: column; height: 100vh;align-items: center;">
+  <div class="web-contain" style="display:flex;width:100%;height:100%;flex-direction: column;" >
     <!-- 时间选择器 -->
-    <div class="date-picker">
+    <div class="date-picker" >
       <div class="block">
         <el-date-picker v-model="value2" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
           end-placeholder="截至时间" :shortcuts="shortcuts" :size="size" />
       </div>
-      <br>
-      <!-- 表格 -->
-      <div style="width: 100%; position: relative;">
-        <el-table :data="tableData" style="width: 100%; height: 100%;" size="100%" :row-style="rowStyle">
-          <el-table-column fixed prop="num" label="序号" width="60" />
-          <el-table-column prop="date" label="发布时间" width="160" />
-          <el-table-column prop="title" label="公告标题" width="160" />
-          <el-table-column prop="content" label="公告内容" width="250" />
-          <el-table-column prop="person" label="发布人" width="120" />
-          <el-table-column fixed="right" label="公告详情" min-width="100">
-            <template #default>
-              <!-- 详情按钮 -->
-              <el-button link type="primary" size="small" @click="handleClick">
-                详情
-              </el-button>
-              <!-- 编辑按钮 -->
-              <!-- <el-button link type="primary" size="small">
+    </div>
+    <!-- 数据表 -->
+    <div style="flex:1;max-width: 100%;width: 100%;">
+      <el-table :data="tableData" style="overflow: auto;" :row-style="rowStyle"
+        :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' } ">
+        <el-table-column prop="num" label="序号" min_width="100" />
+        <el-table-column prop="date" label="发布时间" min_width="250"/>
+        <el-table-column prop="title" label="公告标题" min_width="250"/>
+        <el-table-column prop="content" label="公告内容" min_width="400"/>
+        <el-table-column prop="person" label="发布人" min_width="200"/>
+        <el-table-column fixed="right" label="公告详情" min_width="100">
+          <template #default>
+            <!-- 详情按钮 -->
+            <el-button link type="primary" @click="handleClick">
+              详情
+            </el-button>
+            <!-- 编辑按钮 -->
+            <!-- <el-button link type="primary" size="small">
             编辑按钮
           </el-button> -->
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-
-      <!-- 分页器 -->
-      <div class="pagination-block">
-        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
-          :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
-          @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-      </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <!-- 分页器 -->
+    <div class="pagination-block">
+      <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
+        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
+        @size-change="handleSizeChange" @current-change="handleCurrentChange" @click="pageClick" />
     </div>
   </div>
 </template>
@@ -45,8 +44,8 @@
 // 1.分页器
 import { ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
-const currentPage = ref(1)
-const pageSize = ref(10)
+let currentPage = ref(1)
+let pageSize = ref(10)
 const size = ref<ComponentSize>('default')
 const background = ref(false)
 const disabled = ref(false)
@@ -57,7 +56,9 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
 }
-
+const pageClick = (val: number) => {
+  pageSize.value = val
+}
 
 // 2.数据表
 const handleClick = () => {
@@ -137,7 +138,7 @@ const tableData = [
 ]
 const rowStyle = () => {
   return {
-    height: '30px', // 你希望的行高
+    height: '50px', // 你希望的行高
   };
 };
 
@@ -234,14 +235,15 @@ const shortcuts = [
   display: flex;
   width: 100%;
   padding: 0;
-  flex-wrap: wrap;
+  flex:0;
+  align-items: center;
+  justify-content: center;
 }
 
 .date-picker .block {
   padding: 30px 0;
   text-align: center;
   border-right: solid 1px var(--el-border-color);
-  flex: 1;
 }
 
 .date-picker .block:last-child {
@@ -257,6 +259,7 @@ const shortcuts = [
 
 .pagination-block {
   display: flex;
+  flex:0;
   flex-direction: column;
   /* 设置为纵向布局 */
   align-items: center;
@@ -264,7 +267,6 @@ const shortcuts = [
   margin-top: 20px;
   width: 100%;
   /* 占据整个宽度 */
-  position: absolute;
   bottom: 10px;
 }
 </style>

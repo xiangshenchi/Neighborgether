@@ -7,30 +7,31 @@
         <p class="title">邻聚·账号注册</p>
         <button class="btn btn-back" @click="returnToLogin">返回</button>
       </div>
-      
+
     </div>
     <div class="lc3">
-        <el-card class="c3" shadow="always">
-      <div id="form-container1">
-        <el-form :model="form" ref="form" label-width="0">
-          <el-form-item prop="account" :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' }]">
-            <el-input v-model="form.account" placeholder="请输入手机号" />
-          </el-form-item>
-          <el-form-item prop="password" :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]">
-            <el-input v-model="form.password" placeholder="请输入密码" show-password />
-          </el-form-item>
-          <el-form-item prop="confirmPassword" :rules="[{ required: true, message: '请再次输入密码', trigger: 'blur' }]">
-            <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
-          </el-form-item>
-          <div class="button-container">
-            <el-button type="primary" color="#1EB71E" @click="onSubmit" size="30%">注册</el-button>
-          </div>
-        </el-form>
-      </div>
-    </el-card>
+      <el-card class="c3" shadow="always">
+        <div id="form-container1">
+          <el-form :model="form" ref="form" label-width="0">
+            <el-form-item prop="account" :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' }]">
+              <el-input v-model="form.account" placeholder="请输入手机号" />
+            </el-form-item>
+            <el-form-item prop="password" :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]">
+              <el-input v-model="form.password" placeholder="请输入密码" show-password />
+            </el-form-item>
+            <el-form-item prop="confirmPassword" :rules="[{ required: true, message: '请再次输入密码', trigger: 'blur' }]">
+              <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
+            </el-form-item>
+            <div class="button-container">
+              <el-button type="primary" color="#1EB71E" @click="onSubmit" size="30%">注册</el-button>
+            </div>
+          </el-form>
+        </div>
+      </el-card>
     </div>
-      <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a></div>
-    </div>
+    <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5"
+        size="large">联系工作人员</a></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,7 +39,7 @@ import { defineComponent, reactive } from 'vue'
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
 import './style.css'
-
+import axios from 'axios'
 export default defineComponent({
   data() {
     return {
@@ -59,9 +60,38 @@ export default defineComponent({
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(valid => {
-        ElMessageBox.alert(valid ? '注册成功' : '请完成表单', valid ? 'Success' : 'Error', { confirmButtonText: 'OK' });
-      });
+      if (this.form.account === '' || this.form.password === '' || this.form.confirmPassword === '') {
+        ElMessageBox.alert('请填写完整信息', '提示', {
+          confirmButtonText: '确定'
+        });
+        return;
+      }
+      else if (this.form.password !== this.form.confirmPassword) {
+        ElMessageBox.alert('两次输入的密码不一致', '提示', {
+          confirmButtonText: '确定'
+        });
+        return;
+      }
+      else {
+        axios.post('http://192.168.217.70:8090/users/save', {
+          phonenumber: this.form.account,
+          password: this.form.password
+        }).then(res => {
+          if (res.data.code === 0) {
+            ElMessageBox.alert(res.data.message, '错误', {
+              confirmButtonText: '确定'
+            })
+          }
+          else
+            ElMessageBox.alert("注册成功!", '提示', {
+              confirmButtonText: '确定'
+            })
+        }).catch(err => {
+          ElMessageBox.alert('未知错误,提交失败,请联系工作人员！', '失败', {
+            confirmButtonText: '确定'
+          })
+        })
+      }
     },
     returnToLogin() {
       window.location.href = "/login";
