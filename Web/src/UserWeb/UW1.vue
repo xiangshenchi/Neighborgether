@@ -1,41 +1,41 @@
 <template>
-  <div class="container">
+  <div style="display: flex; flex-direction: column; height: 100vh;align-items: center;">
     <!-- 时间选择器 -->
     <div class="date-picker">
       <div class="block">
         <el-date-picker v-model="value2" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
           end-placeholder="截至时间" :shortcuts="shortcuts" :size="size" />
       </div>
-    </div>
-    <br>
-    <!-- 表格 -->
-    <div style="width: 100%; position: relative;">
-      <el-table :data="tableData" style="width: 100%; height: 100%;" size="100%" :row-style="rowStyle">
-        <el-table-column fixed prop="num" label="序号" width="60" />
-        <el-table-column prop="date" label="发布时间" width="160" />
-        <el-table-column prop="title" label="公告标题" width="160" />
-        <el-table-column prop="content" label="公告内容" width="250" />
-        <el-table-column prop="person" label="发布人" width="120" />
-        <el-table-column fixed="right" label="公告详情" min-width="100">
-          <template #default>
-            <!-- 详情按钮 -->
-            <el-button link type="primary" size="small" @click="handleClick">
-              详情
-            </el-button>
-            <!-- 编辑按钮 -->
-            <!-- <el-button link type="primary" size="small">
+      <br>
+      <!-- 表格 -->
+      <div style="width: 100%; position: relative;">
+        <el-table :data="tableData" style="width: 100%; height: 100%;" size="100%" :row-style="rowStyle">
+          <el-table-column fixed prop="num" label="序号" width="60" />
+          <el-table-column prop="date" label="发布时间" width="160" />
+          <el-table-column prop="title" label="公告标题" width="160" />
+          <el-table-column prop="content" label="公告内容" width="250" />
+          <el-table-column prop="person" label="发布人" width="120" />
+          <el-table-column fixed="right" label="公告详情" min-width="100">
+            <template #default>
+              <!-- 详情按钮 -->
+              <el-button link type="primary" size="small" @click="handleClick">
+                详情
+              </el-button>
+              <!-- 编辑按钮 -->
+              <!-- <el-button link type="primary" size="small">
             编辑按钮
           </el-button> -->
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
 
-    <!-- 分页器 -->
-    <div class="pagination-block">
-      <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
-        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
-        @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <!-- 分页器 -->
+      <div class="pagination-block">
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
+          :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
+          @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      </div>
     </div>
   </div>
 </template>
@@ -234,7 +234,6 @@ const shortcuts = [
   display: flex;
   width: 100%;
   padding: 0;
-  height: 10px;
   flex-wrap: wrap;
 }
 

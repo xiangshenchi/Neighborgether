@@ -86,9 +86,9 @@
             </el-menu>
           <!-- </el-scrollbar> -->
         </el-aside>
-        <el-container style="border-left:3px solid #E2E2E2">
+        <div style="border-left:3px solid #E2E2E2;width:100%;height:100%;">
           <router-view />
-        </el-container>
+        </div>
       </el-container>
     </el-container>
   </template>
@@ -159,6 +159,7 @@ import router from '@/router/router';
     height: 97vh;
     overflow: hidden;
     max-width: 100%;
+    max-height: 100%;
   }
   
   .layout-container-demo .el-header {

@@ -1,19 +1,27 @@
 package com.axy.controller;
 
-import com.axy.pojo.Users;
-import com.axy.service.UsersService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axy.pojo.Users;
+import com.axy.service.UsersService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+import jakarta.annotation.Resource;
 //import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 //import com.axy.pojo.Users; // 假设Users类的包路径
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UsersController {
     @GetMapping()

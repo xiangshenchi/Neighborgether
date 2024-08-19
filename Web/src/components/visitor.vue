@@ -14,22 +14,22 @@
                 <div id="form-container2">
                     <el-form :model="form" label-width="40%">
                         <el-form-item label="姓名">
-                            <el-input v-model="form.name" placeholder="请输入您的姓名"></el-input>
+                            <el-input v-model="form.visitname" placeholder="请输入您的姓名"></el-input>
                         </el-form-item>
 
                         <el-form-item label="性别">
-                            <el-radio-group v-model="form.gender">
+                            <el-radio-group v-model="form.sex">
                                 <el-radio label="男">男</el-radio>
                                 <el-radio label="女">女</el-radio>
                                 <el-radio label="其他">其他</el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item label="联系方式">
-                            <el-input v-model="form.phone" placeholder="请输入手机号" </el-input>
+                            <el-input v-model="form.visitphone" placeholder="请输入手机号" </el-input>
                         </el-form-item>
 
                         <el-form-item label="来访原因">
-                            <el-input type="textarea" v-model="form.reason" placeholder="请输入来访原因"></el-input>
+                            <el-input type="textarea" v-model="form.visitreason" placeholder="请输入来访原因"></el-input>
                         </el-form-item>
 
                         <el-form-item>
@@ -50,31 +50,42 @@ import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
 import { ref } from 'vue'
 import './style.css'
-
+import axios from 'axios'
+import { errorMessages } from 'vue/compiler-sfc'
 export default defineComponent({
     data() {
         return {
         }
     },
     methods: {
-        onSubmit() {
-            this.$refs.form.validate(valid => {
-
-            });
-        },
         returnToLogin() {
             window.location.href = "/login";
         },
     },
     setup() {
         const form = ref({
-            name: '',
-            gender: '男',  // 默认选中“男”
-            phone: '',
-            reason: ''
+            visitname: '',
+            sex: '男',  // 默认选中“男”
+            visitphone: '',
+            visitreason: ''
         })
         const onSubmit = () => {
-            console.log('表单数据:', form.value)
+            axios.post('/visitor', form.value).then(res => {
+                if (res.data.status === 1) {
+                    ElMessageBox.alert('提交成功！', '成功', {
+                        confirmButtonText: '确定'
+                    })
+                }
+                else {
+                    ElMessageBox.alert('提交失败,同一天只能提交一次申请！', '失败', {
+                        confirmButtonText: '确定'
+                    })
+                }
+            }).catch(err => { 
+                ElMessageBox.alert('未知错误,提交失败,请联系工作人员！', '失败', {
+                    confirmButtonText: '确定'
+                })
+            })
         }
         const contact = (text) => {
             ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {

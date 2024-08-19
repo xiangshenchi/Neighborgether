@@ -27,6 +27,6 @@
         select password from users where userid = #{userid}
     </select>
     <select id="findbyphonenumber" resultType="java.lang.String">
-        select * from users where phonenumber = #{phonenumber}
+        select password from users where phonenumber = #{phonenumber}
     </select>
 </mapper>
