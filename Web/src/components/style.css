@@ -165,8 +165,8 @@
   width: 300px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 50px;
   display: flex;
-  justify-content: center;
 }
 
 .cp1 {

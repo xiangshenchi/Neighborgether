@@ -133,11 +133,13 @@ export default defineComponent({
         }).then(res => {
           if (res.data.status === 2) {
             console.log('登录成功！');
+            this.$store.commit('login', {"phonenumber": this.account});
+            window.location.href = "/UM";
           }
-          else {
-            console.log('登录失败！');
+          else if (res.data.status === 1) {
             errorAlert('账号或密码错误！');
           }
+          else errorAlert('账号不存在！');
         }).catch(err => {
           console.log(err)
         })

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.mapper.PropertyinfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.axy.pojo.Propertyinfo">
+            <id property="propertyid" column="PropertyID" jdbcType="INTEGER"/>
+            <result property="userid" column="UserID" jdbcType="INTEGER"/>
+            <result property="roomnumber" column="RoomNumber" jdbcType="VARCHAR"/>
+            <result property="buildingnumber" column="BuildingNumber" jdbcType="VARCHAR"/>
+            <result property="unitnumber" column="UnitNumber" jdbcType="VARCHAR"/>
+            <result property="area" column="Area" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        PropertyID,UserID,RoomNumber,
+        BuildingNumber,UnitNumber,Area
+    </sql>
+</mapper>
