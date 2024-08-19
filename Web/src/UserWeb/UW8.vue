@@ -1,5 +1,5 @@
 <style scoped>
-* {
+.doc {
     overflow-y: auto;
     /* 确保页面可以垂直滚动 */
 }
@@ -32,7 +32,7 @@
 
         <div class="content">
             <h2 style="text-align: center;">
-                邻聚 · 智慧物业</h2>
+                邻聚 · 智慧物业 · 关于</h2>
             <hr>
 
             <h2>项目简介</h2>

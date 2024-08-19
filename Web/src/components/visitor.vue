@@ -70,7 +70,7 @@ export default defineComponent({
             visitreason: ''
         })
         const onSubmit = () => {
-            axios.post('/visitor', form.value).then(res => {
+            axios.post('http://192.168.217.70:8090/visitor', form.value).then(res => {
                 if (res.data.status === 1) {
                     ElMessageBox.alert('提交成功！', '成功', {
                         confirmButtonText: '确定'
