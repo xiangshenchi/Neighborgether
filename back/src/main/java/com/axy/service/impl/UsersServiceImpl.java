@@ -19,7 +19,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users>
     implements UsersService{
     @Resource//或者使用@Autowired，有几率爆红
     private UsersMapper userMapper;
-    private UsersMapper userMapper1;
+    //private UsersMapper userMapper1;
 
     @Override
     //查询所有用户信息
@@ -37,6 +37,8 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users>
         }
         //密码错误，返回1
         if(!pw.equals(password)){
+           // System.out.println(password+" "+pw);
+           // System.out.println(password);
             return 1;
         }
         //登录成功，返回2
