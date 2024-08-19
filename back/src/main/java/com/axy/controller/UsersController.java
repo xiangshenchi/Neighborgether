@@ -59,7 +59,7 @@ public class UsersController {
             return result;
         }
         // 判断手机号是否已存在
-        if (usersMapper.existsphone( phonenumber)) {
+        if (usersMapper.existsphone( phonenumber)!=null) {
             result.put("status", 0);
             result.put("message", "手机号已存在，无法创建");
             return result;
