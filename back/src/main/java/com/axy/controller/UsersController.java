@@ -1,22 +1,15 @@
 package com.axy.controller;
 
+import com.axy.mapper.UsersMapper;
+import com.axy.pojo.Users;
+import com.axy.service.UsersService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.axy.pojo.Users;
-import com.axy.service.UsersService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-
-import jakarta.annotation.Resource;
 //import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 //import com.axy.pojo.Users; // 假设Users类的包路径
 
@@ -24,6 +17,10 @@ import jakarta.annotation.Resource;
 @CrossOrigin
 @RequestMapping("/users")
 public class UsersController {
+    public UsersController(UsersMapper usersMapper) {
+        this.usersMapper = usersMapper;
+    }
+
     @GetMapping()
     public String hello() {
         return "Hello yuasang!!!";
@@ -31,6 +28,7 @@ public class UsersController {
     @Resource
 //    @Autowired
     private UsersService userService;
+    private UsersMapper usersMapper;
     //展示所有用户信息
     @GetMapping("/list")
     public List<Users> list() {//        return userService.list();
@@ -50,8 +48,20 @@ public class UsersController {
 
         // 判断手机号是否合法
         if (phonenumber == null || phonenumber.length() != 11) {
-            result.put("status", false);
+            result.put("status", 0);
             result.put("message", "手机号不合法");
+            return result;
+        }
+        // 检查密码是否含有空格
+        if (password.contains(" ")) {
+            result.put("status", 0);
+            result.put("message", "密码不能含有空格。");
+            return result;
+        }
+        // 判断手机号是否已存在
+        if (usersMapper.existsphone( phonenumber)) {
+            result.put("status", 0);
+            result.put("message", "手机号已存在，无法创建");
             return result;
         }
 
@@ -65,27 +75,14 @@ public class UsersController {
             result.put("status", isSaved);
             result.put("message", isSaved ? "保存成功" : "保存失败");
         } catch (Exception e) {
-            result.put("status", false);
+            result.put("status", 0);
             result.put("message", "保存过程中发生错误: " + e.getMessage());
         }
 
         return result;
     }
-    //修改
-    @PostMapping("/mod")
-    public boolean mod(@RequestBody Users users){
-        return userService.updateById(users);
-    }
-    //新增或修改
-    @PostMapping("/saveOrmod")
-    public boolean saveOrmod(@RequestBody Users users){
-        return userService.saveOrUpdate(users);
-    }
-    //删除
-    @GetMapping("/delete")
-    public boolean delete(@RequestParam int userid){
-        return userService.removeById(userid);
-    }
+
+
     //模糊查询
     @PostMapping("/listP")
     public List<Users> listP(@RequestBody Users users){

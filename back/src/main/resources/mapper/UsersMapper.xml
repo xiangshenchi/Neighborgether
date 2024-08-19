@@ -23,10 +23,13 @@
     <select id="listAll" resultType="com.axy.pojo.Users">
         select * from users
     </select>
-    <select id="findbyid" resultType="String">
-        select password from users where userid = #{userid}
-    </select>
+<!--    <select id="findbyid" resultType="String">-->
+<!--        select password from users where userid = #{userid}-->
+<!--    </select>-->
     <select id="findbyphonenumber" resultType="java.lang.String">
         select password from users where phonenumber = #{phonenumber}
+    </select>
+    <select id="existsphone" resultType="java.lang.Boolean">
+        select * from users where phonenumber = #{phonenumber}
     </select>
 </mapper>
