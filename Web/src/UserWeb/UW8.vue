@@ -1,6 +1,5 @@
 <style scoped>
 .doc {
-    height: 625px;
     overflow-y: auto;
     /* 确保页面可以垂直滚动 */
 }
