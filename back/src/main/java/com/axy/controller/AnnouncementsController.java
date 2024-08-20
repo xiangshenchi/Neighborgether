@@ -2,11 +2,9 @@ package com.axy.controller;
 
 import com.axy.pojo.Announcements;
 import com.axy.service.AnnouncementsService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,5 @@ public class AnnouncementsController {
     public List<Announcements> list() {
         return announcementsService.list();
     }
+
 }

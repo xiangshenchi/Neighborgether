@@ -32,6 +32,12 @@ public class VisitorsController {
         String sex = visitorss.getSex();
         String visitphone = visitorss.getVisitphone();
         String visitreason = visitorss.getVisitreason();
+        // 判断手机号是否合法
+        if (visitphone == null || visitphone.length() != 11) {
+            result.put("status", 0);
+            result.put("message", "手机号不合法");
+            return result;
+        }
 
         try {
             // 调用服务层根据手机号查询访客信息
