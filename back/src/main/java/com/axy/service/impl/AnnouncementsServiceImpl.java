@@ -1,9 +1,12 @@
 package com.axy.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.axy.pojo.Announcements;
 import com.axy.service.AnnouncementsService;
 import com.axy.mapper.AnnouncementsMapper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +18,13 @@ import org.springframework.stereotype.Service;
 public class AnnouncementsServiceImpl extends ServiceImpl<AnnouncementsMapper, Announcements>
     implements AnnouncementsService{
 
+    @Resource
+    private AnnouncementsService annotationMapper;
+
+    @Override
+    public IPage pageC(Page<Announcements> page) {
+        return annotationMapper.pageC(page);
+    }
 }
 
 
