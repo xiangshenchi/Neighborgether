@@ -29,8 +29,11 @@
         </div>
       </el-card>
     </div>
-    <div class="yxj" style="z-index:100">遇到困难? <a href="javascript:void(0)" @click="contact('OK')"
-        style="color: #4095E5">联系工作人员</a></div>
+    <div style="position: absolute; bottom: 0; width: 100%;">
+      <div class="yxj">
+        遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,8 +58,8 @@ export default defineComponent({
   methods: {
     onSubmit() {
       this.$refs.form.validate(valid => {
-        if (!valid){
-          ElMessageBox.alert("请先填写手机号和密码", '错误', {confirmButtonText: '确定'});
+        if (!valid) {
+          ElMessageBox.alert("请先填写手机号和密码", '错误', { confirmButtonText: '确定' });
           return;
         }
         this.$axios.post('/changepassword/updatepassword', {

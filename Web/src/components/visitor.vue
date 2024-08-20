@@ -39,7 +39,10 @@
                 </div>
             </el-card>
         </div>
-        <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5">联系工作人员</a>
+        <div style="position: absolute; bottom: 0; width: 100%;">
+            <div class="yxj">
+                遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a>
+            </div>
         </div>
     </div>
 </template>

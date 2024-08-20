@@ -29,8 +29,11 @@
         </div>
       </el-card>
     </div>
-    <div class="yxj">遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5"
-        size="large">联系工作人员</a></div>
+    <div style="position: absolute; bottom: 0; width: 100%;">
+      <div class="yxj">
+        遇到困难? <a href="javascript:void(0)" @click="contact('OK')" style="color: #4095E5" size="large">联系工作人员</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -117,4 +120,13 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style scoped>
+.yxj>div {
+  position: absolute;
+  bottom: 10px;
+  /* 距离容器底部的距离 */
+  right: 10px;
+  /* 距离容器右边的距离 */
+  text-align: right;
+}
+</style>

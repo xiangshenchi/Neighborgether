@@ -70,12 +70,16 @@
 }
 
 .yxj {
+  height:auto;
+  width: auto;
+  position: relative;
+  bottom: 0;
+  right:0;
   color: #34AD47;
   float: right;
 }
 
 .web-container {
-  position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
