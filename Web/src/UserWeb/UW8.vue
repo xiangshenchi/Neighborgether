@@ -1,5 +1,6 @@
 <style scoped>
 .doc {
+    height: 625px;
     overflow-y: auto;
     /* 确保页面可以垂直滚动 */
 }
@@ -17,7 +18,9 @@
 }
 
 .footer {
-    bottom: 6%;
+    position: relative;
+    /* height: 100%; */
+    bottom: 0%;
     width: 100%;
     text-align: center;
 }
@@ -52,6 +55,5 @@
         <div class="footer">
             <p>copyright© 2024 · 邻聚 · Neighborgether</p>
         </div>
-
     </div>
 </template>

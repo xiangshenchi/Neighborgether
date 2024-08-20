@@ -43,8 +43,10 @@ public class UsersController {
     }
     //注册
     @PostMapping("/save")
-    public Map<String, Object> save(@RequestParam("phonenumber") String phonenumber  , @RequestParam("password") String password) {
+    public Map<String, Object> save(@RequestBody Users userss) {
         Map<String, Object> result = new HashMap<>();
+        String phonenumber = userss.getPhonenumber();
+        String password = userss.getPassword();
 
         // 判断手机号是否合法
         if (phonenumber == null || phonenumber.length() != 11) {
@@ -59,7 +61,7 @@ public class UsersController {
             return result;
         }
         // 判断手机号是否已存在
-        if (usersMapper.existsphone( phonenumber)) {
+        if (usersMapper.existsphone( phonenumber)!=null) {
             result.put("status", 0);
             result.put("message", "手机号已存在，无法创建");
             return result;
