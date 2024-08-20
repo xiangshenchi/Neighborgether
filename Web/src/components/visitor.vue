@@ -44,58 +44,47 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from 'vue'
+<script lang="ts" setup>
+import { defineComponent, getCurrentInstance, ref } from 'vue';
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
-import { ref } from 'vue'
 import './style.css'
-import axios from 'axios'
-import { errorMessages } from 'vue/compiler-sfc'
-export default defineComponent({
-    data() {
-        return {
-        }
-    },
-    methods: {
-        returnToLogin() {
-            window.location.href = "/login";
-        },
-    },
-    setup() {
-        const form = ref({
-            visitname: '',
-            sex: '男',  // 默认选中“男”
-            visitphone: '',
-            visitreason: ''
-        })
-        const onSubmit = () => {
-            axios.post('http://192.168.217.70:8090/visitor', form.value).then(res => {
-                if (res.data.status === 1) {
-                    ElMessageBox.alert('提交成功！', '成功', {
-                        confirmButtonText: '确定'
-                    })
-                }
-                else {
-                    ElMessageBox.alert('提交失败,同一天只能提交一次申请！', '失败', {
-                        confirmButtonText: '确定'
-                    })
-                }
-            }).catch(err => { 
-                ElMessageBox.alert('未知错误,提交失败,请联系工作人员！', '失败', {
-                    confirmButtonText: '确定'
-                })
+function returnToLogin() {
+    window.location.href = "/login";
+}
+
+const form = ref({
+    visitname: '',
+    sex: '男',  // 默认选中“男”
+    visitphone: '',
+    visitreason: ''
+})
+const { proxy } = getCurrentInstance()!;
+const onSubmit = () => {
+    (proxy as any).$axios.post('/visitors/save', form.value).then(res => {
+        if (res.data.status === 1) {
+            ElMessageBox.alert('提交成功！', '成功', {
+                confirmButtonText: '确定'
             })
         }
-        const contact = (text) => {
-            ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
-                confirmButtonText: text
-            });
-        };
-        const { particlesInit, particlesLoaded, options } = useParticles();
-        return { particlesInit, particlesLoaded, options, form, onSubmit, contact };
-    }
-})
+        else {
+            ElMessageBox.alert('提交失败,同一天只能提交一次申请！', '失败', {
+                confirmButtonText: '确定'
+            })
+        }
+    }).catch(err => {
+        ElMessageBox.alert('未知错误,提交失败,请联系工作人员！', '失败', {
+            confirmButtonText: '确定'
+        })
+    })
+}
+const contact = (text) => {
+    ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+        confirmButtonText: text
+    });
+};
+const { particlesInit, particlesLoaded, options } = useParticles();
+
 </script>
 
 <style></style>

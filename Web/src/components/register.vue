@@ -39,7 +39,6 @@ import { defineComponent, reactive } from 'vue'
 import { useParticles } from './re'
 import { ElMessageBox } from 'element-plus'
 import './style.css'
-import axios from 'axios'
 export default defineComponent({
   data() {
     return {
@@ -73,11 +72,11 @@ export default defineComponent({
         return;
       }
       else {
-        axios.post('http://192.168.217.70:8090/users/save', {
+        this.$axios.post('/users/save', {
           phonenumber: this.form.account,
           password: this.form.password
         }).then(res => {
-          if (res.data.code === 0) {
+          if (res.data.status === 0) {
             ElMessageBox.alert(res.data.message, '错误', {
               confirmButtonText: '确定'
             })

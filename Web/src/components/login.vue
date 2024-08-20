@@ -34,12 +34,9 @@
 <script lang="ts">
 import { useStore } from 'vuex'
 import { defineComponent, reactive } from 'vue'
-import { loadFull } from 'tsparticles'
 import { useParticles } from './re'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import type { Action } from 'element-plus'
 import './style.css'
-import axios from 'axios'
 const store = useStore()
 const errorAlert = (text) => {
   ElMessageBox.alert(text, '错误', {
@@ -49,12 +46,6 @@ const errorAlert = (text) => {
 const contact = (text) => {
   ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
     confirmButtonText: text
-  })
-}
-getList()
-function getList() {
-  axios.get('http://localhost:8090/users/list').then(res => {
-    console.log(res.data)
   })
 }
 export default defineComponent({
@@ -125,7 +116,7 @@ export default defineComponent({
       } else if (!this.account) {
         errorAlert('账号不能为空！');
       } else {
-        axios.get('http://localhost:8090/users/showaccount', {
+        this.$axios.get('/users/showaccount', {
           params: {
             phonenumber: this.account,
             password: this.password
