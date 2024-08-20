@@ -15,7 +15,6 @@
                 <span>房号：{{ roomnumber }}</span>
                 <span>户主：{{ househost }}</span>
                 <span>入住时间：{{ checkintime }}</span>
-                
             </el-card>
         </div>
         <div style="margin-top: 100px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
