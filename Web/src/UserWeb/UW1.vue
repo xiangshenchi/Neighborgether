@@ -8,15 +8,15 @@
       </div>
     </div>
     <!-- 数据表 -->
-    <div style="flex:1;max-width: 100%;width: 100%;">
-      <el-table :data="tableData" style="overflow: auto;" :row-style="rowStyle"
+    <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;">
+      <el-table :data="tableData" :row-style="rowStyle"
         :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' } ">
-        <el-table-column prop="num" label="序号" min_width="100" />
-        <el-table-column prop="date" label="发布时间" min_width="250"/>
-        <el-table-column prop="title" label="公告标题" min_width="250"/>
-        <el-table-column prop="content" label="公告内容" min_width="400"/>
-        <el-table-column prop="person" label="发布人" min_width="200"/>
-        <el-table-column fixed="right" label="公告详情" min_width="100">
+        <el-table-column prop="num" label="序号" />
+        <el-table-column prop="date" label="发布时间"/>
+        <el-table-column prop="title" label="公告标题" />
+        <el-table-column prop="content" label="公告内容"/>
+        <el-table-column prop="person" label="发布人"/>
+        <el-table-column fixed="right" label="公告详情">
           <template #default>
             <!-- 详情按钮 -->
             <el-button link type="primary" @click="handleClick">
