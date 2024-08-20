@@ -14,6 +14,7 @@
                 <span>车辆品牌：{{carbrand }}</span>
                 <span>登记时间：{{ regtime }}</span>
                 <span>户主：{{ househost }}</span>
+                
             </el-card>
         </div>
         <div style="margin-top: 100px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">

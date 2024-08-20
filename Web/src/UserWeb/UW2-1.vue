@@ -19,7 +19,6 @@
             <el-card>
                 <span><img src="" alt="用户图片"></span>
             </el-card>
-            
         </div>
     </div>
 </template>
