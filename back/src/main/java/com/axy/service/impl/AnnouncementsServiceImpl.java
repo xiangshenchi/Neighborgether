@@ -18,13 +18,7 @@ import org.springframework.stereotype.Service;
 public class AnnouncementsServiceImpl extends ServiceImpl<AnnouncementsMapper, Announcements>
     implements AnnouncementsService{
 
-    @Resource
-    private AnnouncementsService annotationMapper;
 
-    @Override
-    public IPage pageC(Page<Announcements> page) {
-        return annotationMapper.pageC(page);
-    }
 }
 
 
