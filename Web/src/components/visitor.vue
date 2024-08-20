@@ -64,6 +64,12 @@ const form = ref({
 })
 const { proxy } = getCurrentInstance()!;
 const onSubmit = () => {
+    if (form.value.visitreason === '') {
+        ElMessageBox.alert('请输入来访原因！', '失败', {
+            confirmButtonText: '确定'
+        })
+        return
+    }
     (proxy as any).$axios.post('/visitors/save', form.value).then(res => {
         if (res.data.status === 1) {
             ElMessageBox.alert('提交成功！', '成功', {
@@ -71,7 +77,7 @@ const onSubmit = () => {
             })
         }
         else {
-            ElMessageBox.alert('提交失败,同一天只能提交一次申请！', '失败', {
+            ElMessageBox.alert(res.data.message, '失败', {
                 confirmButtonText: '确定'
             })
         }

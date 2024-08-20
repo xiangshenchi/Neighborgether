@@ -3,13 +3,13 @@
     <!-- 时间选择器 -->
     <div class="date-picker" >
       <div class="block">
-        <el-date-picker v-model="value2" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
+        <el-date-picker v-model="dateRange" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
           end-placeholder="截至时间" :shortcuts="shortcuts" :size="size" />
       </div>
     </div>
     <!-- 数据表 -->
     <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;">
-      <el-table :data="tableData" :row-style="rowStyle"
+      <el-table :data="currentTableData" :row-style="rowStyle"
         :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' } ">
         <el-table-column prop="num" label="序号" />
         <el-table-column prop="date" label="发布时间"/>
@@ -33,7 +33,7 @@
     <!-- 分页器 -->
     <div class="pagination-block">
       <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
-        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="100"
+        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length"
         @size-change="handleSizeChange" @current-change="handleCurrentChange" @click="pageClick" />
     </div>
   </div>
@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 
 // 1.分页器
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import type { ComponentSize } from 'element-plus'
 let currentPage = ref(1)
 let pageSize = ref(10)
@@ -50,14 +50,38 @@ const size = ref<ComponentSize>('default')
 const background = ref(false)
 const disabled = ref(false)
 
+const currentTableData = computed(() => {
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
+  console.log(currentPage.value, pageSize.value, start, end)
+  return filteredData.value.slice(start, end)
+})
+
+const dateRange = ref('')
+
+const filteredData = computed(() => {
+  if (!dateRange.value) {
+    return tableData
+  }
+  const [start, end] = dateRange.value.split('至').map(item => new Date(item))
+  return tableData.filter(item => {
+    const date = new Date(item.date)
+    return date >= start && date <= end
+  })
+})
+
 const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`)
+  pageSize.value = val
+  currentPage.value = 1
 }
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`)
+  currentPage.value = val
+}
+const handleDateChange = () => {
+  currentPage.value = 1
 }
 const pageClick = (val: number) => {
-  pageSize.value = val
+  currentPage.value = val
 }
 
 // 2.数据表
@@ -135,6 +159,13 @@ const tableData = [
     content: 'Los Angeles',
     person: 'XXX',
   },
+  {
+    num: 11,
+    date: '2016-05-02 18:50:21',
+    title: 'California',
+    content: 'Los Angeles',
+    person: 'XXX',
+  }
 ]
 const rowStyle = () => {
   return {
@@ -145,7 +176,6 @@ const rowStyle = () => {
 // 3.日期选择器
 
 // const size = ref<'default' | 'large' | 'small'>('default')
-const value2 = ref('')
 const shortcuts = [
   {
     text: '过去一周',
