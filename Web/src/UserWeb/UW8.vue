@@ -17,7 +17,6 @@
 }
 
 .footer {
-    position: relative;
     bottom: 6%;
     width: 100%;
     text-align: center;

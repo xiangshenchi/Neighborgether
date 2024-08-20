@@ -1,6 +1,6 @@
 <template>
     <el-container class="layout-container-demo">
-      <el-header style="border-bottom:3px solid #E2E2E2;padding: 0;">
+      <el-header style="border-bottom:3px solid #E2E2E2;padding: 0;display:flex;display:0,0,auto;">
         <div style="width:18vw;height:100%;float:left;display: flex;border-right:3px solid #E2E2E2;overflow: hidden;">
           <div style="height:100%; aspect-ratio: 1 / 1"><img src="./logo.jpg" height="100%" width=height
               alt="logo" /></div>
@@ -31,7 +31,7 @@
           </div>
         </div>
       </el-header>
-      <el-container style="width:100vw">
+      <el-container style="width:100vw;display:flex;display:1;overflow: hidden;">
         <el-aside style="width:18vw;height:100%">
           <!-- <el-scrollbar> -->
             <el-menu :default-openeds="['1', '7']" @select="handleMenuSelect">
@@ -86,7 +86,7 @@
             </el-menu>
           <!-- </el-scrollbar> -->
         </el-aside>
-        <div style="border-left:3px solid #E2E2E2;height:100%;flex:1;box-sizing: border-box;">
+        <div style="border-left:3px solid #E2E2E2;height:100%;flex:1;box-sizing: border-box;overflow: auto;">
           <router-view />
         </div>
       </el-container>
@@ -154,16 +154,12 @@ import router from '@/router/router';
   
   <style scoped>
   .layout-container-demo {
-    position: relative;
-    width: 100vw;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-    overflow: hidden;
-    max-width: 100%;
-    max-height: 100%;
   }
   
   .layout-container-demo .el-header {
-    position: relative;
     background-color: #fff;
     height: 10vh;
     color: var(--el-text-color-primary);
