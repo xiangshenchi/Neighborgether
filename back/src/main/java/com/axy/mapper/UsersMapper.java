@@ -21,6 +21,7 @@ public interface UsersMapper extends BaseMapper<Users> {
     String findbyphonenumber(String phonenumber);
     Boolean existsphone( String phonenumber);
     String findrole(String phonenumber);
+    Users findbyphone(String phonenumber);
 }
 
 
