@@ -15,6 +15,11 @@
                 <span><img src="" alt="用户图片"></span>
             </el-card>
         </div>
+        <div style="margin-top: 100px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
+            <el-card>
+                <span><img src="" alt="用户图片"></span>
+            </el-card>
+        </div>
     </div>
 </template>
 <script>
