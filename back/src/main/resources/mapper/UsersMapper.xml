@@ -32,4 +32,7 @@
     <select id="existsphone" resultType="java.lang.Boolean">
         select * from users where phonenumber = #{phonenumber}
     </select>
+    <select id="findrole" resultType="java.lang.String">
+        select role from users where phonenumber = #{phonenumber}
+    </select>
 </mapper>

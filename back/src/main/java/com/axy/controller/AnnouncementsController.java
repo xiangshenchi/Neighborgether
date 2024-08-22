@@ -21,4 +21,16 @@ public class AnnouncementsController {
         return announcementsService.list();
     }
 
+    @PostMapping("/add")
+    //添加公告
+    public boolean add(@RequestBody Announcements announcements) {
+        return announcementsService.save(announcements);
+    }
+
+
+    @DeleteMapping("/delete")
+    //删除公告
+    public boolean delete(@RequestParam("announcementid") int announcementid) {
+        return announcementsService.removeById(announcementid);
+    }
 }
