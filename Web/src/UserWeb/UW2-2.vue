@@ -1,36 +1,29 @@
 <template>
-    <div class="container">
-        <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <h2>房产信息</h2>
-            </el-card>
-        </div>
-        <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <el-descriptions class="margin-top" title="基本房产信息" :column="3" :size="size">
-                    <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
-                    <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
-                    <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
-                    <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
-                    <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
-                </el-descriptions>
-            </el-card>
-        </div>
-
-        <div style="margin-top: 70px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <el-descriptions class="margin-top" title="房产信息更新" :column="3" :size="size">
-                    <template #extra>
-                        <el-button type="primary" size="small" @click="openDialog">修改</el-button>
-                    </template>
-                    <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
-                    <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
-                    <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
-                    <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
-                    <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
-                </el-descriptions>
-            </el-card>
-        </div>
+    <div class="web-container" style="display:flex;width:100%;height:100%;flex-direction: column;flex:0,0,1">
+        <el-card style="margin: 10px;">
+            <h2>房产信息</h2>
+        </el-card>
+        <el-card style="margin: 10px;">
+            <el-descriptions class="margin-top" title="基本房产信息" :column="3" :size="size">
+                <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
+                <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
+                <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
+                <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
+                <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
+            </el-descriptions>
+        </el-card>
+        <el-card style="margin: 10px;">
+            <el-descriptions class="margin-top" title="房产信息更新" :column="3" :size="size">
+                <template #extra>
+                    <el-button type="primary" size="small" @click="openDialog">修改</el-button>
+                </template>
+                <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
+                <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
+                <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
+                <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
+                <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
+            </el-descriptions>
+        </el-card>
 
         <!-- 修改房产信息的对话框 -->
         <el-dialog title="修改房产信息" :visible.sync="dialogVisible">
