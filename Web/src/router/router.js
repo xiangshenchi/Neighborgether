@@ -23,17 +23,30 @@ import UW7 from '../UserWeb/UW7.vue';
 import UW8 from '../UserWeb/UW8.vue';
 import store from '../store'
 import welcome from '../components/welcome.vue'
+import AM from '../admin/AM.vue';
+import AW1 from '../admin/AW1.vue';
+import AW2_1 from '../admin/AW2-1.vue';
+import AW2_2 from '../admin/AW2-2.vue';
+import AW2_3 from '../admin/AW2-3.vue';
+import AW3_1 from '../admin/AW3-1.vue';
+import AW3_2 from '../admin/AW3-2.vue';
+import AW3_3 from '../admin/AW3-3.vue';
+import AW3_4 from '../admin/AW3-4.vue';
+import AW4 from '../admin/AW4.vue';
+import AW5 from '../admin/AW5.vue';
+import AW6 from '../admin/AW6.vue';
+
 
 const routes = [
   { path: '/', redirect: '/welcome' },
-  { path: '/:pathMatch(.*)*', redirect: '/welcome' },
+  { path: '/:pathWatch(.*)*', redirect: '/welcome' },
   { path: '/login', name: 'login', component: login, meta: { requiresAuth: false } },
   { path: '/register', name: 'register', component: register },
   { path: '/forgetPW', name: 'forgetPW', component: forgetPW },
   { path: '/visitor', name: 'visitor', component: visitor },
   { path: '/welcome', name: 'welcome', component: welcome },
   {
-    path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true },
+    path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true ,},
     children: [
       { path: 'UW1', name: 'UW1', component: UW1 },
       { path: 'UW2-1', name: 'UW2-1', component: UW2_1 },
@@ -51,6 +64,22 @@ const routes = [
       { path: 'UW7', name: 'UW7', component: UW7 },
       { path: 'UW8', name: 'UW8', component: UW8 }
     ]
+  },
+  {
+    path: '/AM', name: 'AM', component: AM, meta: { requiresAuth: true },
+    children: [
+      { path: 'AW1', name: 'AW1', component: AW1 },
+      { path: 'AW2-1', name: 'AW2-1', component: AW2_1 },
+      { path: 'AW2-2', name: 'AW2-2', component: AW2_2 },
+      { path: 'AW2-3', name: 'AW2-3', component: AW2_3 },
+      { path: 'AW3-1', name: 'AW3-1', component: AW3_1 },
+      { path: 'AW3-2', name: 'AW3-2', component: AW3_2 },
+      { path: 'AW3-3', name: 'AW3-3', component: AW3_3 },
+      { path: 'AW3-4', name: 'AW3-4', component: AW3_4 },
+      { path: 'AW4', name: 'AW4', component: AW4 },
+      { path: 'AW5', name: 'AW5', component: AW5 },
+      { path: 'AW6', name: 'AW6', component: AW6 }
+    ]
   }
 ]
 const router = createRouter({
@@ -61,7 +90,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters.isLoggedIn
   if (to.path === '/login' && isLoggedIn) {
-    next('/UM') // 如果已经登录，访问 /login 时重定向到 /UM
+    if (UserInfo.identity === 'Admin'){
+      next('/AM')
+    }
+    else{
+      next('/UW')
+    }
   } else if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
     next('/login') // 如果需要授权访问但用户未登录，重定向到 /login
   } else {
