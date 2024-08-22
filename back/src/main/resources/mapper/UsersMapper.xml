@@ -38,4 +38,7 @@
     <select id="listU" resultType="com.axy.pojo.Users">
         select username,phonenumber,email,role,createdat from users where phonenumber = #{phonenumber}
     </select>
+    <select id="findbyphone" resultType="com.axy.pojo.Users">
+        select * from users where phonenumber = #{phonenumber}
+    </select>
 </mapper>

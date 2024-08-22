@@ -14,4 +14,6 @@ public interface UsersService extends IService<Users> {
     List<Users> listAll();
 
     int showaccount(String phonenumber, String password);
+
+    boolean updateUser(String username, String email, String address);
 }

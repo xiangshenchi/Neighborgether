@@ -5,6 +5,7 @@ import com.axy.pojo.Users;
 import com.axy.service.UsersService;
 import com.axy.mapper.UsersMapper;
 import jakarta.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +44,15 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users>
         }
         //登录成功，返回2
         return 2;
+    }
+
+    @Override
+    public boolean updateUser(String username, String email, String address) {
+        Users user=new Users();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setAddress(address);
+        return true;
     }
 
 }
