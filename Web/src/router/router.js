@@ -46,7 +46,7 @@ const routes = [
   { path: '/visitor', name: 'visitor', component: visitor },
   { path: '/welcome', name: 'welcome', component: welcome },
   {
-    path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true ,},
+    path: '/UM', name: 'UM', component: UM, meta: { requiresAuth: true, requiredIdentity: 'Owner' },
     children: [
       { path: 'UW1', name: 'UW1', component: UW1 },
       { path: 'UW2-1', name: 'UW2-1', component: UW2_1 },
@@ -66,7 +66,7 @@ const routes = [
     ]
   },
   {
-    path: '/AM', name: 'AM', component: AM, meta: { requiresAuth: true },
+    path: '/AM', name: 'AM', component: AM, meta: { requiresAuth: true , requiredIdentity: 'Admin' },
     children: [
       { path: 'AW1', name: 'AW1', component: AW1 },
       { path: 'AW2-1', name: 'AW2-1', component: AW2_1 },
@@ -89,17 +89,22 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters.isLoggedIn
-  if (to.path === '/login' && isLoggedIn) {
-    if (UserInfo.identity === 'Admin'){
-      next('/AM')
+  const UserInfo = store.getters.userInfo
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isLoggedIn) {
+      next({ path: '/login' }); // 如果未登录，跳转到登录页面
+    } else {
+      const userIdentity = UserInfo.identity;
+      if (to.meta.requiredIdentity === 'Owner' && userIdentity === 'Admin') {
+        next({ path: '/AM' }); // Admin访问UM时跳转到AM
+      } else if (to.meta.requiredIdentity === 'Admin' && userIdentity === 'Owner') {
+        next({ path: '/UM' }); // Owner访问AM时跳转到UM
+      } else {
+        next(); // 允许访问
+      }
     }
-    else{
-      next('/UW')
-    }
-  } else if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
-    next('/login') // 如果需要授权访问但用户未登录，重定向到 /login
   } else {
-    next() // 继续导航
+    next(); // 不需要身份验证，直接访问
   }
 })
 

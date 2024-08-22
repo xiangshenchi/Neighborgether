@@ -99,7 +99,7 @@
   import { ref, onMounted, onBeforeUnmount } from 'vue'
   import { ElMessage } from 'element-plus'
   import { Menu as IconMenu, Message, Setting, ArrowDown } from '@element-plus/icons-vue'
-import router from '@/router/router';
+  import router from '@/router/router';
   const selectedMenu = ref('')
   const newDate = ref(new Date())
   // 时间格式化函数

@@ -124,8 +124,9 @@ export default defineComponent({
         }).then(res => {
           if (res.data.status === 2) {
             console.log('登录成功！');
-            this.$store.commit('login', {"phonenumber": this.account});
-            window.location.href = "/UM";
+            this.$store.commit('login', {"phonenumber": this.account,"identity":res.data.role});
+            if(res.data.role === "Admin")window.location.href = "/AM";
+            else window.location.href = "/UM";
           }
           else if (res.data.status === 1) {
             errorAlert('账号或密码错误！');
