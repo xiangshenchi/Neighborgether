@@ -15,6 +15,7 @@ import java.util.List;
 @Mapper
 public interface UsersMapper extends BaseMapper<Users> {
     List<Users> listAll();
+    List<Users> listU(String phonenumber);
 
 
     String findbyphonenumber(String phonenumber);

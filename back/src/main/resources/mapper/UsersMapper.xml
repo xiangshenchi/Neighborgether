@@ -35,4 +35,7 @@
     <select id="findrole" resultType="java.lang.String">
         select role from users where phonenumber = #{phonenumber}
     </select>
+    <select id="listU" resultType="com.axy.pojo.Users">
+        select username,phonenumber,email,role,createdat from users where phonenumber = #{phonenumber}
+    </select>
 </mapper>
