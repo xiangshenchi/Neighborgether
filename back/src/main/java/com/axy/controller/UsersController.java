@@ -39,6 +39,7 @@ public class UsersController {
     public Map<String,Object> showaccount(@RequestParam String phonenumber, @RequestParam String password){
         Map<String,Object> map=new HashMap<>();
         map.put("status",userService.showaccount(phonenumber,password));
+        map.put("role",usersMapper.findrole(phonenumber));
         return map;
     }
     //注册
