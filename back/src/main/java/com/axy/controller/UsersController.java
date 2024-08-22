@@ -34,6 +34,12 @@ public class UsersController {
     public List<Users> list() {//        return userService.list();
         return userService.listAll();
     }
+    //展示单个用户信息
+    @GetMapping("/listU")
+    public List<Users> listU(@RequestParam String phonenumber){
+        return usersMapper.listU(phonenumber);
+    }
+
     //登录
     @GetMapping("/showaccount")
     public Map<String,Object> showaccount(@RequestParam String phonenumber, @RequestParam String password){
@@ -85,6 +91,11 @@ public class UsersController {
         return result;
     }
 
+    // 修改信息
+    @PostMapping("/update")
+    public boolean update(@RequestBody Users users) {
+        return userService.updateById(users);
+    }
 
     //模糊查询
     @PostMapping("/listP")
