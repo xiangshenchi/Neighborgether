@@ -93,8 +93,30 @@ public class UsersController {
 
     // 修改信息
     @PostMapping("/update")
-    public boolean update(@RequestBody Users users) {
-        return userService.updateById(users);
+    public Map<String, Object> update(@RequestBody Users users) {
+        Map<String, Object> response = new HashMap<>();
+        String phonenumber = users.getPhonenumber();
+        String username = users.getUsername();
+        String email = users.getEmail();
+        String address = users.getAddress();
+        // 调用UserService的方法来更新用户信息
+        //boolean isUpdated = userService.updateUser(username, email, address);
+        Users user=usersMapper.findbyphone(phonenumber);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setAddress(address);
+        boolean isUpdated = userService.updateById(user);
+
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "用户信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "用户信息修改失败");
+        }
+
+        // 返回更新结果
+        return response;
     }
 
     //模糊查询

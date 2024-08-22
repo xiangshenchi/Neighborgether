@@ -1,11 +1,9 @@
 <template>
-    <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-        <el-card>
+    <div class="web-container" style="display:flex;width:100%;height:100%;flex-direction: column;flex:0,0,1">
+        <el-card style="margin: 10px;">
             <h2>我要投诉</h2>
         </el-card>
-    </div>
-    <div style="margin-top: 20px;margin-left: 10px;margin-right: 10px; width: 100%;height: 200px;">
-        <el-card>
+        <el-card style="margin: 10px;">
             <div style=" margin-top: 10px;">
                 <div class="block">
                     <el-date-picker v-model="date" type="date" placeholder="选择日期">

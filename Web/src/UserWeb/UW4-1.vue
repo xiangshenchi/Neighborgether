@@ -1,22 +1,20 @@
 <template>
-    <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-        <el-card>
+    <div class="web-container" style="display:flex;width:100%;height:100%;flex-direction: column;flex:0,0,1">
+        <el-card style="margin: 10px;">
             <h2>我要报修</h2>
         </el-card>
-    </div>
-    <div style="margin-top: 20px;margin-left: 10px;margin-right: 10px; width: 100%;height: 200px;">
-        <el-card>
+        <el-card style="margin: 10px;">
             <div style=" margin-top: 10px;">
                 <div class="block">
-                    <el-date-picker v-model="date" type="date" placeholder="选择日期">
+                    <el-date-picker v-model="date" type="date" placeholder="选择报修日期">
                     </el-date-picker>
                 </div>
             </div>
             <div style="margin-top: 10px;">
-                <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="textarea">
+                <el-input type="textarea" :rows="4" placeholder="请输入报修内容，包括地点、设备名称等信息。" v-model="textarea">
                 </el-input>
             </div>
-            <div style="margin: 10px;">
+            <div style="margin-top: 10px;">
                 <el-button v-slot="extra" type="primary" size="small" @click="submit()">提 交</el-button>
             </div>
         </el-card>
