@@ -1,15 +1,23 @@
 package com.axy.controller;
 
-import com.axy.mapper.UsersMapper;
-import com.axy.pojo.Users;
-import com.axy.service.UsersService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axy.mapper.UsersMapper;
+import com.axy.pojo.Users;
+import com.axy.service.UsersService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+import jakarta.annotation.Resource;
 //import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 //import com.axy.pojo.Users; // 假设Users类的包路径
 
@@ -28,7 +36,7 @@ public class UsersController {
     @Resource
 //    @Autowired
     private UsersService userService;
-    private UsersMapper usersMapper;
+    private final UsersMapper usersMapper;
     //展示所有用户信息
     @GetMapping("/list")
     public List<Users> list() {//        return userService.list();
