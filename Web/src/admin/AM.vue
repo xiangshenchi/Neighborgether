@@ -40,7 +40,12 @@
                 <ChatLineSquare />
               </el-icon>控制台</span>
           </el-menu-item>
-          <el-sub-menu index="2">
+          <el-menu-item index="/AM/AW2-1">
+            <span slot="title"><el-icon>
+                <User />
+              </el-icon>用户管理</span>
+          </el-menu-item>
+          <!-- <el-sub-menu index="2">
             <template #title>
               <el-icon>
                 <User />
@@ -48,7 +53,7 @@
             </template>
             <el-menu-item index="/AM/AW2-1">业主</el-menu-item>
             <el-menu-item index="/AM/AW2-2">管理员</el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
           <el-sub-menu index="3">
             <template #title>
               <el-icon>
@@ -59,8 +64,8 @@
             <el-menu-item index="/AM/AW3-2">车辆管理</el-menu-item>
             <el-menu-item index="/AM/AW3-3">房产管理</el-menu-item>
             <el-menu-item index="/AM/AW3-4">楼栋管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-4">访客管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-5">工作分配</el-menu-item>
+            <el-menu-item index="/AM/AW3-5">访客管理</el-menu-item>
+            <el-menu-item index="/AM/AW3-6">工作分配</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="4">
             <template #title>
