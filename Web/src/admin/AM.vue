@@ -90,7 +90,7 @@
             </el-icon>
             <span slot="title">报修管理</span>
           </el-menu-item>
-          <el-menu-item index="/AM/AW5">
+          <el-menu-item index="/AM/AW6">
             <el-icon>
               <More />
             </el-icon>
