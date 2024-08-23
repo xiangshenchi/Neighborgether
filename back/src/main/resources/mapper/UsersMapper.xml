@@ -41,4 +41,7 @@
     <select id="findbyphone" resultType="com.axy.pojo.Users">
         select * from users where phonenumber = #{phonenumber}
     </select>
+    <select id="findid" resultType="java.lang.Integer">
+        select userid from users where phonenumber = #{phonenumber}
+    </select>
 </mapper>
