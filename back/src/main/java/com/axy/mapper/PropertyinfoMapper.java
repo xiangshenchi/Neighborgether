@@ -1,11 +1,11 @@
 package com.axy.mapper;
 
-import com.axy.pojo.Propertyinfo;
-import com.axy.pojo.Users;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.axy.pojo.Propertyinfo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
 * @author DELL

@@ -35,7 +35,7 @@
       <el-aside style="width:18vw;height:100%">
         <!-- <el-scrollbar> -->
         <el-menu :default-openeds="['1', '7']" @select="handleMenuSelect">
-          <el-menu-item index="/AM/AM1">
+          <el-menu-item index="/AM/AW1">
             <span slot="title"><el-icon>
                 <ChatLineSquare />
               </el-icon>控制台</span>
