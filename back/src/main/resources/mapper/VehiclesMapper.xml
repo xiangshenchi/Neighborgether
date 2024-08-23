@@ -16,4 +16,8 @@
         VehicleID,UserID,LicensePlate,
         VehicleType,RegistrationDate
     </sql>
+    <select id="listC" resultType="com.axy.pojo.Vehicles">
+        select * from Vehicles where userid = #{userid}
+    </select>
+
 </mapper>

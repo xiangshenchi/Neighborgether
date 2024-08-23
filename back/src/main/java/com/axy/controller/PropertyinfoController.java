@@ -1,5 +1,6 @@
 package com.axy.controller;
 
+import com.axy.common.UpdateRequest;
 import com.axy.mapper.PropertyinfoMapper;
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Propertyinfo;
@@ -45,24 +46,26 @@ public class PropertyinfoController {
     }
     //修改房产信息
     @PostMapping("/update")
-    public Map<String, Object> update(@RequestBody String phonenumber, @RequestBody Propertyinfo propertyinfo) {
+    public Map<String, Object> update(  @RequestBody UpdateRequest request) {
         Map<String, Object> response = new HashMap<>();
+        String phonenumber = request.getPhonenumber();
+        Propertyinfo propertyinfo = request.getPropertyinfo();
         String roomnumber = propertyinfo.getRoomnumber();
         String buildingnumber = propertyinfo.getBuildingnumber();
         String unitnumber = propertyinfo.getUnitnumber();
         double area = propertyinfo.getArea();
         // 调用UserService的方法来更新用户信息
         //boolean isUpdated = userService.updateUser(username, email, address);
-        System.out.println(phonenumber);
-        int id = usersMapper.findid(phonenumber);
-        System.out.println(id);
+//        System.out.println(phonenumber);
+//        int id = usersMapper.findid(phonenumber);
+//        System.out.println(id);
         Propertyinfo propertyinfo1 = propertyinfoMapper.findbyid(usersMapper.findid(phonenumber));
 
-        System.out.println(propertyinfo1);
-//        propertyinfo1.setRoomnumber(roomnumber);
-//        propertyinfo1.setBuildingnumber(buildingnumber);
-//        propertyinfo1.setUnitnumber(unitnumber);
-//        propertyinfo1.setArea(area);
+//        System.out.println(propertyinfo1);
+        propertyinfo1.setRoomnumber(roomnumber);
+        propertyinfo1.setBuildingnumber(buildingnumber);
+        propertyinfo1.setUnitnumber(unitnumber);
+        propertyinfo1.setArea(area);
         boolean isUpdated = propertyinfoService.updateById(propertyinfo1);
         if (isUpdated) {
             response.put("status", "1");
@@ -75,4 +78,6 @@ public class PropertyinfoController {
         // 返回更新结果
         return response;
     }
+
+
 }
