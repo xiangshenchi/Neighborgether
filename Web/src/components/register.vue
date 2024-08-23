@@ -14,13 +14,13 @@
         <div id="form-container1">
           <el-form :model="form" ref="form" label-width="0">
             <el-form-item prop="account" :rules="[{ required: true, message: '请输入手机号', trigger: 'blur' }]">
-              <el-input v-model="form.account" placeholder="请输入手机号" />
+              <el-input class="srk" v-model="form.account" placeholder="请输入手机号" />
             </el-form-item>
             <el-form-item prop="password" :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]">
-              <el-input v-model="form.password" placeholder="请输入密码" show-password />
+              <el-input class="srk" v-model="form.password" placeholder="请输入密码" show-password />
             </el-form-item>
             <el-form-item prop="confirmPassword" :rules="[{ required: true, message: '请再次输入密码', trigger: 'blur' }]">
-              <el-input v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
+              <el-input class="srk" v-model="form.confirmPassword" placeholder="请再次输入密码" show-password />
             </el-form-item>
             <div class="button-container">
               <el-button type="primary" color="#1EB71E" @click="onSubmit" size="30%">注册</el-button>

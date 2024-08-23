@@ -5,86 +5,85 @@
         </el-card>
         <el-card style="margin: 10px;">
             <el-descriptions class="margin-top" title="基本房产信息" :column="3" :size="size">
-                <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
-                <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
-                <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
-                <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
-                <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
+                <el-descriptions-item label="单元">{{ form.unit }}</el-descriptions-item>
+                <el-descriptions-item label="楼栋">{{ form.building }}</el-descriptions-item>
+                <el-descriptions-item label="房间号">{{ form.room }}</el-descriptions-item>
+                <el-descriptions-item label="面积">{{ form.area }} m²</el-descriptions-item>
             </el-descriptions>
         </el-card>
         <el-card style="margin: 10px;">
-            <el-descriptions class="margin-top" title="房产信息更新" :column="3" :size="size">
-                <template #extra>
-                    <el-button type="primary" size="small" @click="openDialog">修改</el-button>
-                </template>
-                <el-descriptions-item label="业主">{{ formData.owner }}</el-descriptions-item>
-                <el-descriptions-item label="单元">{{ formData.unit }}</el-descriptions-item>
-                <el-descriptions-item label="楼栋">{{ formData.building }}</el-descriptions-item>
-                <el-descriptions-item label="房间号">{{ formData.room }}</el-descriptions-item>
-                <el-descriptions-item label="面积">{{ formData.area }} m²</el-descriptions-item>
-            </el-descriptions>
+            <h4 style="margin: 5px;">修改信息</h4>
+            <el-form-item label="单元" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.unit" />
+            </el-form-item>
+            <el-form-item label="楼栋" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.building" />
+            </el-form-item>
+            <el-form-item label="楼房间号" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.room" />
+            </el-form-item>
+            <el-form-item label="面积" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.area" />
+            </el-form-item>
+            <el-button type="primary" @click="confirm()" color="#1EB71E">提交</el-button>
         </el-card>
 
-        <!-- 修改房产信息的对话框 -->
-        <el-dialog title="修改房产信息" :visible.sync="dialogVisible">
-            <el-form :model="formData">
-                <el-form-item label="业主">
-                    <el-input v-model="formData.owner"></el-input>
-                </el-form-item>
-                <el-form-item label="单元">
-                    <el-input v-model="formData.unit"></el-input>
-                </el-form-item>
-                <el-form-item label="楼栋">
-                    <el-input v-model="formData.building"></el-input>
-                </el-form-item>
-                <el-form-item label="房间号">
-                    <el-input v-model="formData.room"></el-input>
-                </el-form-item>
-                <el-form-item label="面积">
-                    <el-input v-model="formData.area"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="submitUpdate">保存</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     data() {
         return {
             size: '',
-            dialogVisible: false, // 控制对话框的显示和隐藏
-            formData: {
-                owner: 'kooriookami',   // 业主
-                unit: '18100000000',    // 单元
-                building: 'xxx@qq.com',  // 楼栋
-                room: 'admin',          // 房间号
-                area: 74                // 面积
+            dialogVisible: false,
+            form: {
+                unit: '',
+                building: '',
+                room: '',
+                area: ''
+            },
+            formSub: {
+                unit: '',
+                building: '',
+                room: '',
+                area: ''
             }
         };
     },
     methods: {
-        openDialog() {
-            // 打开修改对话框
-            this.dialogVisible = true;
+        mounted() {
+            this.$axios.get('/users/listU', {
+                params: {
+                    phonenumber: this.$store.getters.userInfo.phonenumber
+                }
+            }).then(res => {
+                this.form = res.data[0];
+                this.formSub = this.form;
+            });
         },
-        submitUpdate() {
-            // 1. 提交修改后的房产信息到后端
-            axios.post('http://localhost:8090/api/updateProperty', this.formData)
-                .then(response => {
-                    this.$message.success('房产信息更新成功');
-                    this.dialogVisible = false;  // 关闭对话框
-                })
-                .catch(error => {
-                    this.$message.error('更新失败，请稍后重试');
-                    console.error(error);
+        methods: {
+            confirm() {
+                this.$confirm('确认修改信息吗？').then(() => {
+                    this.onSubmit();
+                }).catch(() => {
+                    this.$message.info('已取消');
                 });
+            },
+            onSubmit() {
+                this.$axios.post('/propertyinfo/update', {
+                    phonenumber: this.formSub.phonenumber,
+                    unit: this.formSub.unit,
+                    building: this.formSub.building,
+                    room: this.formSub.room,
+                    area: this.formSub.area
+                }).then(res => {
+                    this.$message.success('修改成功');
+                    javascript: location.reload(true);
+                }).catch(err => {
+                    this.$message.error('修改失败');
+                });
+            }
         }
     }
 };

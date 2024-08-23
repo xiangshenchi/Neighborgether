@@ -7,47 +7,27 @@
         <!-- 基本车辆信息 -->
         <el-card style="margin: 10px;">
             <el-descriptions class="margin-top" title="基本车辆信息" :column="3" :size="size">
-                <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
-                <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
-                <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
-                <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
+                <el-descriptions-item label="车主">{{ form.owner }}</el-descriptions-item>
+                <el-descriptions-item label="车牌号">{{ form.plateNumber }}</el-descriptions-item>
+                <el-descriptions-item label="车辆类型">{{ form.vehicleType }}</el-descriptions-item>
+                <el-descriptions-item label="登记时间">{{ form.registrationDate }}</el-descriptions-item>
             </el-descriptions>
         </el-card>
 
         <!-- 账号信息更新 -->
         <el-card style="margin: 10px;">
-            <el-descriptions class="margin-top" title="车辆信息更新" :column="3" :size="size">
-                <template #extra>
-                    <el-button type="primary" size="small" @click="openDialog">修改</el-button>
-                </template>
-                <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
-                <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
-                <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
-                <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
-            </el-descriptions>
+            <h4 style="margin: 5px;">修改信息</h4>
+            <el-form-item label="车主" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.owner" />
+            </el-form-item>
+            <el-form-item label="车牌号" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.building" />
+            </el-form-item>
+            <el-form-item label="车辆类型" :label-position="itemLabelPosition">
+                <el-input v-model="formSub.vehicleType" />
+            </el-form-item>
+            <el-button type="primary" @click="confirm()" color="#1EB71E">提交</el-button>
         </el-card>
-
-        <!-- 修改车辆信息的对话框 -->
-        <el-dialog title="修改车辆信息" :visible.sync="dialogVisible">
-            <el-form :model="formData">
-                <el-form-item label="车主">
-                    <el-input v-model="formData.owner"></el-input>
-                </el-form-item>
-                <el-form-item label="车牌号">
-                    <el-input v-model="formData.plateNumber"></el-input>
-                </el-form-item>
-                <el-form-item label="车辆类型">
-                    <el-input v-model="formData.vehicleType"></el-input>
-                </el-form-item>
-                <el-form-item label="登记时间">
-                    <el-date-picker v-model="formData.registrationDate" type="date" placeholder="选择日期"></el-date-picker>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="submitUpdate">保存</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
@@ -58,31 +38,40 @@ export default {
     data() {
         return {
             size: '',
-            dialogVisible: false,  // 控制对话框的显示和隐藏
-            formData: {
-                owner: 'kooriookami',           // 车主
-                plateNumber: '18100000000',     // 车牌号
-                vehicleType: 'SUV',             // 车辆类型
-                registrationDate: '2024-08-22'  // 登记时间
-            }
+            form: {
+                owner: '', 
+                plateNumber: '', 
+                vehicleType: '', 
+                registrationDate: ''
+            },
+            formSub: {
+                owner: '', 
+                plateNumber: '', 
+                vehicleType: '', 
+            },
         };
     },
     methods: {
-        openDialog() {
-            // 打开修改对话框
-            this.dialogVisible = true;
+        confirm() {
+            this.$confirm('确认修改信息吗？').then(() => {
+                this.onSubmit();
+            }).catch(() => {
+                this.$message.info('已取消');
+            });
         },
-        submitUpdate() {
-            // 提交修改后的车辆信息到后端
-            axios.post('http://localhost:8090/api/updateVehicle', this.formData)
-                .then(response => {
-                    this.$message.success('车辆信息更新成功');
-                    this.dialogVisible = false;  // 关闭对话框
-                })
-                .catch(error => {
-                    this.$message.error('更新失败，请稍后重试');
-                    console.error(error);
-                });
+        onSubmit() {
+            this.$axios.post('/vehicle/update', {
+                owner: this.formSub.owner,
+                plateNumber: this.formSub.plateNumber,
+                vehicleType: this.formSub.vehicleType,
+            }).then(res => {
+                this.$message.success('修改成功,将于1s后刷新页面');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }).catch(err => {
+                this.$message.error('修改失败');
+            });
         }
     }
 };
