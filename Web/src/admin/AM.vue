@@ -63,7 +63,7 @@
             <el-menu-item index="/AM/AW3-1">公告管理</el-menu-item>
             <el-menu-item index="/AM/AW3-2">车辆管理</el-menu-item>
             <el-menu-item index="/AM/AW3-3">房产管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-4">楼栋管理</el-menu-item>
+            <!-- <el-menu-item index="/AM/AW3-4">楼栋管理</el-menu-item> -->
             <el-menu-item index="/AM/AW3-5">访客管理</el-menu-item>
             <!-- <el-menu-item index="/AM/AW3-6">工作分配</el-menu-item> -->
           </el-sub-menu>
