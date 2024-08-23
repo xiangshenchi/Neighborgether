@@ -1,37 +1,31 @@
 <template>
-    <div class="container">
-        <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <h2>账号管理</h2>
-            </el-card>
-        </div>
+    <div class="web-container" style="display:flex;width:100%;height:100%;flex-direction: column;flex:0,0,1">
+        <el-card style="margin: 10px;">
+            <h2>账号管理</h2>
+        </el-card>
 
         <!-- 基本车辆信息 -->
-        <div style="margin-top: 10px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <el-descriptions class="margin-top" title="基本车辆信息" :column="3" :size="size">
-                    <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
-                    <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
-                    <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
-                </el-descriptions>
-            </el-card>
-        </div>
+        <el-card style="margin: 10px;">
+            <el-descriptions class="margin-top" title="基本车辆信息" :column="3" :size="size">
+                <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
+                <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
+                <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
+                <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
+            </el-descriptions>
+        </el-card>
 
         <!-- 账号信息更新 -->
-        <div style="margin-top: 70px;margin-left: 10px;margin-right: 10px; width: 100%;height: 80px;">
-            <el-card>
-                <el-descriptions class="margin-top" title="账号信息更新" :column="3" :size="size">
-                    <template #extra>
-                        <el-button type="primary" size="small" @click="openDialog">修改</el-button>
-                    </template>
-                    <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
-                    <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
-                    <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
-                </el-descriptions>
-            </el-card>
-        </div>
+        <el-card style="margin: 10px;">
+            <el-descriptions class="margin-top" title="车辆信息更新" :column="3" :size="size">
+                <template #extra>
+                    <el-button type="primary" size="small" @click="openDialog">修改</el-button>
+                </template>
+                <el-descriptions-item label="车主">{{ formData.owner }}</el-descriptions-item>
+                <el-descriptions-item label="车牌号">{{ formData.plateNumber }}</el-descriptions-item>
+                <el-descriptions-item label="车辆类型">{{ formData.vehicleType }}</el-descriptions-item>
+                <el-descriptions-item label="登记时间">{{ formData.registrationDate }}</el-descriptions-item>
+            </el-descriptions>
+        </el-card>
 
         <!-- 修改车辆信息的对话框 -->
         <el-dialog title="修改车辆信息" :visible.sync="dialogVisible">
