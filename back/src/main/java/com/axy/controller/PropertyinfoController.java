@@ -1,18 +1,26 @@
 package com.axy.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.axy.common.UpdateRequest;
 import com.axy.mapper.PropertyinfoMapper;
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Propertyinfo;
 import com.axy.pojo.Users;
 import com.axy.service.PropertyinfoService;
-import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import jakarta.annotation.Resource;
 
 @RestController
 @CrossOrigin
@@ -20,15 +28,12 @@ import java.util.Map;
 public class PropertyinfoController {
     @Resource
     private PropertyinfoService propertyinfoService;
-    private PropertyinfoMapper propertyinfoMapper;
-    private UsersMapper usersMapper;
-    @Autowired
-     private Users userss;
+    private final PropertyinfoMapper propertyinfoMapper;
+    private final UsersMapper usersMapper;
     @Autowired
     public PropertyinfoController(PropertyinfoMapper propertyinfoMapper, UsersMapper usersMapper, Users userss) {
         this.propertyinfoMapper = propertyinfoMapper;
         this.usersMapper = usersMapper;
-        this.userss = userss;
     }
 
     //展示所有房产信息
