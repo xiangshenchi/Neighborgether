@@ -42,7 +42,12 @@ public class PropertyinfoController {
     public List<Propertyinfo> listU(@RequestParam String phonenumber){
        int id=usersMapper.findid(phonenumber);
         System.out.println(id);
-        return propertyinfoMapper.listP(id);
+        List<Propertyinfo> propertyList = propertyinfoMapper.listP(id);
+        if (propertyList == null || propertyList.isEmpty()) {
+            return null;
+        } else {
+            return propertyinfoMapper.listP(id);
+        }
     }
     //修改房产信息
     @PostMapping("/update")
@@ -54,14 +59,8 @@ public class PropertyinfoController {
         String buildingnumber = propertyinfo.getBuildingnumber();
         String unitnumber = propertyinfo.getUnitnumber();
         double area = propertyinfo.getArea();
-        // 调用UserService的方法来更新用户信息
-        //boolean isUpdated = userService.updateUser(username, email, address);
-//        System.out.println(phonenumber);
-//        int id = usersMapper.findid(phonenumber);
-//        System.out.println(id);
         Propertyinfo propertyinfo1 = propertyinfoMapper.findbyid(usersMapper.findid(phonenumber));
 
-//        System.out.println(propertyinfo1);
         propertyinfo1.setRoomnumber(roomnumber);
         propertyinfo1.setBuildingnumber(buildingnumber);
         propertyinfo1.setUnitnumber(unitnumber);
@@ -74,8 +73,6 @@ public class PropertyinfoController {
             response.put("status", "0");
             response.put("message", "房产信息修改失败");
         }
-
-        // 返回更新结果
         return response;
     }
 
