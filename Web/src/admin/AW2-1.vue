@@ -7,21 +7,30 @@
         <div style="width: 12%; margin-left: 20px; display: inline-block;">
             <el-select v-model="selectedRole" placeholder="选择用户类型" size="mini" clearable>
                 <el-option label="所有用户" value=""></el-option>
-                <el-option label="Owner" value="Owner"></el-option>
-                <el-option label="Staff" value="Staff"></el-option>
-                <el-option label="Admin" value="Admin"></el-option>
+                <el-option label="业主" value="Owner"></el-option>
+                <el-option label="工作人员" value="Staff"></el-option>
+                <el-option label="管理员" value="Admin"></el-option>
             </el-select>
         </div>
 
         <!-- 用户表格 -->
         <el-table :data="filteredData" style="width: 100%">
             <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
-            <el-table-column prop="username" label="用户姓名" width="100px"></el-table-column>
-            <el-table-column prop="password" label="用户密码"></el-table-column>
-            <el-table-column prop="phonenumber" label="用户电话"></el-table-column>
-            <el-table-column prop="email" label="用户邮箱"></el-table-column>
-            <el-table-column prop="address" label="用户住址"></el-table-column>
-            <el-table-column prop="role" label="用户类别"></el-table-column>
+            <el-table-column prop="username" label="用户名" width="100px"></el-table-column>
+            <el-table-column prop="password" label="密码"></el-table-column>
+            <el-table-column prop="phonenumber" label="电话"></el-table-column>
+            <el-table-column prop="email" label="邮箱"></el-table-column>
+            <el-table-column prop="address" label="住址"></el-table-column>
+
+            <!-- 不同用户类别背景颜色不同，style块中定义了颜色 -->
+            <el-table-column prop="role" label="用户类别">
+                <!-- 目前先注释，用示例数据，后期用后端数据 -->
+                <!-- <template #default="scope">
+                    <span :class="getRoleClass(scope.row.role)">
+                        {{ scope.row.role }}
+                    </span>
+                </template> -->
+            </el-table-column>
             <el-table-column prop="createdat" label="创建时间"></el-table-column>
 
             <el-table-column label="操作" align="right">
@@ -174,5 +183,23 @@ export default {
 .search {
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+.role-admin {
+    background-color: #ffcccc;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.role-staff {
+    background-color: #ccffcc;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.role-owner {
+    background-color: #ccccff;
+    padding: 3px 5px;
+    border-radius: 3px;
 }
 </style>

@@ -1,18 +1,24 @@
 package com.axy.controller;
 
-import com.axy.common.UpdateRequest;
-import com.axy.common.VupdateRequest;
-import com.axy.mapper.UsersMapper;
-import com.axy.mapper.VehiclesMapper;
-import com.axy.pojo.Propertyinfo;
-import com.axy.pojo.Vehicles;
-import com.axy.service.VehiclesService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axy.common.VupdateRequest;
+import com.axy.mapper.UsersMapper;
+import com.axy.mapper.VehiclesMapper;
+import com.axy.pojo.Vehicles;
+import com.axy.service.VehiclesService;
+
+import jakarta.annotation.Resource;
 
 @RestController
 @CrossOrigin
@@ -21,8 +27,8 @@ import java.util.Map;
 public class VehiclesController {
     @Resource
     private VehiclesService vehiclesService;
-    private VehiclesMapper vehiclesMapper;
-    private UsersMapper usersMapper;
+    private final VehiclesMapper vehiclesMapper;
+    private final UsersMapper usersMapper;
 
     public VehiclesController(VehiclesMapper vehiclesMapper, UsersMapper usersMapper) {
         this.vehiclesMapper = vehiclesMapper;
