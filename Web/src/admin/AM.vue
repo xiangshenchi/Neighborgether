@@ -67,7 +67,14 @@
             <el-menu-item index="/AM/AW3-5">访客管理</el-menu-item>
             <!-- <el-menu-item index="/AM/AW3-6">工作分配</el-menu-item> -->
           </el-sub-menu>
-          <el-sub-menu index="4">
+
+          <el-menu-item index="/AM/AW4">
+            <span slot="title"><el-icon>
+                <Clock />
+              </el-icon>缴费管理</span>
+          </el-menu-item>
+
+          <!-- <el-sub-menu index="4">
             <template #title>
               <el-icon>
                 <Clock />
@@ -75,7 +82,8 @@
             </template>
             <el-menu-item index="/AM/AW4-1">水费</el-menu-item>
             <el-menu-item index="/AM/AW4-2">物业费</el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
+
           <el-menu-item index="/AM/AW5">
             <el-icon>
               <Service />
