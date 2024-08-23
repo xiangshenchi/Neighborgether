@@ -26,7 +26,7 @@
             <el-form-item label="用户名" :label-position="itemLabelPosition">
                 <el-input v-model="formSub.username" />
             </el-form-item>
-            <el-button type="primary" @click="onSubmit" color="#1EB71E">提交</el-button>
+            <el-button type="primary" @click="confirm()" color="#1EB71E">提交</el-button>
         </el-card>
     </div>
 </template>
@@ -59,24 +59,30 @@ export default {
             }
         }).then(res => {
             this.form = res.data[0];
-            console.log(this.form);
-            console.log(res.data[0]);
-            console.log(this.form.address);
+            this.formSub.address = this.form.address;
+            this.formSub.username = this.form.username;
+            this.formSub.email = this.form.email;
         });
-        this.formSub.address = this.form.address;
-        this.formSub.username = this.form.username;
-        this.formSub.email = this.form.email;
     },
     methods: {
+        confirm() {
+            this.$confirm('确认修改信息吗？').then(() => {
+                this.onSubmit();
+            }).catch(() => {
+                this.$message.info('已取消');
+            });
+        },
         onSubmit() {
-            this.$axios.post('/users/update',  {
+            this.$axios.post('/users/update', {
                 phonenumber: this.formSub.phonenumber,
                 address: this.formSub.address,
                 email: this.formSub.email,
                 username: this.formSub.username,
-            } ).then(res => {
-                this.$message.success('修改成功');
-                javascript:location.reload(true);
+            }).then(res => {
+                this.$message.success('修改成功,将于1s后刷新页面');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             }).catch(err => {
                 this.$message.error('修改失败');
             });

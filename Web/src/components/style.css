@@ -152,15 +152,6 @@
   margin-top: 20px;
 }
 
-.el-input__wrapper {
-  border: 2px solid #AADDB2 !important;
-  border-radius: 1vw 0 !important;
-}
-
-.el-input__wrapper.is-focus {
-  border-color: inherit !important;
-  box-shadow: none !important;
-}
 
 #form-container2 {
   margin-top: 15vh;
