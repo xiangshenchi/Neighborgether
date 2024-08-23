@@ -1,8 +1,11 @@
 package com.axy.mapper;
 
 import com.axy.pojo.Propertyinfo;
+import com.axy.pojo.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author DELL
@@ -12,6 +15,9 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface PropertyinfoMapper extends BaseMapper<Propertyinfo> {
+
+    List<Propertyinfo> listP(int userid);
+    Propertyinfo findbyid(Integer id);
 
 }
 

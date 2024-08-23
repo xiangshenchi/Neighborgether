@@ -17,4 +17,13 @@
         PropertyID,UserID,RoomNumber,
         BuildingNumber,UnitNumber,Area
     </sql>
+    <select id="listP" resultType="com.axy.pojo.Propertyinfo">
+        select roomnumber,buildingnumber,unitnumber,area from propertyinfo where userid = #{userid}
+    </select>
+    <select id="findbyid" resultType="com.axy.pojo.Propertyinfo">
+        select * from propertyinfo where userid = #{userid}
+    </select>
+    <!--    <select id="findid" resultType="java.lang.Integer">-->
+<!--        select userid from users where phonenumber = #{phonenumber}-->
+<!--    </select>-->
 </mapper>

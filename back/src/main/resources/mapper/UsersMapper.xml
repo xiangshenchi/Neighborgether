@@ -36,9 +36,12 @@
         select role from users where phonenumber = #{phonenumber}
     </select>
     <select id="listU" resultType="com.axy.pojo.Users">
-        select username,phonenumber,email,role,createdat from users where phonenumber = #{phonenumber}
+        select username,phonenumber,email,address,role,createdat from users where phonenumber = #{phonenumber}
     </select>
     <select id="findbyphone" resultType="com.axy.pojo.Users">
         select * from users where phonenumber = #{phonenumber}
+    </select>
+    <select id="findid" resultType="java.lang.Integer">
+        select userid from users where phonenumber = #{phonenumber}
     </select>
 </mapper>
