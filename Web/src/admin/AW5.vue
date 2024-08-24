@@ -1,99 +1,101 @@
 <template>
-    <div>
-        <!-- 维修状态筛选 -->
-        <div style="width: 12%; margin-left: 20px; margin-top: 10px; display: inline-block;">
-            <el-select v-model="selectedRepairStatus" placeholder="选择维修状态" size="mini" clearable>
-                <el-option label="所有状态" value=""></el-option>
-                <el-option label="待处理" value="待处理"></el-option>
-                <el-option label="处理中" value="处理中"></el-option>
-                <el-option label="已完成" value="已完成"></el-option>
-            </el-select>
+    <el-card style="margin:10px">
+        <div>
+            <!-- 维修状态筛选 -->
+            <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
+                <el-select v-model="selectedRepairStatus" placeholder="选择维修状态" size="mini" clearable>
+                    <el-option label="所有状态" value=""></el-option>
+                    <el-option label="待处理" value="待处理"></el-option>
+                    <el-option label="处理中" value="处理中"></el-option>
+                    <el-option label="已完成" value="已完成"></el-option>
+                </el-select>
+            </div>
+
+            <!-- 维修管理表格 -->
+            <el-table :data="paginatedData" style="width: 100%">
+                <el-table-column prop="RepairID" label="维修ID" width="80px"></el-table-column>
+                <el-table-column prop="RepairPhone" label="联系电话" width="120px"></el-table-column>
+                <el-table-column prop="RepairContent" label="维修内容" width="150px"></el-table-column>
+                <el-table-column prop="RepairDate" label="维修日期"></el-table-column>
+                <el-table-column prop="RepairStatus" label="状态" width="100px">
+                    <template #default="scope">
+                        <span v-if="scope.row.RepairStatus === '处理中'">处理中</span>
+                        <span v-else-if="scope.row.RepairStatus === '已完成'">已完成</span>
+                        <span v-else>待处理</span>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="操作" align="right">
+                    <template #default="scope">
+                        <el-button v-if="scope.row.RepairStatus === '待处理'" size="mini" type="primary"
+                            @click="handleProcess(scope.row)">处理</el-button>
+                        <el-button v-if="scope.row.RepairStatus === '处理中'" size="mini" type="success"
+                            @click="handleComplete(scope.row)">完成</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+            <!-- 分页器 -->
+            <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+                @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
+
+            <!-- 处理维修对话框 -->
+            <el-dialog title="确认处理" :visible.sync="processDialogVisible">
+                <p>确认处理用户 {{ selectedRepair.RepairPhone }} 的维修请求: {{ selectedRepair.RepairContent }}?</p>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="processDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="confirmProcess">确认处理</el-button>
+                </span>
+            </el-dialog>
+
+            <!-- 完成维修对话框 -->
+            <el-dialog title="确认完成" :visible.sync="completeDialogVisible">
+                <p>确认已完成用户 {{ selectedRepair.RepairPhone }} 的维修请求: {{ selectedRepair.RepairContent }}?</p>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="completeDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="confirmComplete">确认完成</el-button>
+                </span>
+            </el-dialog>
+
+            <!-- 编辑维修信息对话框 -->
+            <el-dialog title="编辑维修信息" :visible.sync="editDialogVisible">
+                <el-form :model="editForm">
+                    <el-form-item label="维修内容">
+                        <el-input v-model="editForm.RepairContent"></el-input>
+                    </el-form-item>
+                    <el-form-item label="联系电话">
+                        <el-input v-model="editForm.RepairPhone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="维修日期">
+                        <el-date-picker v-model="editForm.RepairDate" type="date"></el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="状态">
+                        <el-select v-model="editForm.RepairStatus">
+                            <el-option label="待处理" value="待处理"></el-option>
+                            <el-option label="处理中" value="处理中"></el-option>
+                            <el-option label="已完成" value="已完成"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="editDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="saveEdit">保存</el-button>
+                </span>
+            </el-dialog>
+
+            <!-- 删除确认对话框 -->
+            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+                <span>确定要删除该条维修记录吗？</span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="deleteDialogVisible = false">取消</el-button>
+                    <el-button type="danger" @click="confirmDelete">删除</el-button>
+                </span>
+            </el-dialog>
         </div>
-
-        <!-- 维修管理表格 -->
-        <el-table :data="paginatedData" style="width: 100%">
-            <el-table-column prop="RepairID" label="维修ID" width="80px"></el-table-column>
-            <el-table-column prop="RepairPhone" label="联系电话" width="120px"></el-table-column>
-            <el-table-column prop="RepairContent" label="维修内容" width="150px"></el-table-column>
-            <el-table-column prop="RepairDate" label="维修日期"></el-table-column>
-            <el-table-column prop="RepairStatus" label="状态" width="100px">
-                <template #default="scope">
-                    <span v-if="scope.row.RepairStatus === '处理中'">处理中</span>
-                    <span v-else-if="scope.row.RepairStatus === '已完成'">已完成</span>
-                    <span v-else>待处理</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column label="操作" align="right">
-                <template #default="scope">
-                    <el-button v-if="scope.row.RepairStatus === '待处理'" size="mini" type="primary"
-                        @click="handleProcess(scope.row)">处理</el-button>
-                    <el-button v-if="scope.row.RepairStatus === '处理中'" size="mini" type="success"
-                        @click="handleComplete(scope.row)">完成</el-button>
-                    <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
-        <!-- 分页器 -->
-        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
-            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
-            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
-
-        <!-- 处理维修对话框 -->
-        <el-dialog title="确认处理" :visible.sync="processDialogVisible">
-            <p>确认处理用户 {{ selectedRepair.RepairPhone }} 的维修请求: {{ selectedRepair.RepairContent }}?</p>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="processDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="confirmProcess">确认处理</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 完成维修对话框 -->
-        <el-dialog title="确认完成" :visible.sync="completeDialogVisible">
-            <p>确认已完成用户 {{ selectedRepair.RepairPhone }} 的维修请求: {{ selectedRepair.RepairContent }}?</p>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="completeDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="confirmComplete">确认完成</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 编辑维修信息对话框 -->
-        <el-dialog title="编辑维修信息" :visible.sync="editDialogVisible">
-            <el-form :model="editForm">
-                <el-form-item label="维修内容">
-                    <el-input v-model="editForm.RepairContent"></el-input>
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="editForm.RepairPhone"></el-input>
-                </el-form-item>
-                <el-form-item label="维修日期">
-                    <el-date-picker v-model="editForm.RepairDate" type="date"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="状态">
-                    <el-select v-model="editForm.RepairStatus">
-                        <el-option label="待处理" value="待处理"></el-option>
-                        <el-option label="处理中" value="处理中"></el-option>
-                        <el-option label="已完成" value="已完成"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveEdit">保存</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 删除确认对话框 -->
-        <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
-            <span>确定要删除该条维修记录吗？</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="deleteDialogVisible = false">取消</el-button>
-                <el-button type="danger" @click="confirmDelete">删除</el-button>
-            </span>
-        </el-dialog>
-    </div>
+    </el-card>
 </template>
 
 <script>
