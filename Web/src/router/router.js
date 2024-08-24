@@ -11,8 +11,8 @@ import UW2_1 from '../UserWeb/UW2-1.vue';
 import UW2_2 from '../UserWeb/UW2-2.vue';
 import UW2_3 from '../UserWeb/UW2-3.vue';
 import UW3_1 from '../UserWeb/UW3-1.vue';
-import UW3_2 from '../UserWeb/UW3-2.vue';
-import UW3_3 from '../UserWeb/UW3-3.vue';
+// import UW3_2 from '../UserWeb/UW3-2.vue';
+// import UW3_3 from '../UserWeb/UW3-3.vue';
 import UW4_1 from '../UserWeb/UW4-1.vue';
 import UW4_2 from '../UserWeb/UW4-2.vue';
 import UW5_1 from '../UserWeb/UW5-1.vue';
@@ -55,8 +55,8 @@ const routes = [
       { path: 'UW2-2', name: 'UW2-2', component: UW2_2 },
       { path: 'UW2-3', name: 'UW2-3', component: UW2_3 },
       { path: 'UW3-1', name: 'UW3-1', component: UW3_1 },
-      { path: 'UW3-2', name: 'UW3-2', component: UW3_2 },
-      { path: 'UW3-3', name: 'UW3-3', component: UW3_3 },
+      // { path: 'UW3-2', name: 'UW3-2', component: UW3_2 },
+      // { path: 'UW3-3', name: 'UW3-3', component: UW3_3 },
       { path: 'UW4-1', name: 'UW4-1', component: UW4_1 },
       { path: 'UW4-2', name: 'UW4-2', component: UW4_2 },
       { path: 'UW5-1', name: 'UW5-1', component: UW5_1 },
