@@ -2,7 +2,7 @@
     <el-card style="margin:10px">
         <div>
             <!-- 维修状态筛选 -->
-            <div style="width: 12%; margin-left: 10px; margin-top: 10px; display: inline-block;">
+            <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
                 <el-select v-model="selectedRepairStatus" placeholder="选择维修状态" size="mini" clearable>
                     <el-option label="所有状态" value=""></el-option>
                     <el-option label="待处理" value="待处理"></el-option>

@@ -2,7 +2,7 @@
     <el-card style="margin:10px">
         <div>
             <!-- 搜索框和状态筛选框 -->
-            <div style="width: 20%; margin-left: 10px; display: inline-block;">
+            <div style="width: 20%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
                 <el-input v-model="search" placeholder="输入诉求内容搜索" size="mini" class="search" />
             </div>
             <div style="width: 12%; margin-left: 20px; display: inline-block;">

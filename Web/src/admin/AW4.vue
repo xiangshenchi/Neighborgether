@@ -2,7 +2,7 @@
     <el-card style="margin:10px">
         <div>
             <!-- 缴费类型筛选 -->
-            <div style="width: 12%; margin-left: 10px; margin-top: 10px; display: inline-block;">
+            <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
                 <el-select v-model="selectedPaymentType" placeholder="选择缴费类型" size="mini" clearable>
                     <el-option label="所有缴费类型" value=""></el-option>
                     <el-option label="水费" value="水费"></el-option>
