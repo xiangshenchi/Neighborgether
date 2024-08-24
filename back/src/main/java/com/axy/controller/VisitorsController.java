@@ -17,7 +17,7 @@ import java.util.Map;
 public class VisitorsController {
     @Resource
     private VisitorsService visitorsService;
-    private VisitorsMapper visitorsMapper;
+    private final VisitorsMapper visitorsMapper;
 
     public VisitorsController(VisitorsMapper visitorsMapper) {
         this.visitorsMapper = visitorsMapper;
