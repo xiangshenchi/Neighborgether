@@ -45,9 +45,15 @@ public class PropertyinfoController {
     //展示单个业主的房产信息
     @GetMapping("/listP")
     public List<Propertyinfo> listU(@RequestParam String phonenumber){
-       int id=usersMapper.findid(phonenumber);
+        int id=usersMapper.findid(phonenumber);
         System.out.println(id);
-        return propertyinfoMapper.listP(id);
+        List<Propertyinfo> propertyList = propertyinfoMapper.listP(id);
+        System.out.println(propertyList);
+        if (propertyList == null || propertyList.isEmpty()) {
+            return null;
+        } else {
+            return propertyinfoMapper.listP(id);
+        }
     }
     //修改房产信息
     @PostMapping("/update")
@@ -65,7 +71,6 @@ public class PropertyinfoController {
 //        int id = usersMapper.findid(phonenumber);
 //        System.out.println(id);
         Propertyinfo propertyinfo1 = propertyinfoMapper.findbyid(usersMapper.findid(phonenumber));
-
 //        System.out.println(propertyinfo1);
         propertyinfo1.setRoomnumber(roomnumber);
         propertyinfo1.setBuildingnumber(buildingnumber);
