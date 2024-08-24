@@ -23,7 +23,7 @@
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
                         <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                        <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
                     </template>
                 </el-table-column>
             </el-table>
@@ -56,13 +56,13 @@
             </el-dialog>
 
             <!-- 删除确认框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+            <!-- <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
                 <span>确定要删除该诉求吗？</span>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteDialogVisible = false">取消</el-button>
                     <el-button type="danger" @click="confirmDelete">删除</el-button>
                 </span>
-            </el-dialog>
+            </el-dialog> -->
         </div>
     </el-card>
 </template>
@@ -129,19 +129,19 @@ export default {
             }
             this.editDialogVisible = false;
         },
-        handleDelete(row) {
-            // 打开删除确认框
-            this.deleteRow = row;
-            this.deleteDialogVisible = true;
-        },
-        confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.repairid === this.deleteRow.repairid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
-            this.deleteDialogVisible = false;
-        },
+        // handleDelete(row) {
+        //     // 打开删除确认框
+        //     this.deleteRow = row;
+        //     this.deleteDialogVisible = true;
+        // },
+        // confirmDelete() {
+        //     // 确认删除并从数据列表中移除
+        //     const index = this.tableData.findIndex(item => item.repairid === this.deleteRow.repairid);
+        //     if (index !== -1) {
+        //         this.tableData.splice(index, 1);
+        //     }
+        //     this.deleteDialogVisible = false;
+        // },
         handlePageChange(page) {
             this.currentPage = page;
         }
