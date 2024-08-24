@@ -37,7 +37,7 @@
                 style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
             <!-- 编辑公告信息弹出框 -->
-            <el-dialog title="编辑访客信息" :visible.sync="editDialogVisible">
+            <!-- <el-dialog title="编辑访客信息" :visible.sync="editDialogVisible">
                 <el-form :model="editForm">
                     <el-form-item label="访客名字">
                         <el-input v-model="editForm.title"></el-input>
@@ -53,7 +53,7 @@
                     <el-button @click="editDialogVisible = false">取消</el-button>
                     <el-button type="primary" @click="saveEdit">保存</el-button>
                 </span>
-            </el-dialog>
+            </el-dialog> -->
 
             <!-- 删除确认框 -->
             <!-- <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
@@ -156,32 +156,32 @@ export default {
         filterByDate(dates) {
             this.selectedDate = dates;
         },
-        handleEdit(row) {
-            // 打开编辑弹出框并将选中的行数据赋值给编辑表单
-            this.editForm = { ...row };
-            this.editDialogVisible = true;
-        },
-        saveEdit() {
-            // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.id === this.editForm.id);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
-            this.editDialogVisible = false;
-        },
-        handleDelete(row) {
-            // 打开删除确认框
-            this.deleteRow = row;
-            this.deleteDialogVisible = true;
-        },
-        confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.id === this.deleteRow.id);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
-            this.deleteDialogVisible = false;
-        },
+        // handleEdit(row) {
+        //     // 打开编辑弹出框并将选中的行数据赋值给编辑表单
+        //     this.editForm = { ...row };
+        //     this.editDialogVisible = true;
+        // },
+        // saveEdit() {
+        //     // 保存编辑后的数据
+        //     const index = this.tableData.findIndex(item => item.id === this.editForm.id);
+        //     if (index !== -1) {
+        //         this.tableData.splice(index, 1, { ...this.editForm });
+        //     }
+        //     this.editDialogVisible = false;
+        // },
+        // handleDelete(row) {
+        //     // 打开删除确认框
+        //     this.deleteRow = row;
+        //     this.deleteDialogVisible = true;
+        // },
+        // confirmDelete() {
+        //     // 确认删除并从数据列表中移除
+        //     const index = this.tableData.findIndex(item => item.id === this.deleteRow.id);
+        //     if (index !== -1) {
+        //         this.tableData.splice(index, 1);
+        //     }
+        //     this.deleteDialogVisible = false;
+        // },
         handlePageChange(page) {
             this.currentPage = page;
         }
