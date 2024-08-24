@@ -41,6 +41,11 @@
             </el-table-column>
         </el-table>
 
+        <!-- 分页器 -->
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
+
         <!-- 编辑用户信息弹出框 -->
         <el-dialog title="编辑用户信息" :visible.sync="editDialogVisible">
             <el-form :model="editForm">
@@ -132,6 +137,8 @@ export default {
                     createdat: "2024-08-14 07:28:28"
                 }
             ],
+            currentPage: 1, // 当前页
+            pageSize: 5, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
             editForm: {}, // 编辑用户的信息
@@ -146,6 +153,11 @@ export default {
                 const matchesRole = !this.selectedRole || data.role === this.selectedRole;
                 return matchesSearch && matchesRole;
             });
+        },
+        paginatedData() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.filteredData.slice(start, end);
         }
     },
     methods: {
@@ -174,6 +186,9 @@ export default {
                 this.tableData.splice(index, 1);
             }
             this.deleteDialogVisible = false;
+        },
+        handlePageChange(page) {
+            this.currentPage = page;
         }
     }
 };
