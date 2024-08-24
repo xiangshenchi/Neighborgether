@@ -25,7 +25,7 @@
             <el-form-item label="面积" :label-position="itemLabelPosition">
                 <el-input v-model="formSub.area" />
             </el-form-item>
-            <el-button type="primary" @click="confirm()" color="#1EB71E">提交</el-button>
+            <el-button type="primary" @click="confirm()" color="#1EB71E" :disabled="butisdisabled">提交</el-button>
         </el-card>
 
     </div>
@@ -42,12 +42,13 @@ export default {
                 roomnumber: '',
                 area: ''
             },
+            butisdisabled: false,
             formSub: {
                 unitnumber: '',
                 buildingnumber: '',
                 roomnumber: '',
                 area: ''
-            }
+            },
         };
     },
     mounted() {
@@ -60,12 +61,16 @@ export default {
                 this.$message.error('暂无房产信息');
                 return;
             }
+            this.butisdisabled=true;
             console.log(res.data[0]);
             this.form = res.data[0];
             this.formSub.area = this.form.area;
             this.formSub.buildingnumber = res.data[0].buildingnumber;
             this.formSub.roomnumber = res.data[0].roomnumber;
             this.formSub.unitnumber = res.data[0].unitnumber;
+        }).catch(err => {
+            console.log(err);
+            this.$message.error('获取房产信息失败,,请稍后再试或者联系管理员');
         });
     },
     methods: {
