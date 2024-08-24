@@ -47,7 +47,7 @@ export default {
             };
 
             // 3. 提交到后端接口
-            axios.post('http://localhost:8090/待填写', formData)  //API接口需修改
+            axios.post('http://localhost:8090/demand/add', formData)  //API接口需修改
                 .then(response => {
                     // 4. 提交成功后提示
                     this.$message.success('报修提交成功');
