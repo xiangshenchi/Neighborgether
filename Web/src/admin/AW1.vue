@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style=" width: 90%; margin-top: 20px; margin-left: 20px;">
         <!-- 上方两张图：访客和用户对比 & 缴费状态 -->
         <div style="display: flex; justify-content: space-between;">
             <!-- 访客和用户对比图 -->

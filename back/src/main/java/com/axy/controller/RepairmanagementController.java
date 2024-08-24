@@ -1,15 +1,23 @@
 package com.axy.controller;
 
-import com.axy.mapper.RepairmanagementMapper;
-import com.axy.pojo.Repairmanagement;
-import com.axy.service.RepairmanagementService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axy.mapper.RepairmanagementMapper;
+import com.axy.pojo.Repairmanagement;
+import com.axy.service.RepairmanagementService;
+
+import jakarta.annotation.Resource;
 
 @RestController
 @CrossOrigin
@@ -18,7 +26,7 @@ import java.util.Map;
 public class RepairmanagementController {
     @Resource
     private RepairmanagementService repairmanagementService;
-    private RepairmanagementMapper repairmanagementMapper;
+    private final RepairmanagementMapper repairmanagementMapper;
 
     public RepairmanagementController(RepairmanagementMapper repairmanagementMapper) {
         this.repairmanagementMapper = repairmanagementMapper;
