@@ -50,7 +50,14 @@
             <el-menu-item index="/UM/UW2-2">房产信息</el-menu-item>
             <el-menu-item index="/UM/UW2-3">车辆信息</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="3">
+
+          <el-menu-item index="/UM/UW3-1">
+            <span slot="title"><el-icon>
+                <Money />
+              </el-icon>生活缴费</span>
+          </el-menu-item>
+
+          <!-- <el-sub-menu index="3">
             <template #title>
               <el-icon>
                 <Money />
@@ -59,7 +66,8 @@
             <el-menu-item index="/UM/UW3-1">我的水费</el-menu-item>
             <el-menu-item index="/UM/UW3-2">我的电费</el-menu-item>
             <el-menu-item index="/UM/UW3-3">我的物业费</el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
+
           <el-sub-menu index="4">
             <template #title>
               <el-icon>
