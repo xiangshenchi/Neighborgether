@@ -48,7 +48,7 @@
             </div>
 
             <div class="footer">
-                <p>copyright© 2024 · 邻聚 · Neighborgether</p>
+                <p>Copyright© 2024 · 邻聚 · Neighborgether</p>
             </div>
         </div>
     </div>

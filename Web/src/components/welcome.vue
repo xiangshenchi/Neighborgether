@@ -9,7 +9,7 @@
         <div style="flex: 1;">
             <el-carousel :interval="5000" height="100%">
                 <el-carousel-item v-for="item in 3" :key="item">
-                    <img :src="getImageUrl(item)" alt="">
+                    <img :src="getImageUrl(item)" alt="糟糕！图片被小猫吃掉了！:<" class="carousel-img">
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -45,5 +45,12 @@ export default {
     margin: 0;
     text-align: center;
     font-size: 2em;
+}
+
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 或者使用 cover */
 }
 </style>
