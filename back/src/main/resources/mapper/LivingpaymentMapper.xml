@@ -21,7 +21,7 @@
         select * from livingpayment where userid = #{userid}
     </select>
     <select id="listD" resultType="com.axy.pojo.Livingpayment">
-        select * from livingpayment where userid = #{userid} and status='未缴'
+        select * from livingpayment where userid = #{userid} and status='未缴' and paymentid = #{paymentid}
     </select>
     <select id="getById" resultType="com.axy.pojo.Livingpayment">
         select * from livingpayment where userid = #{userid} and status='未缴'

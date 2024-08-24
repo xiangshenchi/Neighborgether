@@ -16,7 +16,7 @@ import java.util.List;
 public interface LivingpaymentMapper extends BaseMapper<Livingpayment> {
 
     List<Livingpayment> listC(int id);
-    List<Livingpayment> listD(int id);
+    Livingpayment listD(int userid,int paymentid);
     Livingpayment getById(int id);
 }
 

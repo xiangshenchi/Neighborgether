@@ -44,20 +44,14 @@ public class LivingpaymentController {
     public Map<String, Object> update(@RequestBody LupdateRequest request){
         Map<String, Object> response = new HashMap<>();
         String phonenumber = request.getPhonenumber();
-        int id=usersMapper.findid(phonenumber);
-        //Livingpayment livingpayment;
-        List<Livingpayment> list=livingpaymentMapper.listD(id);
-        System.out.println(list);
+        Livingpayment livingpayment=request.getLivingpayment();
+        int paymentid = livingpayment.getPaymentid();
+        int userid=usersMapper.findid(phonenumber);
         String status="已缴";
-        if (list == null || list.isEmpty()){
-            response.put("status", "0");
-            response.put("message", "缴费信息不存在");
-        }else {
-            //livingpayment=request.getLivingpayment();
-            //status= (String) livingpayment.getStatus();
-            Livingpayment livingpayment1=livingpaymentMapper.getById(id);
-            livingpayment1.setStatus(status);
-            boolean isUpdated = liv.updateById(livingpayment1);
+         Livingpayment list=livingpaymentMapper.listD(userid,paymentid);
+        //System.out.println(list);
+        list.setStatus(status);
+            boolean isUpdated = liv.updateById(list);
             if (isUpdated) {
                 response.put("status", "1");
                 response.put("message", "缴费状态修改成功");
@@ -65,7 +59,7 @@ public class LivingpaymentController {
                 response.put("status", "0");
                 response.put("message", "缴费状态修改失败");
             }
-        }
+
         return response;
     }
 }
