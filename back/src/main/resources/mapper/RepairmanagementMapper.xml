@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axy.mapper.RepairmanagementMapper">
+
+    <resultMap id="BaseResultMap" type="com.axy.pojo.Repairmanagement">
+            <id property="repairid" column="RepairID" jdbcType="INTEGER"/>
+            <result property="repairphone" column="RepairPhone" jdbcType="VARCHAR"/>
+            <result property="repaircontent" column="RepairContent" jdbcType="VARCHAR"/>
+            <result property="repairdate" column="RepairDate" jdbcType="DATE"/>
+            <result property="repairstatus" column="RepairStatus" jdbcType="OTHER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        RepairID,RepairPhone,RepairContent,
+        RepairDate,RepairStatus
+    </sql>
+    <select id="listbyph" resultType="com.axy.pojo.Repairmanagement">
+        select * from Repairmanagement where RepairPhone = #{repairphone}
+    </select>
+</mapper>
