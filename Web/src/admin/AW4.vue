@@ -45,11 +45,9 @@
         </el-table>
 
         <!-- 分页器 -->
-        <div style="text-align: right; margin-top: 20px; margin-left: 10px;">
-            <el-pagination background layout="prev, pager, next" :current-page="currentPage" :page-size="pageSize"
-                :total="filteredData.length" @current-change="handleCurrentChange">
-            </el-pagination>
-        </div>
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
         <!-- 缴费弹出框 -->
         <el-dialog title="确认缴费" :visible.sync="payDialogVisible">
@@ -107,10 +105,19 @@ export default {
         return {
             selectedPaymentType: '', // 选择的缴费类型
             selectedPaymentStatus: '', // 选择的缴费状态
-            currentPage: 1, // 当前页码
-            pageSize: 10, // 每页显示的条目数
+            currentPage: 1, // 当前页
+            pageSize: 10, // 每页显示的数据条数
             tableData: [
                 { UserName: "张三", PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "李四", PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
+                { UserName: "王五", PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" }, { UserName: "张三", PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "李四", PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
+                { UserName: "王五", PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" }, { UserName: "张三", PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "李四", PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
+                { UserName: "王五", PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
+                { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" }, { UserName: "张三", PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
                 { UserName: "李四", PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
                 { UserName: "王五", PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
                 { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" },
@@ -177,7 +184,7 @@ export default {
             }
             this.deleteDialogVisible = false;
         },
-        handleCurrentChange(page) {
+        handlePageChange(page) {
             this.currentPage = page;
         }
     }
