@@ -1,92 +1,94 @@
 <template>
-    <div>
-        <!-- 搜索框和用户类型筛选框 -->
-        <div style="width: 20%; margin-left: 10px; display: inline-block;">
-            <el-input v-model="search" placeholder="输入用户姓名搜索" size="mini" class="search" />
-        </div>
-        <div style="width: 12%; margin-left: 20px; display: inline-block;">
-            <el-select v-model="selectedRole" placeholder="选择用户类型" size="mini" clearable>
-                <el-option label="所有用户" value=""></el-option>
-                <el-option label="业主" value="Owner"></el-option>
-                <el-option label="工作人员" value="Staff"></el-option>
-                <el-option label="管理员" value="Admin"></el-option>
-            </el-select>
-        </div>
+    <el-card style="margin:10px">
+        <div>
+            <!-- 搜索框和用户类型筛选框 -->
+            <div style="width: 20%; margin-left: 10px; display: inline-block;">
+                <el-input v-model="search" placeholder="输入用户姓名搜索" size="mini" class="search" />
+            </div>
+            <div style="width: 12%; margin-left: 20px; display: inline-block;">
+                <el-select v-model="selectedRole" placeholder="选择用户类型" size="mini" clearable>
+                    <el-option label="所有用户" value=""></el-option>
+                    <el-option label="业主" value="Owner"></el-option>
+                    <el-option label="工作人员" value="Staff"></el-option>
+                    <el-option label="管理员" value="Admin"></el-option>
+                </el-select>
+            </div>
 
-        <!-- 用户表格 -->
-        <el-table :data="filteredData" style="width: 100%">
-            <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
-            <el-table-column prop="username" label="用户名" width="100px"></el-table-column>
-            <el-table-column prop="password" label="密码"></el-table-column>
-            <el-table-column prop="phonenumber" label="电话"></el-table-column>
-            <el-table-column prop="email" label="邮箱"></el-table-column>
-            <el-table-column prop="address" label="住址"></el-table-column>
+            <!-- 用户表格 -->
+            <el-table :data="paginatedData" style="width: 100%">
+                <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
+                <el-table-column prop="username" label="用户名" width="100px"></el-table-column>
+                <el-table-column prop="password" label="密码"></el-table-column>
+                <el-table-column prop="phonenumber" label="电话"></el-table-column>
+                <el-table-column prop="email" label="邮箱"></el-table-column>
+                <el-table-column prop="address" label="住址"></el-table-column>
 
-            <!-- 不同用户类别背景颜色不同，style块中定义了颜色 -->
-            <el-table-column prop="role" label="用户类别">
-                <!-- 目前先注释，用示例数据，后期用后端数据 -->
-                <!-- <template #default="scope">
+                <!-- 不同用户类别背景颜色不同，style块中定义了颜色 -->
+                <el-table-column prop="role" label="用户类别">
+                    <!-- 目前先注释，用示例数据，后期用后端数据 -->
+                    <!-- <template #default="scope">
                     <span :class="getRoleClass(scope.row.role)">
                         {{ scope.row.role }}
                     </span>
                 </template> -->
-            </el-table-column>
-            <el-table-column prop="createdat" label="创建时间"></el-table-column>
+                </el-table-column>
+                <el-table-column prop="createdat" label="创建时间"></el-table-column>
 
-            <el-table-column label="操作" align="right">
-                <template #default="scope">
-                    <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+                <el-table-column label="操作" align="right">
+                    <template #default="scope">
+                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
 
-        <!-- 分页器 -->
-        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
-            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
-            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
+            <!-- 分页器 -->
+            <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+                @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
-        <!-- 编辑用户信息弹出框 -->
-        <el-dialog title="编辑用户信息" :visible.sync="editDialogVisible">
-            <el-form :model="editForm">
-                <el-form-item label="用户姓名">
-                    <el-input v-model="editForm.username"></el-input>
-                </el-form-item>
-                <el-form-item label="用户密码">
-                    <el-input v-model="editForm.password"></el-input>
-                </el-form-item>
-                <el-form-item label="用户电话">
-                    <el-input v-model="editForm.phonenumber"></el-input>
-                </el-form-item>
-                <el-form-item label="用户邮箱">
-                    <el-input v-model="editForm.email"></el-input>
-                </el-form-item>
-                <el-form-item label="用户住址">
-                    <el-input v-model="editForm.address"></el-input>
-                </el-form-item>
-                <el-form-item label="用户类别">
-                    <el-select v-model="editForm.role">
-                        <el-option label="Admin" value="Admin"></el-option>
-                        <el-option label="Staff" value="Staff"></el-option>
-                        <el-option label="Owner" value="Owner"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveEdit">保存</el-button>
-            </span>
-        </el-dialog>
+            <!-- 编辑用户信息弹出框 -->
+            <el-dialog title="编辑用户信息" :visible.sync="editDialogVisible">
+                <el-form :model="editForm">
+                    <el-form-item label="用户姓名">
+                        <el-input v-model="editForm.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户密码">
+                        <el-input v-model="editForm.password"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户电话">
+                        <el-input v-model="editForm.phonenumber"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户邮箱">
+                        <el-input v-model="editForm.email"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户住址">
+                        <el-input v-model="editForm.address"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户类别">
+                        <el-select v-model="editForm.role">
+                            <el-option label="Admin" value="Admin"></el-option>
+                            <el-option label="Staff" value="Staff"></el-option>
+                            <el-option label="Owner" value="Owner"></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="editDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="saveEdit">保存</el-button>
+                </span>
+            </el-dialog>
 
-        <!-- 删除确认框 -->
-        <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
-            <span>确定要删除该用户吗？</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="deleteDialogVisible = false">取消</el-button>
-                <el-button type="danger" @click="confirmDelete">删除</el-button>
-            </span>
-        </el-dialog>
-    </div>
+            <!-- 删除确认框 -->
+            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+                <span>确定要删除该用户吗？</span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="deleteDialogVisible = false">取消</el-button>
+                    <el-button type="danger" @click="confirmDelete">删除</el-button>
+                </span>
+            </el-dialog>
+        </div>
+    </el-card>
 </template>
 
 <script>
@@ -138,7 +140,7 @@ export default {
                 }
             ],
             currentPage: 1, // 当前页
-            pageSize: 5, // 每页显示的数据条数
+            pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
             editForm: {}, // 编辑用户的信息

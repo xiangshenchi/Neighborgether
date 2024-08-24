@@ -1,5 +1,6 @@
 <template>
-  <div class="web-contain" style="display:flex;width:100%;height:100%;flex-direction: column;justify-content: space-between;">
+  <div class="web-contain"
+    style="display:flex;width:100%;height:100%;flex-direction: column;justify-content: space-between;">
     <!-- 时间选择器 -->
     <el-card style="margin:10px;padding:0px;">
       <div class="date-picker">
@@ -17,8 +18,12 @@
       <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;padding: 10px;">
         <el-table :data="currentTableData" :row-style="rowStyle" :header-cell-style="{ 'text-align': 'center' }"
           :cell-style="{ 'text-align': 'center' }">
-          <el-table-column prop="announcementid" label="序号" />
-          <el-table-column prop="publishdate" label="发布时间" />
+          <el-table-column label="序号">
+            <template #default="scope">
+              {{ (currentPage - 1) * pageSize + scope.$index + 1 }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="publishdate" label="发布时间"/>
           <el-table-column prop="title" label="公告标题" />
           <el-table-column prop="content" label="公告内容">
             <template #default="scope">
@@ -29,8 +34,8 @@
           </el-table-column>
           <el-table-column prop="userid" label="发布人" />
           <el-table-column fixed="right" label="公告详情">
-            <template #default>
-              <el-button link type="primary" @click="handleClick">
+            <template #default="scope">
+              <el-button link type="primary" @click="handleClick(scope.row)">
                 详情
               </el-button>
             </template>
@@ -46,6 +51,15 @@
           :total="filteredData.length" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-card>
+    <el-dialog v-model="dialogVisible" title="公告详情">
+      <p><strong>公告标题：</strong>{{ dialogData.title }}</p>
+      <p><strong>发布时间：</strong>{{ dialogData.publishdate }}</p>
+      <p><strong>发布人：</strong>{{ dialogData.userid }}</p>
+      <p><strong>公告内容：</strong>{{ dialogData.content }}</p>
+      <template #footer>
+        <el-button @click="dialogVisible = false">关闭</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -59,7 +73,15 @@ let pageSize = ref(10)
 const size = ref<ComponentSize>('default')
 const background = ref(false)
 const disabled = ref(false)
+const dialogVisible = ref(false)
 const dateRange = ref<Date[]>([])
+const dialogData = ref<Announcement>({
+  announcementid: 0,
+  publishdate: '',
+  title: '',
+  content: '',
+  userid: ''
+})
 interface Announcement {
   announcementid: number;
   publishdate: string;
@@ -70,6 +92,11 @@ interface Announcement {
 const tableData = ref<Announcement[]>([])
 const test = () => {
   console.log(tableData);
+}
+const handleClick = (row: Announcement) => {
+  console.log(row)
+  dialogData.value = row
+  dialogVisible.value = true
 }
 fetchData()
 async function fetchData() {
@@ -83,13 +110,17 @@ async function fetchData() {
   }
 }
 const filteredData = computed(() => {
-  if (dateRange.value.length === 0) {
-    return tableData.value
+  let data = tableData.value
+
+  if (dateRange.value.length > 0) {
+    const [start, end] = dateRange.value
+    data = data.filter(item => {
+      const date = new Date(item.publishdate)
+      return date >= start && date <= end
+    })
   }
-  const [start, end] = dateRange.value
-  return tableData.value.filter(item => {
-    const date = new Date(item.publishdate)
-    return date >= start && date <= end
+  return data.sort((a, b) => {
+    return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime()
   })
 })
 
@@ -112,9 +143,6 @@ const handleDateChange = () => {
 const handleDateDelete = () => {
   dateRange.value = []
   currentPage.value = 1
-}
-const handleClick = () => {
-  console.log('click')
 }
 
 const rowStyle = () => {
@@ -156,9 +184,10 @@ const shortcuts = [
 </script>
 
 <style scoped>
-:deep(.el-card .el-card__body){
+:deep(.el-card .el-card__body) {
   padding: 0px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
