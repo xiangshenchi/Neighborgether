@@ -7,8 +7,8 @@
                     <el-input v-model="search" placeholder="输入公告标题搜索" class="search" />
                 </div>
                 <div style="margin-left: 20px;">
-                    <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                        end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="filterByDate" />
+                    <el-date-picker v-model="selectedDate" type="daterange" unlink-panels range-separator="至"
+                    start-placeholder="起始时间" end-placeholder="截至时间" @change="filterByDate" @clear="selectedDate=[]" />
                 </div>
                 <!-- 添加公告按钮 -->
                 <div style="margin-left: 20px;">
@@ -50,9 +50,6 @@
                     <el-form-item label="公告内容">
                         <el-input type="textarea" v-model="addForm.content"></el-input>
                     </el-form-item>
-                    <el-form-item label="发布日期">
-                        <el-date-picker v-model="addForm.publishdate" type="date" value-format="yyyy-MM-dd" />
-                    </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addDialogVisible = false">取消</el-button>
@@ -68,9 +65,6 @@
                     </el-form-item>
                     <el-form-item label="公告内容">
                         <el-input type="textarea" v-model="editForm.content"></el-input>
-                    </el-form-item>
-                    <el-form-item label="发布日期">
-                        <el-date-picker v-model="editForm.publishDate" type="date" value-format="yyyy-MM-dd" />
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -96,8 +90,8 @@ export default {
     data() {
         return {
             search: '', // 搜索关键字
-            selectedDate: null, // 选中的日期范围
-            tableData: [],
+            selectedDate: [], // 选中的日期范围
+            tabledata: [],
             currentPage: 1, // 当前页
             pageSize: 10, // 每页显示的数据条数
             addDialogVisible: false, // 控制添加弹出框的显示
@@ -106,7 +100,6 @@ export default {
             addForm: { // 添加公告的信息
                 title: '',
                 content: '',
-                publishdate: ''
             },
             editForm: {}, // 编辑公告的信息
             deleteRow: null, // 待删除的行
@@ -114,18 +107,21 @@ export default {
     },
     computed: {
         filteredData() {
-            return this.tableData
+            return this.tabledata
                 .filter(data => {
                     const matchesSearch = !this.search || data.title.toLowerCase().includes(this.search.toLowerCase());
-                    const publishDate = this.formatDateToYMD(data.publishDate); // 截取日期部分
-                    const matchesDate = !this.selectedDate ||
-                        (publishDate >= this.formatDateToYMD(this.selectedDate[0]) &&
-                            publishDate <= this.formatDateToYMD(this.selectedDate[1]));
+                    const publishDate = new Date(data.publishdate);
+                    console.log(publishDate);
+                    const matchesDate = !this.selectedDate.length ||
+                        (publishDate >= this.selectedDate[0] &&
+                            publishDate <= this.selectedDate[1]);
                     return matchesSearch && matchesDate;
                 })
                 .sort((a, b) => { return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime() }) // 按发布日期降序排序
         },
         paginatedData() {
+            console.log(this.tabledata);
+            console.log("selectedDate: ", this.selectedDate);
             const start = (this.currentPage - 1) * this.pageSize;
             const end = start + this.pageSize;
             return this.filteredData.slice(start, end);
@@ -134,9 +130,9 @@ export default {
     mounted() {
         this.$axios.get('/announcements/list')
             .then(response => {
-                console.log(this.tableData);
-                this.tableData = response.data;
-                console.log(this.tableData);
+                console.log(this.tabledata);
+                this.tabledata = response.data;
+                console.log(this.tabledata);
             })
             .catch(error => {
                 console.log(error);
@@ -155,8 +151,8 @@ export default {
             const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
             return new Date(date).toLocaleString('zh-CN', options);
         },
-        filterByDate(dates) {
-            this.selectedDate = dates;
+        filterByDate() {
+            this.currentPage = 1;
         },
         showAddDialog() {
             // 打开添加弹出框
@@ -182,6 +178,7 @@ export default {
                 console.log(error);
                 this.$message.error("未知错误！");
             });
+            this.addDialogVisible = false;
         },
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
@@ -207,6 +204,7 @@ export default {
                 console.log(error);
                 this.$message.error("未知错误！");
             });
+            this.editDialogVisible = false;
         },
         handleDelete(row) {
             // 打开删除确认框
@@ -229,6 +227,7 @@ export default {
                 console.log(error);
                 this.$message.error("未知错误！");
             });
+            this.deleteDialogVisible = false;
         },
         handlePageChange(page) {
             this.currentPage = page;

@@ -1,13 +1,9 @@
 package com.axy.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.axy.pojo.Announcements;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
-import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
 * @author DELL

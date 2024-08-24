@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.axy.pojo.Vehicles;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -134,6 +135,7 @@ public Map<String, Object> adeditp(@RequestBody Propertyinfo propertyinfo){
     }
     return response;
 }
+@DeleteMapping("/delete")
 //管理员删除房产信息
 public boolean delete(@RequestParam int propertyid) {
     return propertyinfoService.removeById(propertyid);

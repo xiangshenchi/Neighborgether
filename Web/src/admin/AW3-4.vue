@@ -7,7 +7,7 @@
             </div>
             <div style="width: 20%; margin-left: 20px; display: inline-block;">
                 <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                    end-placeholder="结束日期" size="mini" value-format="yyyy-MM-dd" @change="filterByDate" />
+                    end-placeholder="结束日期" size="mini" @change="filterByDate" @clear="selectedDate = []"/>
             </div>
 
             <!-- 公告表格 -->
@@ -72,49 +72,8 @@ export default {
     data() {
         return {
             search: '', // 搜索关键字
-            selectedDate: null, // 选中的日期范围
-            tableData: [
-                {
-                    id: 1,
-                    visitid: 'V001',
-                    visitname: '张三',
-                    visitphone: '13812345678',
-                    visitreason: '拜访朋友',
-                    visitdate: '2024-08-01 10:30:00'
-                },
-                {
-                    id: 2,
-                    visitid: 'V002',
-                    visitname: '李四',
-                    visitphone: '13987654321',
-                    visitreason: '送快递',
-                    visitdate: '2024-08-05 14:15:00'
-                },
-                {
-                    id: 3,
-                    visitid: 'V003',
-                    visitname: '王五',
-                    visitphone: '13798765432',
-                    visitreason: '物业维修',
-                    visitdate: '2024-08-07 09:45:00'
-                },
-                {
-                    id: 4,
-                    visitid: 'V004',
-                    visitname: '赵六',
-                    visitphone: '13612349876',
-                    visitreason: '朋友聚会',
-                    visitdate: '2024-08-09 16:00:00'
-                },
-                {
-                    id: 5,
-                    visitid: 'V005',
-                    visitname: '钱七',
-                    visitphone: '13565432123',
-                    visitreason: '家政服务',
-                    visitdate: '2024-08-12 11:20:00'
-                },
-            ],
+            selectedDate: [], // 选中的日期范围
+            tableData: [],
             currentPage: 1, // 当前页
             pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
@@ -127,11 +86,11 @@ export default {
         filteredData() {
             return this.tableData.filter(data => {
                 // 根据标题和日期进行筛选
-                const matchesSearch = !this.search || data.title.toLowerCase().includes(this.search.toLowerCase());
-                const publishDate = this.formatDateToYMD(data.publishDate); // 截取日期部分
-                const matchesDate = !this.selectedDate ||
-                    (publishDate >= this.formatDateToYMD(this.selectedDate[0]) &&
-                        publishDate <= this.formatDateToYMD(this.selectedDate[1]));
+                const matchesSearch = !this.search || data.visitname.toLowerCase().includes(this.search.toLowerCase());
+                const publishDate = new Date(data.visitdate); // 截取日期部分
+                const matchesDate = !this.selectedDate.length ||
+                    (publishDate >= this.selectedDate[0] &&
+                        publishDate <= this.selectedDate[1]);
                 return matchesSearch && matchesDate;
             });
         },
@@ -140,6 +99,18 @@ export default {
             const end = start + this.pageSize;
             return this.filteredData.slice(start, end);
         }
+    },
+    mounted() {
+        this.$axios.get('/visitors/list')
+            .then(response => {
+                console.log(this.tabledata);
+                this.tableData = response.data;
+                console.log(this.tabledata);
+            })
+            .catch(error => {
+                console.log(error);
+                this.$message.error("获取公告列表失败！");
+            });
     },
     methods: {
         formatDate(date) {

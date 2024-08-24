@@ -8,10 +8,9 @@
             <div style="width: 12%; margin-left: 20px; display: inline-block;">
                 <el-select v-model="selectedBuilding" placeholder="选择楼栋" size="mini" clearable>
                     <el-option label="所有楼栋" value=""></el-option>
-                    <el-option label="1" value="1"></el-option>
-                    <el-option label="2" value="2"></el-option>
-                    <el-option label="3" value="3"></el-option>
-                    <el-option label="4" value="4"></el-option>
+                    <el-option label="A" value="A"></el-option>
+                    <el-option label="B" value="B"></el-option>
+                    <el-option label="C" value="C"></el-option>
                 </el-select>
             </div>
             <div style="width: 12%; margin-left: 20px; display: inline-block;">
@@ -24,9 +23,10 @@
                 </el-select>
             </div>
 
-            <!-- 物业信息表格 -->
-            <el-table :data="paginatedData" style="width: 100%">
-                <el-table-column prop="propertyid" label="物业ID" width="80px"></el-table-column>
+            <!-- 房源信息表格 -->
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+            :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="propertyid" label="房源ID" width="80px"></el-table-column>
                 <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
                 <el-table-column prop="roomnumber" label="房间号" width="100px"></el-table-column>
                 <el-table-column prop="buildingnumber" label="楼栋" width="100px"></el-table-column>
@@ -45,8 +45,8 @@
                 @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
                 style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
-            <!-- 编辑物业信息弹出框 -->
-            <el-dialog title="编辑物业信息" :visible.sync="editDialogVisible">
+            <!-- 编辑房源信息弹出框 -->
+            <el-dialog title="编辑房源信息" v-model="editDialogVisible">
                 <el-form :model="editForm">
                     <el-form-item label="用户ID">
                         <el-input v-model="editForm.userid"></el-input>
@@ -71,8 +71,8 @@
             </el-dialog>
 
             <!-- 删除确认框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
-                <span>确定要删除该物业信息吗？</span>
+            <el-dialog title="确认删除" v-model="deleteDialogVisible">
+                <span>确定要删除该房源信息吗？</span>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteDialogVisible = false">取消</el-button>
                     <el-button type="danger" @click="confirmDelete">删除</el-button>
@@ -89,61 +89,12 @@ export default {
             search: '', // 搜索关键字
             selectedBuilding: '', // 楼栋筛选
             selectedUnit: '', // 单元筛选
-            tableData: [
-                {
-                    propertyid: 1,
-                    userid: 1,
-                    roomnumber: "101",
-                    buildingnumber: "A",
-                    unitnumber: "1",
-                    area: 120.5
-                },
-                {
-                    propertyid: 2,
-                    userid: 2,
-                    roomnumber: "202",
-                    buildingnumber: "B",
-                    unitnumber: "2",
-                    area: 98.3
-                },
-                {
-                    propertyid: 2,
-                    userid: 2,
-                    roomnumber: "202",
-                    buildingnumber: "B",
-                    unitnumber: "2",
-                    area: 98.3
-                },
-                {
-                    propertyid: 2,
-                    userid: 2,
-                    roomnumber: "202",
-                    buildingnumber: "B",
-                    unitnumber: "2",
-                    area: 98.3
-                },
-                {
-                    propertyid: 2,
-                    userid: 2,
-                    roomnumber: "202",
-                    buildingnumber: "B",
-                    unitnumber: "2",
-                    area: 98.3
-                },
-                {
-                    propertyid: 2,
-                    userid: 2,
-                    roomnumber: "202",
-                    buildingnumber: "B",
-                    unitnumber: "2",
-                    area: 98.3
-                },
-            ],
+            tableData: [],
             currentPage: 1, // 当前页
             pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
-            editForm: {}, // 编辑物业的信息
+            editForm: {}, // 编辑房源的信息
             deleteRow: null, // 待删除的行
         };
     },
@@ -162,6 +113,16 @@ export default {
             return this.filteredData.slice(start, end);
         }
     },
+    mounted() {
+        this.$axios.get('/propertyinfo/list')
+            .then(response => {
+                this.tableData = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+                this.$message.error("获取房源列表失败！");
+            });
+    },
     methods: {
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
@@ -169,11 +130,25 @@ export default {
             this.editDialogVisible = true;
         },
         saveEdit() {
-            // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.propertyid === this.editForm.propertyid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
+            this.$axios.post('/propertyinfo/edit', {
+                propertyid: this.editForm.propertyid,
+                roomnumber: this.editForm.roomnumber,
+                buildingnumber: this.editForm.buildingnumber,
+                unitnumber: this.editForm.unitnumber,
+                area: this.editForm.area
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("编辑房源成功！");
+                    this.editDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("编辑房源失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.editDialogVisible = false;
         },
         handleDelete(row) {
@@ -182,11 +157,21 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.propertyid === this.deleteRow.propertyid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
+            this.$axios.delete('/propertyinfo/delete', {
+                params: { propertyid: this.deleteRow.propertyid } 
+            }).then(response => {
+                if (response.data===true) {
+                    this.$message.success("删除房源成功！");
+                    this.deleteDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("删除房源失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.deleteDialogVisible = false;
         },
 

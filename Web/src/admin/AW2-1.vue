@@ -15,7 +15,8 @@
             </div>
 
             <!-- 用户表格 -->
-            <el-table :data="paginatedData" style="width: 100%">
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+                :cell-style="{ 'text-align': 'center' }">
                 <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
                 <el-table-column prop="username" label="用户名" width="100px"></el-table-column>
                 <el-table-column prop="password" label="密码"></el-table-column>
@@ -36,8 +37,10 @@
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
-                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                        <el-button size="mini" @click="handleEdit(scope.row)"
+                            :disabled="scope.row.role === 'Admin'">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
+                            :disabled="scope.row.role === 'Admin'">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -48,23 +51,8 @@
                 style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
             <!-- 编辑用户信息弹出框 -->
-            <el-dialog title="编辑用户信息" :visible.sync="editDialogVisible">
+            <el-dialog title="编辑用户信息" v-model="editDialogVisible">
                 <el-form :model="editForm">
-                    <el-form-item label="用户姓名">
-                        <el-input v-model="editForm.username"></el-input>
-                    </el-form-item>
-                    <el-form-item label="用户密码">
-                        <el-input v-model="editForm.password"></el-input>
-                    </el-form-item>
-                    <el-form-item label="用户电话">
-                        <el-input v-model="editForm.phonenumber"></el-input>
-                    </el-form-item>
-                    <el-form-item label="用户邮箱">
-                        <el-input v-model="editForm.email"></el-input>
-                    </el-form-item>
-                    <el-form-item label="用户住址">
-                        <el-input v-model="editForm.address"></el-input>
-                    </el-form-item>
                     <el-form-item label="用户类别">
                         <el-select v-model="editForm.role">
                             <el-option label="Admin" value="Admin"></el-option>
@@ -80,7 +68,7 @@
             </el-dialog>
 
             <!-- 删除确认框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+            <el-dialog title="确认删除" v-model="deleteDialogVisible">
                 <span>确定要删除该用户吗？</span>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteDialogVisible = false">取消</el-button>
@@ -97,48 +85,7 @@ export default {
         return {
             search: '', // 搜索关键字
             selectedRole: '', // 用户类型筛选
-            tableData: [
-                {
-                    userid: 1,
-                    username: "xsc",
-                    password: "1234567890",
-                    phonenumber: "16581616",
-                    email: "sadsad@qq.com",
-                    address: "123 Main St",
-                    role: "Owner",
-                    createdat: "2024-08-14 07:28:28"
-                },
-                {
-                    userid: 2,
-                    password: "password456",
-                    phonenumber: "0987654321",
-                    email: "jane.smith@example.com",
-                    username: "Jane Smith",
-                    address: "456 Elm St",
-                    role: "Staff",
-                    createdat: "2024-08-14 07:28:28"
-                },
-                {
-                    userid: 3,
-                    username: "Admin User",
-                    password: "adminpass",
-                    phonenumber: "1122334455",
-                    email: "admin@example.com",
-                    address: "Admin Office",
-                    role: "Admin",
-                    createdat: "2024-08-14 07:28:28"
-                },
-                {
-                    userid: 10,
-                    username: "123",
-                    password: "123456",
-                    phonenumber: "13545769103",
-                    email: "789",
-                    address: "456",
-                    role: "Owner",
-                    createdat: "2024-08-14 07:28:28"
-                }
-            ],
+            tableData: [],
             currentPage: 1, // 当前页
             pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
@@ -147,11 +94,23 @@ export default {
             deleteRow: null, // 待删除的行
         };
     },
+    mounted() {
+        this.$axios.get('/users/list')
+            .then(response => {
+                console.log(this.tableData);
+                this.tableData = response.data;
+                console.log(this.tableData);
+            })
+            .catch(error => {
+                console.log(error);
+                this.$message.error("获取公告列表失败！");
+            });
+    },
     computed: {
         filteredData() {
             return this.tableData.filter(data => {
                 // 根据用户名和用户类型进行筛选
-                const matchesSearch = !this.search || data.username.toLowerCase().includes(this.search.toLowerCase());
+                const matchesSearch = !this.search || (data.username && data.username.toLowerCase().includes(this.search.toLowerCase()));
                 const matchesRole = !this.selectedRole || data.role === this.selectedRole;
                 return matchesSearch && matchesRole;
             });
@@ -160,7 +119,7 @@ export default {
             const start = (this.currentPage - 1) * this.pageSize;
             const end = start + this.pageSize;
             return this.filteredData.slice(start, end);
-        }
+        },
     },
     methods: {
         handleEdit(row) {
@@ -169,11 +128,22 @@ export default {
             this.editDialogVisible = true;
         },
         saveEdit() {
-            // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.userid === this.editForm.userid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
+            this.$axios.post('/users/adupdate', {
+                phonenumber: this.editForm.phonenumber,
+                role: this.editForm.role
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("编辑用户信息成功！");
+                    this.addDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("编辑用户信息失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.editDialogVisible = false;
         },
         handleDelete(row) {
@@ -182,12 +152,23 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.userid === this.deleteRow.userid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
-            this.deleteDialogVisible = false;
+            this.$axios.post('/users/addelete', {
+                phonenumber: this.editForm.phonenumber,
+                role: this.editForm.role
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("删除用户信息成功！");
+                    this.addDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("删除用户信息失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
+            this.editDialogVisible = false;
         },
         handlePageChange(page) {
             this.currentPage = page;
