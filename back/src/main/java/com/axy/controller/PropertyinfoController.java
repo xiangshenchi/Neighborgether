@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axy.pojo.Vehicles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -109,6 +110,32 @@ public class PropertyinfoController {
 
         return response;
     }
-
-
+//管理员修改房产信息
+@PostMapping("/edit")
+public Map<String, Object> adeditp(@RequestBody Propertyinfo propertyinfo){
+    Map<String, Object> response = new HashMap<>();
+    int propertyid = propertyinfo.getPropertyid();
+    String roomnumber = propertyinfo.getRoomnumber();
+    String buildingnumber = propertyinfo.getBuildingnumber();
+    String unitnumber = propertyinfo.getUnitnumber();
+    double area = propertyinfo.getArea();
+    Propertyinfo propertyinfo1 = propertyinfoMapper.getbyid(propertyid);
+    propertyinfo1.setRoomnumber(roomnumber);
+    propertyinfo1.setBuildingnumber(buildingnumber);
+    propertyinfo1.setUnitnumber(unitnumber);
+    propertyinfo1.setArea(area);
+    boolean isUpdated = propertyinfoService.updateById(propertyinfo1);
+    if (isUpdated) {
+        response.put("status", "1");
+        response.put("message", "房产信息修改成功");
+    } else {
+        response.put("status", "0");
+        response.put("message", "房产信息修改失败");
+    }
+    return response;
+}
+//管理员删除房产信息
+public boolean delete(@RequestParam int propertyid) {
+    return propertyinfoService.removeById(propertyid);
+}
 }
