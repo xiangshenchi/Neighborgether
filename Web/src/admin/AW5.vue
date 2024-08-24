@@ -36,12 +36,10 @@
             </el-table-column>
         </el-table>
 
-        <!-- 分页组件 -->
-        <div style="margin-top: 20px; text-align: center; margin-left: 10px;">
-            <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="filteredData.length"
-                @current-change="handleCurrentChange" :current-page="currentPage">
-            </el-pagination>
-        </div>
+        <!-- 分页器 -->
+        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
         <!-- 处理维修对话框 -->
         <el-dialog title="确认处理" :visible.sync="processDialogVisible">
@@ -114,9 +112,16 @@ export default {
                 { RepairID: 8, RepairPhone: "852", RepairContent: "电梯按钮失灵", RepairDate: "2024-08-18", RepairStatus: "处理中" },
                 { RepairID: 9, RepairPhone: "963", RepairContent: "停车场门禁系统故障", RepairDate: "2024-08-14", RepairStatus: "已完成" },
                 { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
+                { RepairID: 10, RepairPhone: "159", RepairContent: "监控摄像头故障", RepairDate: "2024-08-17", RepairStatus: "待处理" },
             ],
             currentPage: 1, // 当前页
-            pageSize: 5, // 每页显示的条目数
+            pageSize: 10, // 每页显示的数据条数
             processDialogVisible: false, // 控制处理确认对话框
             completeDialogVisible: false, // 控制完成确认对话框
             editDialogVisible: false, // 控制编辑对话框
@@ -135,8 +140,9 @@ export default {
             });
         },
         paginatedData() {
-            const startIndex = (this.currentPage - 1) * this.pageSize;
-            return this.filteredData.slice(startIndex, startIndex + this.pageSize);
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.filteredData.slice(start, end);
         }
     },
     methods: {
@@ -190,9 +196,8 @@ export default {
             this.deleteDialogVisible = false;
             this.$message.success("删除成功！");
         },
-        handleCurrentChange(val) {
-            // 更新当前页
-            this.currentPage = val;
+        handlePageChange(page) {
+            this.currentPage = page;
         }
     }
 };

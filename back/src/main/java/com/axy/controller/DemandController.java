@@ -1,8 +1,9 @@
 package com.axy.controller;
 
-import com.axy.common.DupdateRequest;
-import com.axy.mapper.DemandMapper;
-import com.axy.mapper.UsersMapper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.axy.common.DupdateRequest;
+import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Demand;
 import com.axy.service.DemandService;
 
 import jakarta.annotation.Resource;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -28,11 +27,9 @@ import java.util.Map;
 public class DemandController {
     @Resource
     private DemandService demandService;
-    private DemandMapper demandMapper;
-    private UsersMapper usersMapper;
+    private final UsersMapper usersMapper;
 
-    public DemandController(DemandMapper demandMapper, UsersMapper usersMapper) {
-        this.demandMapper = demandMapper;
+    public DemandController(UsersMapper usersMapper) {
         this.usersMapper = usersMapper;
     }
 
@@ -41,7 +38,6 @@ public class DemandController {
     public List<Demand> list(){
         return demandService.list();
     }
-
     //添加投诉
     @PostMapping("/addC")
     public Map<String,Object> addC(@RequestBody DupdateRequest dupdateRequest){

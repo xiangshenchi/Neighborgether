@@ -26,8 +26,8 @@ import welcome from '../components/welcome.vue'
 import AM from '../admin/AM.vue';
 import AW1 from '../admin/AW1.vue';
 import AW2_1 from '../admin/AW2-1.vue';
-import AW2_2 from '../admin/--AW2-2.vue';
-import AW2_3 from '../admin/--AW2-3.vue';
+// import AW2_2 from '../admin/--AW2-2.vue';
+// import AW2_3 from '../admin/--AW2-3.vue';
 import AW3_1 from '../admin/AW3-1.vue';
 import AW3_2 from '../admin/AW3-2.vue';
 import AW3_3 from '../admin/AW3-3.vue';
@@ -72,8 +72,8 @@ const routes = [
     children: [
       { path: 'AW1', name: 'AW1', component: AW1 },
       { path: 'AW2-1', name: 'AW2-1', component: AW2_1 },
-      { path: 'AW2-2', name: 'AW2-2', component: AW2_2 },
-      { path: 'AW2-3', name: 'AW2-3', component: AW2_3 },
+      // { path: 'AW2-2', name: 'AW2-2', component: AW2_2 },
+      // { path: 'AW2-3', name: 'AW2-3', component: AW2_3 },
       { path: 'AW3-1', name: 'AW3-1', component: AW3_1 },
       { path: 'AW3-2', name: 'AW3-2', component: AW3_2 },
       { path: 'AW3-3', name: 'AW3-3', component: AW3_3 },

@@ -30,7 +30,7 @@
         <!-- 分页器 -->
         <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
             @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
-            style="margin-top: 20px; text-align: right;"></el-pagination>
+            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
         <!-- 编辑诉求信息弹出框 -->
         <el-dialog title="编辑诉求信息" :visible.sync="editDialogVisible">
@@ -74,6 +74,20 @@ export default {
             tableData: [
                 { repairid: 1, repaircontent: "水管破裂", repairdate: "2024-08-10", repairstatus: "处理中" },
                 { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                { repairid: 2, repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+
                 // 更多示例数据
             ],
             currentPage: 1, // 当前页
