@@ -19,7 +19,7 @@
           <el-dropdown :hide-on-click="false" @command="handleCommand">
             <span class="el-dropdown-link ipt"
               style="width:7vw;height:auto; display: flex;justify-content: center;align-items: center;margin-top: 0;padding: 0.1vw;margin-right: 1vw;color:black ">
-              业主<el-icon class="el-icon--right"><arrow-down style="margin-left: auto;" /></el-icon>
+              管理员<el-icon class="el-icon--right"><arrow-down style="margin-left: auto;" /></el-icon>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
