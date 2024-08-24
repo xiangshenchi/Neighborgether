@@ -132,6 +132,15 @@ export default {
             });
         }
     },
+    mounted() {
+        this.$axios.get('/repairmanagement/listR', {
+            params: {
+                phonenumber: this.$store.getters.userInfo.phonenumber
+            }
+        }).then(res => {
+            this.tableData = res.data;
+        });
+    },
     methods: {
         handlePay(row) {
             // 打开缴费弹出框并记录选中的缴费记录
