@@ -4,11 +4,11 @@
             <div style="display: flex; align-items: center;">
                 <!-- 搜索框和日期选择器 -->
                 <div style="margin-left: 10px;">
-                    <el-input v-model="search" placeholder="输入公告标题搜索"class="search" />
+                    <el-input v-model="search" placeholder="输入公告标题搜索" class="search" />
                 </div>
                 <div style="margin-left: 20px;">
                     <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                        end-placeholder="结束日期"value-format="yyyy-MM-dd" @change="filterByDate" />
+                        end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="filterByDate" />
                 </div>
                 <!-- 添加公告按钮 -->
                 <div style="margin-left: 20px;">
@@ -17,7 +17,8 @@
             </div>
 
             <!-- 公告表格 -->
-            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }">
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+                :cell-style="{ 'text-align': 'center' }">
                 <el-table-column prop="announcementid" label="公告ID" width="80px"></el-table-column>
                 <el-table-column prop="title" label="公告标题" width="200px"></el-table-column>
                 <el-table-column prop="content" label="公告内容"></el-table-column>
@@ -29,7 +30,7 @@
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
-                        <el-button  @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -122,7 +123,7 @@ export default {
                             publishDate <= this.formatDateToYMD(this.selectedDate[1]));
                     return matchesSearch && matchesDate;
                 })
-                .sort((a, b) =>{return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime()}) // 按发布日期降序排序
+                .sort((a, b) => { return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime() }) // 按发布日期降序排序
         },
         paginatedData() {
             const start = (this.currentPage - 1) * this.pageSize;
@@ -165,12 +166,22 @@ export default {
             console.log(this.addDialogVisible);
         },
         addAnnouncement() {
-            // 添加公告到数据列表
-            const newId = Math.max(...this.tableData.map(item => item.announcementid)) + 1;
-            const newAnnouncement = { ...this.addForm, announcementid: newId, publishDate: `${this.addForm.publishDate} 00:00:00` };
-            this.tableData.push(newAnnouncement);
-            this.addDialogVisible = false;
-            this.$message.success("公告添加成功！");
+            this.$axios.post('/announcements/add', {
+                title: this.addForm.title,
+                content: this.addForm.content
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("添加公告成功！");
+                    this.addDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("添加公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
         },
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
@@ -179,11 +190,23 @@ export default {
         },
         saveEdit() {
             // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.announcementid === this.editForm.announcementid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
-            this.editDialogVisible = false;
+            this.$axios.post('/announcements/edit', {
+                announcementid: this.editForm.announcementid,
+                title: this.editForm.title,
+                content: this.editForm.content,
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("编辑公告成功！");
+                    this.editDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("编辑公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
         },
         handleDelete(row) {
             // 打开删除确认框
@@ -191,12 +214,21 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.announcementid === this.deleteRow.announcementid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
-            this.deleteDialogVisible = false;
+            this.$axios.delete('/announcements/delete', {
+                params: { announcementid: this.deleteRow.announcementid }
+            }).then(response => {
+                if (response.data===true) {
+                    this.$message.success("删除公告成功！");
+                    this.deleteDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("删除公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
         },
         handlePageChange(page) {
             this.currentPage = page;
