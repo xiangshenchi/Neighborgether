@@ -62,6 +62,8 @@ export default {
             this.formSub.address = this.form.address;
             this.formSub.username = this.form.username;
             this.formSub.email = this.form.email;
+        }).catch(err => {
+            this.$message.error('获取用户信息失败,请稍后再试或联系管理员');
         });
     },
     methods: {
