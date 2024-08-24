@@ -1,67 +1,69 @@
 <template>
-    <div>
-        <!-- 搜索框和日期选择器 -->
-        <div style="width: 20%; margin-left: 10px; display: inline-block;">
-            <el-input v-model="search" placeholder="输入访客名搜索" size="mini" class="search" />
+    <el-card style="margin:10px">
+        <div>
+            <!-- 搜索框和日期选择器 -->
+            <div style="width: 20%; margin-left: 10px; display: inline-block;">
+                <el-input v-model="search" placeholder="输入访客名搜索" size="mini" class="search" />
+            </div>
+            <div style="width: 20%; margin-left: 20px; display: inline-block;">
+                <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
+                    end-placeholder="结束日期" size="mini" value-format="yyyy-MM-dd" @change="filterByDate" />
+            </div>
+
+            <!-- 公告表格 -->
+            <el-table :data="filteredData" style="width: 100%">
+                <el-table-column prop="visitid" label="访客ID" width="80px"></el-table-column>
+                <el-table-column prop="visitname" label="访客名字" width="120px"></el-table-column>
+                <el-table-column prop="sex" label="性别" width="80px"></el-table-column>
+                <el-table-column prop="visitphone" label="电话号码" width="150px"></el-table-column>
+                <el-table-column prop="visitreason" label="访问理由" width="200px"></el-table-column>
+                <el-table-column prop="visittime" label="访问时间" width="180px">
+                    <template #default="scope">
+                        {{ formatDate(scope.row.publishDate) }}
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="操作" align="right">
+                    <template #default="scope">
+                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+            <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+                @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
+
+            <!-- 编辑公告信息弹出框 -->
+            <el-dialog title="编辑访客信息" :visible.sync="editDialogVisible">
+                <el-form :model="editForm">
+                    <el-form-item label="访客名字">
+                        <el-input v-model="editForm.title"></el-input>
+                    </el-form-item>
+                    <el-form-item label="访问理由">
+                        <el-input type="textarea" v-model="editForm.content"></el-input>
+                    </el-form-item>
+                    <el-form-item label="访问日期">
+                        <el-date-picker v-model="editForm.publishDate" type="date" value-format="yyyy-MM-dd" />
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="editDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="saveEdit">保存</el-button>
+                </span>
+            </el-dialog>
+
+            <!-- 删除确认框 -->
+            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+                <span>确定要删除该访客信息吗？</span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="deleteDialogVisible = false">取消</el-button>
+                    <el-button type="danger" @click="confirmDelete">删除</el-button>
+                </span>
+            </el-dialog>
         </div>
-        <div style="width: 20%; margin-left: 20px; display: inline-block;">
-            <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                end-placeholder="结束日期" size="mini" value-format="yyyy-MM-dd" @change="filterByDate" />
-        </div>
-
-        <!-- 公告表格 -->
-        <el-table :data="filteredData" style="width: 100%">
-            <el-table-column prop="visitid" label="访客ID" width="80px"></el-table-column>
-            <el-table-column prop="visitname" label="访客名字" width="120px"></el-table-column>
-            <el-table-column prop="sex" label="性别" width="80px"></el-table-column>
-            <el-table-column prop="visitphone" label="电话号码" width="150px"></el-table-column>
-            <el-table-column prop="visitreason" label="访问理由" width="200px"></el-table-column>
-            <el-table-column prop="visittime" label="访问时间" width="180px">
-                <template #default="scope">
-                    {{ formatDate(scope.row.publishDate) }}
-                </template>
-            </el-table-column>
-
-            <el-table-column label="操作" align="right">
-                <template #default="scope">
-                    <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
-        <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
-            @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
-            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
-
-        <!-- 编辑公告信息弹出框 -->
-        <el-dialog title="编辑访客信息" :visible.sync="editDialogVisible">
-            <el-form :model="editForm">
-                <el-form-item label="访客名字">
-                    <el-input v-model="editForm.title"></el-input>
-                </el-form-item>
-                <el-form-item label="访问理由">
-                    <el-input type="textarea" v-model="editForm.content"></el-input>
-                </el-form-item>
-                <el-form-item label="访问日期">
-                    <el-date-picker v-model="editForm.publishDate" type="date" value-format="yyyy-MM-dd" />
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveEdit">保存</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 删除确认框 -->
-        <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
-            <span>确定要删除该访客信息吗？</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="deleteDialogVisible = false">取消</el-button>
-                <el-button type="danger" @click="confirmDelete">删除</el-button>
-            </span>
-        </el-dialog>
-    </div>
+    </el-card>
 </template>
 
 <script>
