@@ -30,11 +30,9 @@ export default {
                 return;
             }
             // 2. 提交到后端接口
-            this.$axios.post('/repairmanagement/add', {
-                phonenumber: this.$store.getters.userInfo.phonenumber,
-                demand: {
-                    demandmsg: this.textarea
-                }
+            this.$axios.post('/repairmanagement/addR', {
+                repairphone: this.$store.getters.userInfo.phonenumber,
+                repaircontent: this.textarea
             }).then(res => {
                 if (res.data.status == 1) {
                     this.$message.success('建议提交成功');
