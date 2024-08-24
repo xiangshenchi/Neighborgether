@@ -15,7 +15,7 @@
             </div>
 
             <!-- 用户表格 -->
-            <el-table :data="filteredData" style="width: 100%">
+            <el-table :data="paginatedData" style="width: 100%">
                 <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
                 <el-table-column prop="username" label="用户名" width="100px"></el-table-column>
                 <el-table-column prop="password" label="密码"></el-table-column>
@@ -140,7 +140,7 @@ export default {
                 }
             ],
             currentPage: 1, // 当前页
-            pageSize: 5, // 每页显示的数据条数
+            pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
             editForm: {}, // 编辑用户的信息

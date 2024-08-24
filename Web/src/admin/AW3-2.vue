@@ -7,7 +7,7 @@
             </div>
 
             <!-- 车辆表格 -->
-            <el-table :data="filteredData" style="width: 100%">
+            <el-table :data="paginatedData" style="width: 100%">
                 <el-table-column prop="vehicleid" label="车辆ID" width="80px"></el-table-column>
                 <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
                 <el-table-column prop="licenseplate" label="车牌号" width="100px"></el-table-column>
@@ -21,6 +21,11 @@
                     </template>
                 </el-table-column>
             </el-table>
+
+            <!-- 分页器 -->
+            <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
+                @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
             <!-- 编辑车辆信息弹出框 -->
             <el-dialog title="编辑车辆信息" :visible.sync="editDialogVisible">
@@ -75,8 +80,38 @@ export default {
                     licenseplate: "XYZ789",
                     vehicletype: "SUV",
                     registrationdate: "2024-08-14 15:30:35"
-                }
+                },
+                {
+                    vehicleid: 2,
+                    userid: 2,
+                    licenseplate: "XYZ789",
+                    vehicletype: "SUV",
+                    registrationdate: "2024-08-14 15:30:35"
+                },
+                {
+                    vehicleid: 2,
+                    userid: 2,
+                    licenseplate: "XYZ789",
+                    vehicletype: "SUV",
+                    registrationdate: "2024-08-14 15:30:35"
+                },
+                {
+                    vehicleid: 2,
+                    userid: 2,
+                    licenseplate: "XYZ789",
+                    vehicletype: "SUV",
+                    registrationdate: "2024-08-14 15:30:35"
+                },
+                {
+                    vehicleid: 2,
+                    userid: 2,
+                    licenseplate: "XYZ789",
+                    vehicletype: "SUV",
+                    registrationdate: "2024-08-14 15:30:35"
+                },
             ],
+            currentPage: 1, // 当前页
+            pageSize: 10, // 每页显示的数据条数
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
             editForm: {}, // 编辑车辆的信息
@@ -89,6 +124,11 @@ export default {
                 // 根据车牌号进行筛选
                 return !this.search || data.licenseplate.toLowerCase().includes(this.search.toLowerCase());
             });
+        },
+        paginatedData() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.filteredData.slice(start, end);
         }
     },
     methods: {
@@ -117,6 +157,9 @@ export default {
                 this.tableData.splice(index, 1);
             }
             this.deleteDialogVisible = false;
+        },
+        handlePageChange(page) {
+            this.currentPage = page;
         }
     }
 };

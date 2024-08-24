@@ -154,7 +154,7 @@ export default {
 
             ],
             currentPage: 1, // 当前页
-            pageSize: 5, // 每页显示的数据条数
+            pageSize: 10, // 每页显示的数据条数
             addDialogVisible: false, // 控制添加弹出框的显示
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
