@@ -1,9 +1,11 @@
 package com.axy.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axy.pojo.Announcements;
 import org.springframework.web.bind.annotation.*;
 
 import com.axy.common.LupdateRequest;
@@ -69,4 +71,46 @@ public class LivingpaymentController {
         return liv.removeById(paymentid);
     }
     //管理员添加缴费信息
+    @PostMapping("/add")
+    public Map<String, Object> add(@RequestBody Livingpayment livingpayment) {
+        Map<String, Object> response = new HashMap<>();
+        String paymenttype = (String) livingpayment.getPaymenttype();
+        BigDecimal amount = livingpayment.getAmount();
+        livingpayment.setPaymenttype(paymenttype);
+        livingpayment.setAmount(amount);
+        boolean isSaved = liv.save(livingpayment);
+        if (isSaved) {
+            response.put("status", "1");
+            response.put("message", "缴费信息添加成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "缴费信息添加失败");
+        }
+        return response;
+    }
+    //管理员编辑缴费信息
+    @PostMapping("/edit")
+    public Map<String, Object> adedit(@RequestBody Livingpayment livingpayment){
+        Map<String, Object> response = new HashMap<>();
+        int paymentid =livingpayment.getPaymentid();
+        String paymenttype = (String) livingpayment.getPaymenttype();
+        BigDecimal amount = livingpayment.getAmount();
+        Livingpayment li=livingpaymentMapper.getbyphonenumber(paymentid);
+        li.setPaymenttype(paymenttype);
+        li.setAmount(amount);
+        boolean isUpdated = liv.updateById(li);
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "公告信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "公告信息修改失败");
+        }
+        return response;
+    }
+    //展示所有缴费信息
+    @GetMapping("/list")
+    public List<Livingpayment> list() {
+        return liv.list();
+    }
 }

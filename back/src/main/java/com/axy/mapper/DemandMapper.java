@@ -27,6 +27,9 @@ public interface DemandMapper extends BaseMapper<Demand> {
     //删除投诉建议
     boolean delete(@RequestParam("demandid") int demandid);
 
+    Demand getbyphonenumber(int demandid);
+
+    List<Demand> listall();
 }
 
 

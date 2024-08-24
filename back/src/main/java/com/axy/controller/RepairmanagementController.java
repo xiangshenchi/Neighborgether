@@ -1,10 +1,12 @@
 package com.axy.controller;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axy.pojo.Livingpayment;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,5 +65,28 @@ public class RepairmanagementController {
         } else {
             return repairmanagementMapper.listbyph(phonenumber);
         }
+    }
+    //展示所有报修信息
+    @GetMapping("/list")
+    public List<Repairmanagement> list() {
+        return repairmanagementService.list();
+    }
+    //管理员编辑报修信息
+    @PostMapping("/edit")
+    public Map<String, Object> adedit(@RequestBody Repairmanagement repairmanagement){
+        Map<String, Object> response = new HashMap<>();
+        int repairid = repairmanagement.getRepairid();
+        String repairstatus = (String) repairmanagement.getRepairstatus();
+        Repairmanagement re=repairmanagementMapper.getbyphonenumber(repairid);
+        re.setRepairstatus(repairstatus);
+        boolean isUpdated = repairmanagementService.updateById(re);
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "报修信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "报修信息修改失败");
+        }
+        return response;
     }
 }

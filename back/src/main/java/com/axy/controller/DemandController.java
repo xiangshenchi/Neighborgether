@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axy.mapper.DemandMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +29,17 @@ public class DemandController {
     @Resource
     private DemandService demandService;
     private final UsersMapper usersMapper;
+    private DemandMapper demandMapper;
 
-    public DemandController(UsersMapper usersMapper) {
+    public DemandController(UsersMapper usersMapper, DemandMapper demandMapper) {
         this.usersMapper = usersMapper;
+        this.demandMapper = demandMapper;
     }
 
     @GetMapping("/list")
-    //展示投诉建议
+    //展示投诉
     public List<Demand> list(){
-        return demandService.list();
+        return demandMapper.listall();
     }
     //添加投诉
     @PostMapping("/addC")
@@ -88,5 +91,23 @@ public class DemandController {
     public boolean delete(@RequestParam("demandid") int demandid){
         return demandService.removeById(demandid);
         
+    }
+    //管理员编辑投诉
+    @PostMapping("/edit")
+    public Map<String, Object> adedit(@RequestBody Demand demand){
+        Map<String, Object> response = new HashMap<>();
+        int demandid=demand.getDemandid();
+        String status= (String) demand.getStatus();
+        Demand de=demandMapper.getbyphonenumber(demandid);
+        de.setStatus(status);
+        boolean isUpdated = demandService.updateById(de);
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "投诉信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "投诉信息修改失败");
+        }
+        return response;
     }
 }
