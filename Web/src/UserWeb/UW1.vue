@@ -1,10 +1,10 @@
 <template>
-  <div class="web-contain" style="display:flex;width:100%;height:100%;flex-direction: column;">
+  <div class="web-contain" style="display:flex;width:100%;height:100%;flex-direction: column;justify-content: space-between;">
     <!-- 时间选择器 -->
-    <el-card style="margin:10px;padding:0px;overflow: auto;height:140px">
+    <el-card style="margin:10px;padding:0px;">
       <div class="date-picker">
         <div class="block" style="display: flex;align-items: center;">
-          <h4>日期选择</h4>
+          <h4 style="margin-right: 15px">日期选择</h4>
           <el-date-picker v-model="dateRange" type="daterange" unlink-panels range-separator="至"
             start-placeholder="起始时间" end-placeholder="截至时间" :shortcuts="shortcuts" :size="size"
             @change="handleDateChange" />
@@ -13,7 +13,7 @@
       </div>
     </el-card>
     <!-- 数据表 -->
-    <el-card style="margin:10px;overflow-y: auto;">
+    <el-card style="margin:10px;overflow-y: auto;flex:1">
       <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;padding: 10px;">
         <el-table :data="currentTableData" :row-style="rowStyle" :header-cell-style="{ 'text-align': 'center' }"
           :cell-style="{ 'text-align': 'center' }">
@@ -156,6 +156,9 @@ const shortcuts = [
 </script>
 
 <style scoped>
+:deep(.el-card .el-card__body){
+  padding: 0px;
+}
 .container {
   display: flex;
   flex-direction: column;

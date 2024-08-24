@@ -4,21 +4,12 @@
             <h2>我要建议</h2>
         </el-card>
         <el-card style="margin: 10px;">
-            <div style=" margin-top: 10px;">
-                <div class="block">
-                    <el-date-picker v-model="date" type="date" placeholder="选择日期">
-                    </el-date-picker>
-                </div>
-            </div>
-            <div>
-
-            </div>
             <div style="margin-top: 10px;">
                 <el-input type="textarea" :rows="4" placeholder="请输入建议内容" v-model="textarea">
                 </el-input>
             </div>
             <div style="margin-top: 10px;">
-                <el-button v-slot="extra" type="primary" size="small" @click="submit()">提交建议</el-button>
+                <el-button v-slot="extra" type="primary" @click="submit()">提交建议</el-button>
             </div>
         </el-card>
     </div>
