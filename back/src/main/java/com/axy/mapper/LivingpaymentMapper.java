@@ -4,6 +4,8 @@ import com.axy.pojo.Livingpayment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
 * @author DELL
 * @description 针对表【livingpayment】的数据库操作Mapper
@@ -13,6 +15,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LivingpaymentMapper extends BaseMapper<Livingpayment> {
 
+    List<Livingpayment> listC(int id);
+    List<Livingpayment> listD(int id);
+    Livingpayment getById(int id);
 }
 
 
