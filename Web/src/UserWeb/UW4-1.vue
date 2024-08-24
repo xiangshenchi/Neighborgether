@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     data() {
         return {
@@ -34,31 +32,28 @@ export default {
     methods: {
         submit() {
             // 1. 检查是否填写完整
-            if (!this.textarea || !this.date) {
-                this.$message.error('请填写报修内容和选择日期');
+            if (this.textarea.trim() === '') {
+                this.$message.error('请填写投诉内容');
                 return;
             }
-
-            // 2. 准备请求数据
-            const formData = {
-                repairContent: this.textarea,   // 报修内容
-                repairDate: this.date,          // 报修日期
-                userId: 1,                      // 假设这里有当前用户 ID，可以从 store 获取用户信息
-            };
-
-            // 3. 提交到后端接口
-            axios.post('http://localhost:8090/demand/add', formData)  //API接口需修改
-                .then(response => {
-                    // 4. 提交成功后提示
-                    this.$message.success('报修提交成功');
-                    // 清空输入内容
+            // 2. 提交到后端接口
+            this.$axios.post('/repairmanagement/add', {
+                phonenumber: this.$store.getters.userInfo.phonenumber,
+                demand: {
+                    demandmsg: this.textarea
+                }
+            }).then(res => {
+                if (res.data.status == 1) {
+                    this.$message.success('建议提交成功');
                     this.textarea = '';
-                    this.date = '';
-                })
-                .catch(error => {
+                }
+                else{
                     this.$message.error('提交失败，请稍后重试');
-                    console.error(error);
-                });
+                }
+            }).catch(error => {
+                this.$message.error('出错了，请稍后重试或联系管理员');
+                console.error(error);
+            });
         }
     }
 };
