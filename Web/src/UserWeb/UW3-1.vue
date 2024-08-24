@@ -27,11 +27,16 @@
             </div>
 
             <!-- 用户缴费表格 -->
-            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="paymentid" label="缴费ID" width="80px"></el-table-column>
-                <el-table-column prop="paymenttype" label="缴费类型" width="100px"></el-table-column>
+            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+                :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="paymentid" label="缴费ID"></el-table-column>
+                <el-table-column prop="paymenttype" label="缴费类型"></el-table-column>
                 <el-table-column prop="amount" label="金额" sortable></el-table-column>
-                <el-table-column prop="paymentdate" label="缴费日期" sortable></el-table-column>
+                <el-table-column prop="paymentdate" label="缴费日期" sortable>
+                    <template #default="scope">
+                        {{ formatDate(scope.row.paymentdate) }}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="status" label="状态" width="100px">
                     <template #default="scope">
                         <span v-if="scope.row.status === '已缴'">已缴</span>
@@ -93,6 +98,11 @@ export default {
         });
     },
     methods: {
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
+        },
         handlePay(row) {
             // 打开缴费弹出框并记录选中的缴费记录
             this.selectedPayment = row;
@@ -102,7 +112,7 @@ export default {
             // 模拟缴费操作
             this.$axios.post('/livingpayment/update', {
                 phonenumber: this.$store.getters.userInfo.phonenumber,
-                livingpayment:{
+                livingpayment: {
                     paymentid: this.selectedPayment.paymentid,
                 }
             }).then(res => {

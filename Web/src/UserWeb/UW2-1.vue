@@ -9,7 +9,7 @@
                 <el-descriptions-item label="手机号">{{ form.phonenumber }}</el-descriptions-item>
                 <el-descriptions-item label="邮箱">{{ form.email }}</el-descriptions-item>
                 <el-descriptions-item label="地址">{{ form.address }}</el-descriptions-item>
-                <el-descriptions-item label="创建时间">{{ form.createdat }}</el-descriptions-item>
+                <el-descriptions-item label="创建时间">{{ this.formatDate(form.createdat) }}</el-descriptions-item>
                 <el-descriptions-item label="角色">
                     <el-tag size="small">{{ form.role }}</el-tag>
                 </el-descriptions-item>
@@ -73,6 +73,11 @@ export default {
             }).catch(() => {
                 this.$message.info('已取消');
             });
+        },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
         },
         onSubmit() {
             this.$axios.post('/users/update', {

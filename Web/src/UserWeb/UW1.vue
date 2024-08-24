@@ -23,7 +23,11 @@
               {{ (currentPage - 1) * pageSize + scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="publishdate" label="发布时间"/>
+          <el-table-column label="发布时间">
+            <template #default="scope">
+              {{ formatDate(scope.row.publishdate) }}
+            </template>
+          </el-table-column>
           <el-table-column prop="title" label="公告标题" />
           <el-table-column prop="content" label="公告内容">
             <template #default="scope">
@@ -90,8 +94,16 @@ interface Announcement {
   userid: string;
 }
 const tableData = ref<Announcement[]>([])
-const test = () => {
-  console.log(tableData);
+function formatDate(date: string | number | Date): string {
+  // 格式化日期时间，显示精确到小时和分钟
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  return new Date(date).toLocaleString('zh-CN', options);
 }
 const handleClick = (row: Announcement) => {
   console.log(row)
