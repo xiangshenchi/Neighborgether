@@ -20,6 +20,8 @@ public interface VehiclesMapper extends BaseMapper<Vehicles> {
     List<Vehicles> listC(int id);
 
     Vehicles findbyid(Integer id);
+
+    Vehicles getbyvid(int vehicleid);
 }
 
 
