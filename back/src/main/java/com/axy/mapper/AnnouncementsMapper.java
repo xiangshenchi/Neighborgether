@@ -18,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Mapper
 public interface AnnouncementsMapper extends BaseMapper<Announcements> {
 
-    //展示公告
-     List<Announcements> list();
-    //增加公告
-    boolean add(@RequestBody Announcements announcements);
-    //删除公告
-    boolean delete(@RequestParam("announcementid") int announcementid);
+
+    Announcements getbyphonenumber(int announcementphonenumber);
 }
 
 

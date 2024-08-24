@@ -4,13 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Users;
@@ -134,5 +128,44 @@ public class UsersController {
         wrapper.like(Users::getUsername, users.getUsername());
         return userService.list(wrapper);
     }
+    //管理员修改用户信息
+    @PostMapping("/adupdate")
+    public Map<String, Object> adupdate(@RequestBody Users users) {
+        Map<String, Object> response = new HashMap<>();
+        String phonenumber = users.getPhonenumber();
+        String role = (String) users.getRole();
+        // 调用UserService的方法来更新用户信息
+        //boolean isUpdated = userService.updateUser(username, email, address);
+        Users uuser=usersMapper.findbyphone(phonenumber);
+        uuser.setRole(role);
+        boolean isUpdated = userService.updateById(uuser);
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "用户信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "用户信息修改失败");
+        }
+
+        // 返回更新结果
+        return response;
+    }
+    //管理员删除用户信息
+    @PostMapping("/addelete")
+    public Map<String, Object> addelete(@RequestParam String phonenumber) {
+        Map<String, Object> response = new HashMap<>();
+        // 调用UserService的方法来删除用户信息
+        boolean isDeleted = usersMapper.delByPhonenumber(phonenumber);
+        if (isDeleted) {
+            response.put("status", "1");
+            response.put("message", "用户信息删除成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "用户信息删除失败");
+        }
+        // 返回删除结果
+        return response;
+    }
+
 
 }

@@ -17,4 +17,7 @@
         AnnouncementID,Title,Content,
         PublishDate,Attachment,UserID
     </sql>
+    <select id="getbyphonenumber" resultType="com.axy.pojo.Announcements">
+        select * from Announcements where announcementid = #{announcementid}
+    </select>
 </mapper>

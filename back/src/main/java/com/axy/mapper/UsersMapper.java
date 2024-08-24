@@ -23,6 +23,7 @@ public interface UsersMapper extends BaseMapper<Users> {
     String findrole(String phonenumber);
     Users findbyphone(String phonenumber);
     Integer findid(String phonenumber);
+    Boolean delByPhonenumber(String phonenumber);
 }
 
 
