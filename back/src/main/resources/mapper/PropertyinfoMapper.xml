@@ -23,6 +23,9 @@
     <select id="findbyid" resultType="com.axy.pojo.Propertyinfo">
         select * from propertyinfo where userid = #{userid}
     </select>
+    <select id="getbyid" resultType="com.axy.pojo.Propertyinfo">
+        select * from propertyinfo where propertyid = #{propertyid}
+    </select>
     <!--    <select id="findid" resultType="java.lang.Integer">-->
 <!--        select userid from users where phonenumber = #{phonenumber}-->
 <!--    </select>-->

@@ -22,7 +22,9 @@
     <select id="findbyid" resultType="com.axy.pojo.Vehicles">
         select * from Vehicles where userid = #{userid}
     </select>
-
+    <select id="getbyvid" resultType="com.axy.pojo.Vehicles">
+        select * from Vehicles where vehicleid = #{vehicleid}
+    </select>
 
 
 </mapper>

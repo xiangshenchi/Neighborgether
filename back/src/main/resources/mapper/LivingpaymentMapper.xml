@@ -18,7 +18,9 @@
         Amount,PaymentDate,Status
     </sql>
     <select id="listC" resultType="com.axy.pojo.Livingpayment">
-        select * from livingpayment where userid = #{userid}
+        SELECT p.PaymentID, u.UserName,p.PaymentType, p.Amount, p.PaymentDate, p.Status
+        FROM livingpayment p
+                 JOIN Users u ON p.UserID = u.UserID where p.userid = #{userid}
     </select>
     <select id="listD" resultType="com.axy.pojo.Livingpayment">
         select * from livingpayment where userid = #{userid} and status='未缴' and paymentid = #{paymentid}

@@ -4,13 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.axy.pojo.Announcements;
+import org.springframework.web.bind.annotation.*;
 
 import com.axy.common.VupdateRequest;
 import com.axy.mapper.UsersMapper;
@@ -99,5 +94,29 @@ public class VehiclesController {
         // 返回更新结果
         return response;
     }
-
+    //管理员编辑车辆信息
+    @PostMapping("/edit")
+    public Map<String, Object> adeditv(@RequestBody Vehicles vehicles){
+        Map<String, Object> response = new HashMap<>();
+        int vehicleid=vehicles.getVehicleid();
+        String licenseplate=vehicles.getLicenseplate();
+        String vehicletype=vehicles.getVehicletype();
+        Vehicles ve=vehiclesMapper.getbyvid(vehicleid);
+        ve.setLicenseplate(licenseplate);
+        ve.setVehicletype(vehicletype);
+        boolean isUpdated = vehiclesService.updateById(ve);
+        if (isUpdated) {
+            response.put("status", "1");
+            response.put("message", "车辆信息修改成功");
+        } else {
+            response.put("status", "0");
+            response.put("message", "车辆信息修改失败");
+        }
+        return response;
+    }
+    @DeleteMapping("/delete")
+    //删除公告
+    public boolean delete(@RequestParam("vehicleid") int vehicleid) {
+        return vehiclesService.removeById(vehicleid);
+    }
 }

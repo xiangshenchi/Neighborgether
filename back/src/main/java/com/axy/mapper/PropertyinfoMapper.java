@@ -18,7 +18,8 @@ public interface PropertyinfoMapper extends BaseMapper<Propertyinfo> {
 
     List<Propertyinfo> listP(int userid);
     Propertyinfo findbyid(Integer id);
-    
+
+    Propertyinfo getbyid(int propertyid);
 }
 
 
