@@ -11,11 +11,11 @@
         </div>
 
         <!-- 维修管理表格 -->
-        <el-table :data="paginatedData" style="width: 100%">
+        <el-table :data="paginatedData" style="width: 100%; margin-left: 20px">
             <el-table-column prop="RepairID" label="维修ID" width="80px"></el-table-column>
             <el-table-column prop="RepairPhone" label="联系电话" width="120px"></el-table-column>
-            <el-table-column prop="RepairContent" label="维修内容" width="150px"></el-table-column>
-            <el-table-column prop="RepairDate" label="维修日期"></el-table-column>
+            <el-table-column prop="RepairContent" label="维修内容" width="300px"></el-table-column>
+            <el-table-column prop="RepairDate" label="维修日期" width="200px"></el-table-column>
             <el-table-column prop="RepairStatus" label="状态" width="100px">
                 <template #default="scope">
                     <span v-if="scope.row.RepairStatus === '处理中'">处理中</span>
@@ -24,7 +24,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作" align="right">
+            <!-- <el-table-column label="操作" align="right">
                 <template #default="scope">
                     <el-button v-if="scope.row.RepairStatus === '待处理'" size="mini" type="primary"
                         @click="handleProcess(scope.row)">处理</el-button>
@@ -33,13 +33,13 @@
                     <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                     <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
 
         <!-- 分页器 -->
         <el-pagination :current-page="currentPage" :page-size="pageSize" :total="filteredData.length"
             @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
-            style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
+            style="margin-top: 20px; text-align: right; margin-left: 20px;"></el-pagination>
 
         <!-- 处理维修对话框 -->
         <el-dialog title="确认处理" :visible.sync="processDialogVisible">
