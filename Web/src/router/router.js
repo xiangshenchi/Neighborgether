@@ -26,8 +26,8 @@ import welcome from '../components/welcome.vue'
 import AM from '../admin/AM.vue';
 import AW1 from '../admin/AW1.vue';
 import AW2_1 from '../admin/AW2-1.vue';
-import AW2_2 from '../admin/AW2-2.vue';
-import AW2_3 from '../admin/AW2-3.vue';
+import AW2_2 from '../admin/--AW2-2.vue';
+import AW2_3 from '../admin/--AW2-3.vue';
 import AW3_1 from '../admin/AW3-1.vue';
 import AW3_2 from '../admin/AW3-2.vue';
 import AW3_3 from '../admin/AW3-3.vue';
