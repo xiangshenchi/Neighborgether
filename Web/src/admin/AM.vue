@@ -11,7 +11,7 @@
         </div>
       </div>
       <div style="width:auto;height:100%;display: flex;align-items: center;">
-        <div>
+        <div style="font-size: large; font-weight: bold; margin-left: 20px;">
           <span>{{ dateFormat(newDate) }}</span>
         </div>
         <el-avatar size="large" src="/public/logo.jpg" style="float:right;margin-left: auto;" />
@@ -40,7 +40,12 @@
                 <ChatLineSquare />
               </el-icon>控制台</span>
           </el-menu-item>
-          <el-sub-menu index="2">
+          <el-menu-item index="/AM/AW2-1">
+            <span slot="title"><el-icon>
+                <User />
+              </el-icon>用户管理</span>
+          </el-menu-item>
+          <!-- <el-sub-menu index="2">
             <template #title>
               <el-icon>
                 <User />
@@ -48,7 +53,7 @@
             </template>
             <el-menu-item index="/AM/AW2-1">业主</el-menu-item>
             <el-menu-item index="/AM/AW2-2">管理员</el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
           <el-sub-menu index="3">
             <template #title>
               <el-icon>
@@ -58,11 +63,18 @@
             <el-menu-item index="/AM/AW3-1">公告管理</el-menu-item>
             <el-menu-item index="/AM/AW3-2">车辆管理</el-menu-item>
             <el-menu-item index="/AM/AW3-3">房产管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-4">楼栋管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-4">访客管理</el-menu-item>
-            <el-menu-item index="/AM/AW3-5">工作分配</el-menu-item>
+            <!-- <el-menu-item index="/AM/AW3-4">楼栋管理</el-menu-item> -->
+            <el-menu-item index="/AM/AW3-5">访客管理</el-menu-item>
+            <!-- <el-menu-item index="/AM/AW3-6">工作分配</el-menu-item> -->
           </el-sub-menu>
-          <el-sub-menu index="4">
+
+          <el-menu-item index="/AM/AW4">
+            <span slot="title"><el-icon>
+                <Clock />
+              </el-icon>缴费管理</span>
+          </el-menu-item>
+
+          <!-- <el-sub-menu index="4">
             <template #title>
               <el-icon>
                 <Clock />
@@ -70,14 +82,15 @@
             </template>
             <el-menu-item index="/AM/AW4-1">水费</el-menu-item>
             <el-menu-item index="/AM/AW4-2">物业费</el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
+
           <el-menu-item index="/AM/AW5">
             <el-icon>
               <Service />
             </el-icon>
             <span slot="title">报修管理</span>
           </el-menu-item>
-          <el-menu-item index="/AM/AW5">
+          <el-menu-item index="/AM/AW6">
             <el-icon>
               <More />
             </el-icon>
@@ -120,7 +133,7 @@ function dateFormat(date) {
   const weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
   const week = date.getDay()
 
-  return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds} ${weekArr[week]}`
+  return `${year}年${month}月${day}日-${weekArr[week]}-${hours}:${minutes}:${seconds}`
 }
 
 // 设置定时器更新时间
@@ -198,8 +211,8 @@ const tableData = ref(Array.from({ length: 20 }).fill(item))
   color: #22A637;
   font-size: 2.2vh;
   font-family: 'PingFang SC';
-  font-weight: 450;
-  text-shadow: 7px 7px 7px #BDE5C3;
+  font-weight: 550;
+  text-shadow: 4px 2px 5px #85b38ca1;
 }
 
 .example-showcase .el-dropdown+.el-dropdown {
