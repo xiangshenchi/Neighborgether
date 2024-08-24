@@ -13,7 +13,11 @@
                 <el-table-column prop="userid" label="用户ID"></el-table-column>
                 <el-table-column prop="licenseplate" label="车牌号"></el-table-column>
                 <el-table-column prop="vehicletype" label="车辆类型" ></el-table-column>
-                <el-table-column prop="registrationdate" label="登记日期" ></el-table-column>
+                <el-table-column prop="registrationdate" label="登记日期" >
+                    <template #default="scope">
+                        {{ formatDate(scope.row.registrationdate) }}
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
@@ -149,6 +153,11 @@ export default {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
             this.editForm = { ...row };
             this.editDialogVisible = true;
+        },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
         },
         saveEdit() {
             // 保存编辑后的数据

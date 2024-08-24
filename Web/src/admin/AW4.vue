@@ -31,12 +31,16 @@
             <!-- 用户缴费表格 -->
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="paymentid" label="缴费ID" width="80px"></el-table-column>
+                <el-table-column prop="paymentid" label="缴费ID"></el-table-column>
                 <!-- <el-table-column prop="UserName" label="用户名" width="120px"></el-table-column> -->
-                <el-table-column prop="paymenttype" label="缴费类型" width="100px"></el-table-column>
-                <el-table-column prop="amount" label="金额" width="100px"></el-table-column>
-                <el-table-column prop="paymentdate" label="缴费日期" width="250px"></el-table-column>
-                <el-table-column prop="status" label="状态" width="100px">
+                <el-table-column prop="paymenttype" label="缴费类型"></el-table-column>
+                <el-table-column prop="amount" label="金额"></el-table-column>
+                <el-table-column label="缴费日期">
+                    <template #default="scope">
+                        {{ formatDate(scope.row.paymentdate) }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="status" label="状态">
                     <template #default="scope">
                         <span v-if="scope.row.status === '已缴'">已缴</span>
                         <span v-else>未缴</span>
@@ -172,6 +176,11 @@ export default {
                 paymentdate: '',
                 status: ''//默认未缴费
             };
+        },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
         },
         saveAdd() {
             this.$axios.post('/livingpayment/add', {

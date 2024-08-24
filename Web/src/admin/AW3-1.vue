@@ -8,7 +8,8 @@
                 </div>
                 <div style="margin-left: 20px;">
                     <el-date-picker v-model="selectedDate" type="daterange" unlink-panels range-separator="至"
-                    start-placeholder="起始时间" end-placeholder="截至时间" @change="filterByDate" @clear="selectedDate=[]" />
+                        start-placeholder="起始时间" end-placeholder="截至时间" @change="filterByDate"
+                        @clear="selectedDate = []" />
                 </div>
                 <!-- 添加公告按钮 -->
                 <div style="margin-left: 20px;">
@@ -19,10 +20,16 @@
             <!-- 公告表格 -->
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
                 :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="announcementid" label="公告ID" width="80px"></el-table-column>
-                <el-table-column prop="title" label="公告标题" width="200px"></el-table-column>
-                <el-table-column prop="content" label="公告内容"></el-table-column>
-                <el-table-column label="发布日期" width="180px">
+                <el-table-column prop="announcementid" label="公告ID"></el-table-column>
+                <el-table-column prop="title" label="公告标题"></el-table-column>
+                <el-table-column prop="content" label="公告内容">
+                    <template #default="scope">
+                        <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            {{ scope.row.content }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="发布日期">
                     <template #default="scope">
                         {{ formatDate(scope.row.publishdate) }}
                     </template>
@@ -215,7 +222,7 @@ export default {
             this.$axios.delete('/announcements/delete', {
                 params: { announcementid: this.deleteRow.announcementid }
             }).then(response => {
-                if (response.data===true) {
+                if (response.data === true) {
                     this.$message.success("删除公告成功！");
                     this.deleteDialogVisible = false;
                     window.location.reload();

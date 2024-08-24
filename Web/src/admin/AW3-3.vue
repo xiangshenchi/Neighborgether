@@ -26,12 +26,12 @@
             <!-- 房源信息表格 -->
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="propertyid" label="房源ID" width="80px"></el-table-column>
-                <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
-                <el-table-column prop="roomnumber" label="房间号" width="100px"></el-table-column>
-                <el-table-column prop="buildingnumber" label="楼栋" width="100px"></el-table-column>
-                <el-table-column prop="unitnumber" label="单元" width="100px"></el-table-column>
-                <el-table-column prop="area" label="面积(㎡)" width="160px"></el-table-column>
+                <el-table-column prop="propertyid" label="房源ID"></el-table-column>
+                <el-table-column prop="userid" label="用户ID"></el-table-column>
+                <el-table-column prop="roomnumber" label="房间号"></el-table-column>
+                <el-table-column prop="buildingnumber" label="楼栋"></el-table-column>
+                <el-table-column prop="unitnumber" label="单元"></el-table-column>
+                <el-table-column prop="area" label="面积(㎡)"></el-table-column>
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">

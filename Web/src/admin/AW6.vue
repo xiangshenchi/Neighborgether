@@ -16,10 +16,20 @@
             <!-- 诉求表格 -->
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="demandid" label="诉求ID" width="80px"></el-table-column>
-                <el-table-column prop="demandmsg" label="诉求内容" width="180px"></el-table-column>
-                <el-table-column prop="demanddate" label="诉求日期" width="150px"></el-table-column>
-                <el-table-column prop="status" label="处理状态" width="100px"></el-table-column>
+                <el-table-column prop="demandid" label="诉求ID"></el-table-column>
+                <el-table-column prop="demandmsg" label="诉求内容">
+                    <template #default="scope">
+                        <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            {{ scope.row.demandmsg }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="诉求日期">
+                    <template #default="scope">
+                        {{ formatDate(scope.row.demanddate) }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="status" label="处理状态"></el-table-column>
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
                         <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
@@ -109,6 +119,11 @@ export default {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
             this.editForm = { ...row };
             this.editDialogVisible = true;
+        },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
         },
         saveEdit() {
             this.$axios.post('/demand/edit', {

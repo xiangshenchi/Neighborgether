@@ -14,11 +14,21 @@
             <!-- 维修管理表格 -->
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="repairid" label="维修ID" width="80px"></el-table-column>
-                <el-table-column prop="repairphone" label="联系电话" width="120px"></el-table-column>
-                <el-table-column prop="repaircontent" label="维修内容" width="150px"></el-table-column>
-                <el-table-column prop="repairdate" label="维修日期"></el-table-column>
-                <el-table-column prop="repairstatus" label="状态" width="100px">
+                <el-table-column prop="repairid" label="维修ID"></el-table-column>
+                <el-table-column prop="repairphone" label="联系电话"></el-table-column>
+                <el-table-column prop="repaircontent" label="维修内容">
+                    <template #default="scope">
+                        <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            {{ scope.row.repaircontent }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="维修日期">
+                    <template #default="scope">
+                        {{ formatDate(scope.row.repairdate) }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="repairstatus" label="状态">
                     <template #default="scope">
                         <span v-if="scope.row.repairstatus === '处理中'">处理中</span>
                         <span v-else-if="scope.row.repairstatus === '已完成'">已完成</span>
@@ -120,6 +130,11 @@ export default {
             // 打开处理确认对话框，并记录选中的维修
             this.selectedRepair = row;
             this.processDialogVisible = true;
+        },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
         },
         confirmProcess() {
             // 模拟处理维修

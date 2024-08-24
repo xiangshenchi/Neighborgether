@@ -11,13 +11,14 @@
             </div>
 
             <!-- 公告表格 -->
-            <el-table :data="filteredData" style="width: 100%">
-                <el-table-column prop="visitid" label="访客ID" width="80px"></el-table-column>
-                <el-table-column prop="visitname" label="访客名字" width="120px"></el-table-column>
+            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+            :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="visitid" label="访客ID"></el-table-column>
+                <el-table-column prop="visitname" label="访客名字"></el-table-column>
                 <!-- <el-table-column prop="sex" label="性别" width="80px"></el-table-column> -->
-                <el-table-column prop="visitphone" label="电话号码" width="150px"></el-table-column>
-                <el-table-column prop="visitreason" label="访问理由" width="200px"></el-table-column>
-                <el-table-column prop="visitdate" label="访问时间" width="180px">
+                <el-table-column prop="visitphone" label="电话号码"></el-table-column>
+                <el-table-column prop="visitreason" label="访问理由"></el-table-column>
+                <el-table-column prop="visitdate" label="访问时间">
                     <template #default="scope">
                         {{ formatDate(scope.row.visitdate) }}
                     </template>
