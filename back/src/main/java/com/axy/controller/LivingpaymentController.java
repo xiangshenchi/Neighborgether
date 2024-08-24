@@ -1,25 +1,32 @@
 package com.axy.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.axy.common.LupdateRequest;
-import com.axy.common.VupdateRequest;
 import com.axy.mapper.LivingpaymentMapper;
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Livingpayment;
 import com.axy.service.LivingpaymentService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import jakarta.annotation.Resource;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/livingpayment")
 
 public class LivingpaymentController {
-    private UsersMapper usersMapper;
-    private LivingpaymentMapper livingpaymentMapper;
+    private final UsersMapper usersMapper;
+    private final LivingpaymentMapper livingpaymentMapper;
     @Resource
     private LivingpaymentService liv;
 

@@ -22,7 +22,7 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="repairdate" label="维修日期"></el-table-column>
+                <el-table-column prop="repairdate" label="维修日期" sortable></el-table-column>
                 <el-table-column prop="repairstatus" label="状态">
                     <template #default="scope">
                         <span v-if="scope.row.repairstatus === '处理中'">处理中</span>

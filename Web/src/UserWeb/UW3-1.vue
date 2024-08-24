@@ -27,73 +27,32 @@
             </div>
 
             <!-- 用户缴费表格 -->
-            <el-table :data="filteredData" style="width: 100%">
-                <el-table-column prop="PaymentID" label="缴费ID" width="80px"></el-table-column>
-                <el-table-column prop="PaymentType" label="缴费类型" width="100px"></el-table-column>
-                <el-table-column prop="Amount" label="金额"></el-table-column>
-                <el-table-column prop="PaymentDate" label="缴费日期"></el-table-column>
-                <el-table-column prop="Status" label="状态" width="100px">
+            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="paymentid" label="缴费ID" width="80px"></el-table-column>
+                <el-table-column prop="paymenttype" label="缴费类型" width="100px"></el-table-column>
+                <el-table-column prop="amount" label="金额" sortable></el-table-column>
+                <el-table-column prop="paymentdate" label="缴费日期" sortable></el-table-column>
+                <el-table-column prop="status" label="状态" width="100px">
                     <template #default="scope">
-                        <span v-if="scope.row.Status === '已缴'">已缴</span>
+                        <span v-if="scope.row.status === '已缴'">已缴</span>
                         <span v-else>未缴</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column label="操作" align="right">
+                <el-table-column label="操作">
                     <template #default="scope">
-                        <el-button v-if="scope.row.Status === '未缴'" size="mini" type="primary"
+                        <el-button v-if="scope.row.status === '未缴'" size="mini" type="primary"
                             @click="handlePay(scope.row)">缴费</el-button>
-                        <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
                     </template>
                 </el-table-column>
             </el-table>
 
             <!-- 缴费弹出框 -->
-            <el-dialog title="确认缴费" :visible.sync="payDialogVisible">
-                <p>您的缴费金额为: {{ selectedPayment.Amount }} 元</p>
+            <el-dialog title="确认缴费" v-model="payDialogVisible">
+                <p>您的缴费金额为: {{ selectedPayment.amount }} 元</p>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="payDialogVisible = false">取消</el-button>
                     <el-button type="primary" @click="confirmPay">确认缴费</el-button>
-                </span>
-            </el-dialog>
-
-            <!-- 编辑缴费信息弹出框 -->
-            <el-dialog title="编辑缴费信息" :visible.sync="editDialogVisible">
-                <el-form :model="editForm">
-                    <el-form-item label="缴费类型">
-                        <el-select v-model="editForm.PaymentType">
-                            <el-option label="水费" value="水费"></el-option>
-                            <el-option label="电费" value="电费"></el-option>
-                            <el-option label="物业费" value="物业费"></el-option>
-                            <el-option label="其他" value="其他"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="金额">
-                        <el-input v-model="editForm.Amount"></el-input>
-                    </el-form-item>
-                    <el-form-item label="缴费日期">
-                        <el-date-picker v-model="editForm.PaymentDate" type="datetime"></el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="状态">
-                        <el-select v-model="editForm.Status">
-                            <el-option label="已缴" value="已缴"></el-option>
-                            <el-option label="未缴" value="未缴"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="editDialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="saveEdit">保存</el-button>
-                </span>
-            </el-dialog>
-
-            <!-- 删除确认框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
-                <span>确定要删除该条缴费记录吗？</span>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="deleteDialogVisible = false">取消</el-button>
-                    <el-button type="danger" @click="confirmDelete">删除</el-button>
                 </span>
             </el-dialog>
         </div>
@@ -108,32 +67,24 @@ export default {
             selectedPaymentType: '', // 选择的缴费类型
             selectedPaymentStatus: '', // 选择的缴费状态
             tableData: [
-                { PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
-                { PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
-                { PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
-                { PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" },
             ],
             payDialogVisible: false, // 控制缴费弹出框的显示
-            editDialogVisible: false, // 控制编辑弹出框的显示
-            deleteDialogVisible: false, // 控制删除确认框的显示
             selectedPayment: {}, // 当前选中的缴费记录
-            editForm: {}, // 编辑表单
-            deleteRow: null, // 待删除的行
         };
     },
     computed: {
         filteredData() {
             return this.tableData.filter(data => {
                 // 根据缴费类型、缴费状态和搜索关键字进行筛选
-                const matchesSearch = !this.search || data.PaymentType.toLowerCase().includes(this.search.toLowerCase());
-                const matchesPaymentType = !this.selectedPaymentType || data.PaymentType === this.selectedPaymentType;
-                const matchesPaymentStatus = !this.selectedPaymentStatus || data.Status === this.selectedPaymentStatus;
+                const matchesSearch = !this.search || data.paymenttype.toLowerCase().includes(this.search.toLowerCase());
+                const matchesPaymentType = !this.selectedPaymentType || data.paymenttype === this.selectedPaymentType;
+                const matchesPaymentStatus = !this.selectedPaymentStatus || data.status === this.selectedPaymentStatus;
                 return matchesSearch && matchesPaymentType && matchesPaymentStatus;
             });
         }
     },
     mounted() {
-        this.$axios.get('/repairmanagement/listR', {
+        this.$axios.get('/livingpayment/listF', {
             params: {
                 phonenumber: this.$store.getters.userInfo.phonenumber
             }
@@ -149,9 +100,24 @@ export default {
         },
         confirmPay() {
             // 模拟缴费操作
-            this.selectedPayment.Status = '已缴';
-            this.payDialogVisible = false;
-            this.$message.success("缴费成功！");
+            this.$axios.post('/livingpayment/update', {
+                phonenumber: this.$store.getters.userInfo.phonenumber,
+                livingpayment:{
+                    paymentid: this.selectedPayment.paymentid,
+                }
+            }).then(res => {
+                if (res.data.status === "1") {
+                    this.selectedPayment.status = '已缴';
+                    this.payDialogVisible = false;
+                    this.$message.success("缴费成功！");
+                }
+                else {
+                    this.$message.error("缴费失败！");
+                }
+            }).catch(err => {
+                console.log(err);
+                this.$message.error("未知错误，请稍后重试或联系管理员！");
+            });
         },
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
@@ -160,7 +126,7 @@ export default {
         },
         saveEdit() {
             // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.PaymentID === this.editForm.PaymentID);
+            const index = this.tableData.findIndex(item => item.paymentid === this.editForm.paymentid);
             if (index !== -1) {
                 this.tableData.splice(index, 1, { ...this.editForm });
             }
@@ -173,7 +139,7 @@ export default {
         },
         confirmDelete() {
             // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.PaymentID === this.deleteRow.PaymentID);
+            const index = this.tableData.findIndex(item => item.paymentid === this.deleteRow.paymentid);
             if (index !== -1) {
                 this.tableData.splice(index, 1);
             }
