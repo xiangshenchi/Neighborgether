@@ -18,6 +18,8 @@ public interface LivingpaymentMapper extends BaseMapper<Livingpayment> {
     List<Livingpayment> listC(int id);
     Livingpayment listD(int userid,int paymentid);
     Livingpayment getById(int id);
+
+    Livingpayment getbyphonenumber(int paymentid);
 }
 
 

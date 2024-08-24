@@ -19,4 +19,7 @@
     <select id="listbyph" resultType="com.axy.pojo.Repairmanagement">
         select * from Repairmanagement where RepairPhone = #{repairphone}
     </select>
+    <select id="getbyphonenumber" resultType="com.axy.pojo.Repairmanagement">
+        select * from Repairmanagement where repairid = #{repairid}
+    </select>
 </mapper>

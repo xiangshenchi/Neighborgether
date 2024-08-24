@@ -16,6 +16,7 @@ import java.util.List;
 public interface RepairmanagementMapper extends BaseMapper<Repairmanagement> {
     List<Repairmanagement> listbyph(String repairphone);
 
+    Repairmanagement getbyphonenumber(int repairid);
 }
 
 

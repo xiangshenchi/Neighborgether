@@ -28,4 +28,7 @@
     <select id="getById" resultType="com.axy.pojo.Livingpayment">
         select * from livingpayment where userid = #{userid} and status='未缴'
     </select>
+    <select id="getbyphonenumber" resultType="com.axy.pojo.Livingpayment">
+        select * from livingpayment where paymentid = #{paymentid}
+    </select>
 </mapper>

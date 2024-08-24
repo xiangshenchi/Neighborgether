@@ -19,4 +19,10 @@
         DemandDate,UserID,StaffID,
         Status
     </sql>
+    <select id="getbyphonenumber" resultType="com.axy.pojo.Demand">
+        select * from Demand where demandid = #{demandid} and demandtype = "投诉"
+    </select>
+    <select id="listall" resultType="com.axy.pojo.Demand">
+        select * from Demand where demandtype = "投诉"
+    </select>
 </mapper>
