@@ -21,7 +21,7 @@
         </div>
 
         <!-- 用户缴费表格 -->
-        <el-table :data="filteredData" style="width: 100%">
+        <el-table :data="paginatedData" style="width: 100%">
             <el-table-column prop="PaymentID" label="缴费ID" width="80px"></el-table-column>
             <el-table-column prop="UserName" label="用户名" width="120px"></el-table-column>
             <el-table-column prop="PaymentType" label="缴费类型" width="100px"></el-table-column>
@@ -43,6 +43,13 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <!-- 分页器 -->
+        <div style="text-align: right; margin-top: 20px; margin-left: 10px;">
+            <el-pagination background layout="prev, pager, next" :current-page="currentPage" :page-size="pageSize"
+                :total="filteredData.length" @current-change="handleCurrentChange">
+            </el-pagination>
+        </div>
 
         <!-- 缴费弹出框 -->
         <el-dialog title="确认缴费" :visible.sync="payDialogVisible">
@@ -100,11 +107,14 @@ export default {
         return {
             selectedPaymentType: '', // 选择的缴费类型
             selectedPaymentStatus: '', // 选择的缴费状态
+            currentPage: 1, // 当前页码
+            pageSize: 10, // 每页显示的条目数
             tableData: [
                 { UserName: "张三", PaymentID: 1, PaymentType: "水费", Amount: 50.75, PaymentDate: "2024-08-14", Status: "已缴" },
                 { UserName: "李四", PaymentID: 2, PaymentType: "电费", Amount: 120.00, PaymentDate: "2024-08-14", Status: "未缴" },
                 { UserName: "王五", PaymentID: 3, PaymentType: "物业费", Amount: 300.00, PaymentDate: "2024-08-14", Status: "已缴" },
                 { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" },
+                // 你可以继续添加更多数据
             ],
             payDialogVisible: false, // 控制缴费弹出框的显示
             editDialogVisible: false, // 控制编辑弹出框的显示
@@ -122,6 +132,11 @@ export default {
                 const matchesPaymentStatus = !this.selectedPaymentStatus || data.Status === this.selectedPaymentStatus;
                 return matchesPaymentType && matchesPaymentStatus;
             });
+        },
+        paginatedData() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.filteredData.slice(start, end);
         }
     },
     methods: {
@@ -161,6 +176,9 @@ export default {
                 this.tableData.splice(index, 1);
             }
             this.deleteDialogVisible = false;
+        },
+        handleCurrentChange(page) {
+            this.currentPage = page;
         }
     }
 };
