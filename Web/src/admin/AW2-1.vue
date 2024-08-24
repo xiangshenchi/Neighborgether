@@ -100,11 +100,11 @@ export default {
             tableData: [
                 {
                     userid: 1,
-                    username: "",
-                    password: "",
+                    username: "xsc",
+                    password: "1234567890",
                     phonenumber: "16581616",
-                    email: "",
-                    address: "",
+                    email: "sadsad@qq.com",
+                    address: "123 Main St",
                     role: "Owner",
                     createdat: "2024-08-14 07:28:28"
                 },

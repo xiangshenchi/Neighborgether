@@ -27,12 +27,12 @@
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
-                        <el-button v-if="scope.row.RepairStatus === '待处理'" size="mini" type="primary"
+                        <!-- <el-button v-if="scope.row.RepairStatus === '待处理'" size="mini" type="primary"
                             @click="handleProcess(scope.row)">处理</el-button>
                         <el-button v-if="scope.row.RepairStatus === '处理中'" size="mini" type="success"
-                            @click="handleComplete(scope.row)">完成</el-button>
+                            @click="handleComplete(scope.row)">完成</el-button> -->
                         <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                        <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
                     </template>
                 </el-table-column>
             </el-table>
@@ -87,13 +87,13 @@
             </el-dialog>
 
             <!-- 删除确认对话框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+            <!-- <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
                 <span>确定要删除该条维修记录吗？</span>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteDialogVisible = false">取消</el-button>
                     <el-button type="danger" @click="confirmDelete">删除</el-button>
                 </span>
-            </el-dialog>
+            </el-dialog> -->
         </div>
     </el-card>
 </template>
@@ -184,20 +184,20 @@ export default {
             this.$message.success("编辑成功！");
             this.editDialogVisible = false;
         },
-        handleDelete(row) {
-            // 打开删除确认对话框
-            this.deleteRow = row;
-            this.deleteDialogVisible = true;
-        },
-        confirmDelete() {
-            // 确认删除，并从表格中移除数据
-            const index = this.tableData.findIndex(item => item.RepairID === this.deleteRow.RepairID);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
-            this.deleteDialogVisible = false;
-            this.$message.success("删除成功！");
-        },
+        // handleDelete(row) {
+        //     // 打开删除确认对话框
+        //     this.deleteRow = row;
+        //     this.deleteDialogVisible = true;
+        // },
+        // confirmDelete() {
+        //     // 确认删除，并从表格中移除数据
+        //     const index = this.tableData.findIndex(item => item.RepairID === this.deleteRow.RepairID);
+        //     if (index !== -1) {
+        //         this.tableData.splice(index, 1);
+        //     }
+        //     this.deleteDialogVisible = false;
+        //     this.$message.success("删除成功！");
+        // },
         handlePageChange(page) {
             this.currentPage = page;
         }

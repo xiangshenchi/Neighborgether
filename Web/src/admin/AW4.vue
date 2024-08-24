@@ -1,33 +1,40 @@
 <template>
     <el-card style="margin:10px">
         <div>
-            <!-- 缴费类型筛选 -->
-            <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
-                <el-select v-model="selectedPaymentType" placeholder="选择缴费类型" size="mini" clearable>
-                    <el-option label="所有缴费类型" value=""></el-option>
-                    <el-option label="水费" value="水费"></el-option>
-                    <el-option label="电费" value="电费"></el-option>
-                    <el-option label="物业费" value="物业费"></el-option>
-                    <el-option label="其他" value="其他"></el-option>
-                </el-select>
-            </div>
+            <div style="display: flex; align-items: center;">
+                <!-- 缴费类型筛选 -->
+                <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
+                    <el-select v-model="selectedPaymentType" placeholder="选择缴费类型" size="mini" clearable>
+                        <el-option label="所有缴费类型" value=""></el-option>
+                        <el-option label="水费" value="水费"></el-option>
+                        <el-option label="电费" value="电费"></el-option>
+                        <el-option label="物业费" value="物业费"></el-option>
+                        <el-option label="其他" value="其他"></el-option>
+                    </el-select>
+                </div>
 
-            <!-- 缴费状态筛选 -->
-            <div style="width: 12%; margin-left: 20px; display: inline-block;">
-                <el-select v-model="selectedPaymentStatus" placeholder="选择缴费状态" size="mini" clearable>
-                    <el-option label="所有状态" value=""></el-option>
-                    <el-option label="已缴" value="已缴"></el-option>
-                    <el-option label="未缴" value="未缴"></el-option>
-                </el-select>
+                <!-- 缴费状态筛选 -->
+                <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
+                    <el-select v-model="selectedPaymentStatus" placeholder="选择缴费状态" size="mini" clearable>
+                        <el-option label="所有状态" value=""></el-option>
+                        <el-option label="已缴" value="已缴"></el-option>
+                        <el-option label="未缴" value="未缴"></el-option>
+                    </el-select>
+                </div>
+
+                <!-- 添加公告按钮 -->
+                <div style="width: 12%; margin-left: 10px; margin-bottom: 10px; display: inline-block;">
+                    <el-button type="primary" @click="showAddDialog">添加缴费</el-button>
+                </div>
             </div>
 
             <!-- 用户缴费表格 -->
             <el-table :data="paginatedData" style="width: 100%">
                 <el-table-column prop="PaymentID" label="缴费ID" width="80px"></el-table-column>
-                <el-table-column prop="UserName" label="用户名" width="120px"></el-table-column>
+                <!-- <el-table-column prop="UserName" label="用户名" width="120px"></el-table-column> -->
                 <el-table-column prop="PaymentType" label="缴费类型" width="100px"></el-table-column>
-                <el-table-column prop="Amount" label="金额"></el-table-column>
-                <el-table-column prop="PaymentDate" label="缴费日期"></el-table-column>
+                <el-table-column prop="Amount" label="金额" width="100px"></el-table-column>
+                <el-table-column prop="PaymentDate" label="缴费日期" width="250px"></el-table-column>
                 <el-table-column prop="Status" label="状态" width="100px">
                     <template #default="scope">
                         <span v-if="scope.row.Status === '已缴'">已缴</span>
@@ -37,8 +44,8 @@
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
-                        <el-button v-if="scope.row.Status === '未缴'" size="mini" type="primary"
-                            @click="handlePay(scope.row)">缴费</el-button>
+                        <!-- <el-button v-if="scope.row.Status === '未缴'" size="mini" type="primary"
+                            @click="handlePay(scope.row)">缴费</el-button> -->
                         <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
@@ -50,20 +57,11 @@
                 @current-change="handlePageChange" layout="total, prev, pager, next, jumper"
                 style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
-            <!-- 缴费弹出框 -->
-            <el-dialog title="确认缴费" :visible.sync="payDialogVisible">
-                <p>用户 {{ selectedPayment.UserName }} 的缴费金额为: {{ selectedPayment.Amount }} 元</p>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="payDialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="confirmPay">确认缴费</el-button>
-                </span>
-            </el-dialog>
-
-            <!-- 编辑缴费信息弹出框 -->
-            <el-dialog title="编辑缴费信息" :visible.sync="editDialogVisible">
-                <el-form :model="editForm">
+            <!-- 添加缴费弹出框 -->
+            <el-dialog title="添加缴费信息" :visible.sync="addDialogVisible">
+                <el-form :model="addForm">
                     <el-form-item label="缴费类型">
-                        <el-select v-model="editForm.PaymentType">
+                        <el-select v-model="addForm.PaymentType" placeholder="选择缴费类型">
                             <el-option label="水费" value="水费"></el-option>
                             <el-option label="电费" value="电费"></el-option>
                             <el-option label="物业费" value="物业费"></el-option>
@@ -71,23 +69,25 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="金额">
-                        <el-input v-model="editForm.Amount"></el-input>
+                        <el-input v-model="addForm.Amount" placeholder="输入金额"></el-input>
                     </el-form-item>
                     <el-form-item label="缴费日期">
-                        <el-date-picker v-model="editForm.PaymentDate" type="datetime"></el-date-picker>
+                        <el-date-picker v-model="addForm.PaymentDate" type="datetime"
+                            placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                     <el-form-item label="状态">
-                        <el-select v-model="editForm.Status">
+                        <el-select v-model="addForm.Status" placeholder="选择缴费状态">
                             <el-option label="已缴" value="已缴"></el-option>
                             <el-option label="未缴" value="未缴"></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="editDialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="saveEdit">保存</el-button>
+                    <el-button @click="addDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="saveAdd">保存</el-button>
                 </span>
             </el-dialog>
+
 
             <!-- 删除确认框 -->
             <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
@@ -125,6 +125,13 @@ export default {
                 { UserName: "赵六", PaymentID: 4, PaymentType: "其他", Amount: 200.00, PaymentDate: "2024-08-15", Status: "未缴" },
                 // 你可以继续添加更多数据
             ],
+            addDialogVisible: false, // 控制新增缴费弹出框的显示
+            addForm: { // 新增缴费表单
+                PaymentType: '',
+                Amount: '',
+                PaymentDate: '',
+                Status: ''  //默认未缴费
+            },
             payDialogVisible: false, // 控制缴费弹出框的显示
             editDialogVisible: false, // 控制编辑弹出框的显示
             deleteDialogVisible: false, // 控制删除确认框的显示
@@ -149,6 +156,31 @@ export default {
         }
     },
     methods: {
+        showAddDialog() {
+            this.addDialogVisible = true;
+            // 打开弹窗时重置表单
+            this.addForm = {
+                PaymentType: '',
+                Amount: '',
+                PaymentDate: '',
+                Status: ''//默认未缴费
+            };
+        },
+        saveAdd() {
+            // 为新增缴费生成唯一的缴费ID（简单递增示例）
+            const newPaymentID = this.tableData.length ? this.tableData[this.tableData.length - 1].PaymentID + 1 : 1;
+            const newPayment = {
+                PaymentID: newPaymentID,
+                UserName: "新用户", // 你可以根据需要替换为实际的用户选择逻辑
+                PaymentType: this.addForm.PaymentType,
+                Amount: this.addForm.Amount,
+                PaymentDate: this.addForm.PaymentDate,
+                Status: this.addForm.Status
+            };
+            this.tableData.push(newPayment);
+            this.addDialogVisible = false; // 关闭弹窗
+            this.$message.success("新增缴费成功！");
+        },
         handlePay(row) {
             // 打开缴费弹出框并记录选中的缴费记录
             this.selectedPayment = row;
