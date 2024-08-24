@@ -6,50 +6,64 @@
 
         <!-- 基本车辆信息 -->
         <el-card style="margin: 10px;">
-            <el-descriptions class="margin-top" title="基本车辆信息" :column="3" :size="size">
-                <el-descriptions-item label="车主">{{ form.owner }}</el-descriptions-item>
-                <el-descriptions-item label="车牌号">{{ form.plateNumber }}</el-descriptions-item>
-                <el-descriptions-item label="车辆类型">{{ form.vehicleType }}</el-descriptions-item>
-                <el-descriptions-item label="登记时间">{{ form.registrationDate }}</el-descriptions-item>
+            <el-descriptions class="margin-top" title="基本车辆信息" :column="1" :size="size">
+                <el-descriptions-item label="车牌号">{{ form.licenseplate }}</el-descriptions-item>
+                <el-descriptions-item label="车辆类型">{{ form.vehicletype }}</el-descriptions-item>
+                <el-descriptions-item label="登记时间">{{ form.registrationdate }}</el-descriptions-item>
             </el-descriptions>
         </el-card>
 
         <!-- 账号信息更新 -->
         <el-card style="margin: 10px;">
             <h4 style="margin: 5px;">修改信息</h4>
-            <el-form-item label="车主" :label-position="itemLabelPosition">
-                <el-input v-model="formSub.owner" />
-            </el-form-item>
             <el-form-item label="车牌号" :label-position="itemLabelPosition">
-                <el-input v-model="formSub.building" />
+                <el-input v-model="formSub.licenseplate" />
             </el-form-item>
             <el-form-item label="车辆类型" :label-position="itemLabelPosition">
-                <el-input v-model="formSub.vehicleType" />
+                <el-input v-model="formSub.vehicletype" />
             </el-form-item>
-            <el-button type="primary" @click="confirm()" color="#1EB71E">提交</el-button>
+            <el-button type="primary" @click="confirm()" color="#1EB71E" :disabled="butisdisabled">提交</el-button>
         </el-card>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
     data() {
         return {
             size: '',
             form: {
-                owner: '', 
-                plateNumber: '', 
-                vehicleType: '', 
-                registrationDate: ''
+                owner: '',
+                licenseplate: '',
+                vehicletype: '',
+                registrationdate: ''
             },
+            butisdisabled: false,
             formSub: {
-                owner: '', 
-                plateNumber: '', 
-                vehicleType: '', 
+                owner: '',
+                licenseplate: '',
+                vehicletype: '',
             },
         };
+    },
+    mounted() {
+        console.log(this.$store.getters.userInfo.phonenumber);
+        this.$axios.get('/vehicles/listC', {
+            params: {
+                phonenumber: this.$store.getters.userInfo.phonenumber
+            }
+        }).then(res => {
+            if (res.data.length == 0) {
+                this.$message.error('暂无车辆信息');
+                return;
+            }
+            this.form = res.data[0];
+            this.formSub.licenseplate = this.form.licenseplate;
+            this.formSub.vehicletype = this.form.vehicletype;
+        }).catch(err => {
+            this.$message.error('获取车辆信息失败,请稍后再试或者联系管理员');
+        });
     },
     methods: {
         confirm() {
@@ -60,11 +74,14 @@ export default {
             });
         },
         onSubmit() {
-            this.$axios.post('/vehicle/update', {
-                owner: this.formSub.owner,
-                plateNumber: this.formSub.plateNumber,
-                vehicleType: this.formSub.vehicleType,
+            this.$axios.post('/vehicles/update', {
+                phonenumber: this.$store.getters.userInfo.phonenumber,
+                vehicles: {
+                    licenseplate: this.formSub.licenseplate,
+                    vehicletype: this.formSub.vehicletype
+                }
             }).then(res => {
+                this.butisdisabled = true;
                 this.$message.success('修改成功,将于1s后刷新页面');
                 setTimeout(() => {
                     window.location.reload();

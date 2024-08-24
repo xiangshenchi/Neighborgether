@@ -1,42 +1,51 @@
 <template>
   <div class="web-contain" style="display:flex;width:100%;height:100%;flex-direction: column;">
     <!-- 时间选择器 -->
-    <div class="date-picker">
-      <div class="block">
-        <el-date-picker v-model="dateRange" type="daterange" unlink-panels range-separator="至" start-placeholder="起始时间"
-          end-placeholder="截至时间" :shortcuts="shortcuts" :size="size" @change="handleDateChange" />
-      </div>
-    </div>
-    <!-- 数据表 -->
-    <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;">
-      <el-table :data="currentTableData" :row-style="rowStyle" :header-cell-style="{ 'text-align': 'center' }"
-        :cell-style="{ 'text-align': 'center' }">
-        <el-table-column prop="announcementid" label="序号" />
-        <el-table-column prop="publishdate" label="发布时间" />
-        <el-table-column prop="title" label="公告标题" />
-        <el-table-column prop="content" label="公告内容">
-      <template #default="scope">
-        <div class="ellipsis">
-          {{ scope.row.content }}
+    <el-card style="margin:10px;padding:0px;overflow: auto;height:140px">
+      <div class="date-picker">
+        <div class="block" style="display: flex;align-items: center;">
+          <h4>日期选择</h4>
+          <el-date-picker v-model="dateRange" type="daterange" unlink-panels range-separator="至"
+            start-placeholder="起始时间" end-placeholder="截至时间" :shortcuts="shortcuts" :size="size"
+            @change="handleDateChange" />
         </div>
-      </template>
-    </el-table-column>
-        <el-table-column prop="userid" label="发布人" />
-        <el-table-column fixed="right" label="公告详情">
-          <template #default>
-            <el-button link type="primary" @click="handleClick">
-              详情
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <!-- 分页器 -->
-    <div class="pagination-block">
-      <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
-        :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper"
-        :total="filteredData.length" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-    </div>
+        <el-button type="primary" @click="handleDateDelete">取消</el-button>
+      </div>
+    </el-card>
+    <!-- 数据表 -->
+    <el-card style="margin:10px;overflow-y: auto;">
+      <div style="flex:1;max-width: 100%;width: 100%;overflow: auto;padding: 10px;">
+        <el-table :data="currentTableData" :row-style="rowStyle" :header-cell-style="{ 'text-align': 'center' }"
+          :cell-style="{ 'text-align': 'center' }">
+          <el-table-column prop="announcementid" label="序号" />
+          <el-table-column prop="publishdate" label="发布时间" />
+          <el-table-column prop="title" label="公告标题" />
+          <el-table-column prop="content" label="公告内容">
+            <template #default="scope">
+              <div class="ellipsis">
+                {{ scope.row.content }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="userid" label="发布人" />
+          <el-table-column fixed="right" label="公告详情">
+            <template #default>
+              <el-button link type="primary" @click="handleClick">
+                详情
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-card>
+    <el-card style="margin: 10px;">
+      <!-- 分页器 -->
+      <div class="pagination-block">
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 50]"
+          :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper"
+          :total="filteredData.length" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -51,7 +60,7 @@ const size = ref<ComponentSize>('default')
 const background = ref(false)
 const disabled = ref(false)
 const dateRange = ref<Date[]>([])
-  interface Announcement {
+interface Announcement {
   announcementid: number;
   publishdate: string;
   title: string;
@@ -67,7 +76,7 @@ async function fetchData() {
   try {
     const res = await (proxy as any).$axios.get('/announcements/list')
     console.log(res.data.list)
-    tableData.value=res.data
+    tableData.value = res.data
     console.log(tableData.value)
   } catch (error) {
     console.error('Error fetching data:', error)
@@ -100,7 +109,10 @@ const handleCurrentChange = (val: number) => {
 const handleDateChange = () => {
   currentPage.value = 1
 }
-
+const handleDateDelete = () => {
+  dateRange.value = []
+  currentPage.value = 1
+}
 const handleClick = () => {
   console.log('click')
 }
@@ -161,9 +173,7 @@ const shortcuts = [
 }
 
 .date-picker .block {
-  padding: 30px 0;
   text-align: center;
-  border-right: solid 1px var(--el-border-color);
 }
 
 .date-picker .block:last-child {
@@ -182,10 +192,9 @@ const shortcuts = [
   flex: 0;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
   width: 100%;
-  bottom: 10px;
 }
+
 .ellipsis {
   overflow: hidden;
   white-space: nowrap;

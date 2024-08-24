@@ -11,7 +11,7 @@
         </div>
       </div>
       <div style="width:auto;height:100%;display: flex;align-items: center;">
-        <div>
+        <div style="font-size: large; font-weight: bold; margin-left: 20px;">
           <span>{{ dateFormat(newDate) }}</span>
         </div>
         <el-avatar size="large" src="/public/logo.jpg" style="float:right;margin-left: auto;" />
@@ -133,7 +133,7 @@ function dateFormat(date) {
   const weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
   const week = date.getDay()
 
-  return `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds} ${weekArr[week]}`
+  return `${year}年${month}月${day}日-${weekArr[week]}-${hours}:${minutes}:${seconds}`
 }
 
 // 设置定时器更新时间
@@ -211,8 +211,8 @@ const tableData = ref(Array.from({ length: 20 }).fill(item))
   color: #22A637;
   font-size: 2.2vh;
   font-family: 'PingFang SC';
-  font-weight: 450;
-  text-shadow: 7px 7px 7px #BDE5C3;
+  font-weight: 550;
+  text-shadow: 4px 2px 5px #85b38ca1;
 }
 
 .example-showcase .el-dropdown+.el-dropdown {
