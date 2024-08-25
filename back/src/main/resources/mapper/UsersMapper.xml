@@ -50,4 +50,8 @@
     <select id="findid" resultType="java.lang.Integer">
         select userid from users where phonenumber = #{phonenumber}
     </select>
+    <select id="isUserExists" resultType="com.axy.pojo.Users">
+        select * from users where userid=#{userid}
+    </select>
+
 </mapper>
