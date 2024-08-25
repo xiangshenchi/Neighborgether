@@ -11,7 +11,7 @@
             </div>
 
             <!-- 公告表格 -->
-            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
                 <el-table-column prop="visitid" label="访客ID"></el-table-column>
                 <el-table-column prop="visitname" label="访客名字"></el-table-column>

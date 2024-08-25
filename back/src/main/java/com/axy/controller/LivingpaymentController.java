@@ -80,9 +80,11 @@ public class LivingpaymentController {
     @PostMapping("/add")
     public Map<String, Object> add(@RequestBody Livingpayment livingpayment) {
         Map<String, Object> response = new HashMap<>();
+        int userid = livingpayment.getUserid();
         String paymenttype = (String) livingpayment.getPaymenttype();
         BigDecimal amount = livingpayment.getAmount();
         livingpayment.setPaymenttype(paymenttype);
+        livingpayment.setUserid(userid);
         livingpayment.setAmount(amount);
         livingpayment.setStatus("未缴"); 
         boolean isSaved = liv.save(livingpayment);

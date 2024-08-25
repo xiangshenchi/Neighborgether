@@ -32,6 +32,7 @@
             <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }">
                 <el-table-column prop="paymentid" label="缴费ID"></el-table-column>
+                <el-table-column prop="userid" label="用户ID"></el-table-column>
                 <!-- <el-table-column prop="UserName" label="用户名" width="120px"></el-table-column> -->
                 <el-table-column prop="paymenttype" label="缴费类型"></el-table-column>
                 <el-table-column prop="amount" label="金额"></el-table-column>
@@ -65,6 +66,9 @@
             <!-- 添加缴费弹出框 -->
             <el-dialog title="添加缴费信息" v-model="addDialogVisible">
                 <el-form :model="addForm">
+                    <el-form-item label="用户id">
+                        <el-input v-model="addForm.paymentid" placeholder="输入用户id"></el-input>
+                    </el-form-item>
                     <el-form-item label="缴费类型">
                         <el-select v-model="addForm.paymenttype" placeholder="选择缴费类型">
                             <el-option label="水费" value="水费"></el-option>
@@ -126,10 +130,9 @@ export default {
             tableData: [],
             addDialogVisible: false, // 控制新增缴费弹出框的显示
             addForm: { // 新增缴费表单
+                paymentid: '',
                 paymenttype: '',
                 amount: '',
-                paymentdate: '',
-                status: ''  //默认未缴费
             },
             payDialogVisible: false, // 控制缴费弹出框的显示
             editDialogVisible: false, // 控制编辑弹出框的显示
@@ -184,6 +187,7 @@ export default {
         },
         saveAdd() {
             this.$axios.post('/livingpayment/add', {
+                userid: this.addForm.paymentid,
                 paymenttype: this.addForm.paymenttype,
                 amount: this.addForm.amount
             }).then(response => {
@@ -191,6 +195,9 @@ export default {
                     this.$message.success("添加缴费成功！");
                     this.addDialogVisible = false;
                     window.location.reload();
+                }
+                else if (response.data.status === '0') {
+                    this.$message.error("该用户id不存在,添加缴费失败！");
                 }
                 else {
                     this.$message.error("添加缴费失败！");
