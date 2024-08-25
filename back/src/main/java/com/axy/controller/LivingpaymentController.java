@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.axy.service.UsersService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class LivingpaymentController {
     private final LivingpaymentMapper livingpaymentMapper;
     @Resource
     private LivingpaymentService liv;
+    private UsersService usersService;
 
     public LivingpaymentController(UsersMapper usersMapper, LivingpaymentMapper livingpaymentMapper) {
         this.usersMapper = usersMapper;
@@ -80,8 +82,16 @@ public class LivingpaymentController {
     @PostMapping("/add")
     public Map<String, Object> add(@RequestBody Livingpayment livingpayment) {
         Map<String, Object> response = new HashMap<>();
+        int userid = livingpayment.getUserid();
+        // 检查userid是否在user表中存在
+        if (usersMapper.isUserExists(userid)==null) {
+            response.put("status", "0");
+            response.put("message", "用户ID不存在，缴费信息添加失败");
+            return response;
+        }
         String paymenttype = (String) livingpayment.getPaymenttype();
         BigDecimal amount = livingpayment.getAmount();
+        livingpayment.setUserid(userid);
         livingpayment.setPaymenttype(paymenttype);
         livingpayment.setAmount(amount);
         livingpayment.setStatus("未缴"); 
