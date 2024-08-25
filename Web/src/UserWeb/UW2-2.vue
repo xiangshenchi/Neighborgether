@@ -57,11 +57,10 @@ export default {
                 phonenumber: this.$store.getters.userInfo.phonenumber
             }
         }).then(res => {
-            if(res.data.length == 0){
+            if (res.data.length == 0) {
                 this.$message.error('暂无房产信息');
                 return;
             }
-            this.butisdisabled=true;
             console.log(res.data[0]);
             this.form = res.data[0];
             this.formSub.area = this.form.area;
