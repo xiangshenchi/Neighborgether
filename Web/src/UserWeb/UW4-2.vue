@@ -45,16 +45,16 @@ export default {
         return {
             selectedRepairStatus: '', // 选择的维修状态筛选
             tableData: [
-                { repairid: 1, RepairPhone: "789", repaircontent: "水管破裂", repairdate: "2024-08-10", repairstatus: "处理中" },
-                { repairid: 2, RepairPhone: "123", repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
-                { repairid: 3, RepairPhone: "456", repaircontent: "空调故障", repairdate: "2024-08-15", repairstatus: "处理中" },
-                { repairid: 4, RepairPhone: "987", repaircontent: "屋顶漏水", repairdate: "2024-08-09", repairstatus: "已完成" },
-                { repairid: 5, RepairPhone: "654", repaircontent: "电力系统故障", repairdate: "2024-08-13", repairstatus: "待处理" },
-                { repairid: 6, RepairPhone: "321", repaircontent: "排水管堵塞", repairdate: "2024-08-11", repairstatus: "处理中" },
-                { repairid: 7, RepairPhone: "741", repaircontent: "墙壁开裂", repairdate: "2024-08-16", repairstatus: "待处理" },
-                { repairid: 8, RepairPhone: "852", repaircontent: "电梯按钮失灵", repairdate: "2024-08-18", repairstatus: "处理中" },
-                { repairid: 9, RepairPhone: "963", repaircontent: "停车场门禁系统故障", repairdate: "2024-08-14", repairstatus: "已完成" },
-                { repairid: 10, RepairPhone: "159", repaircontent: "监控摄像头故障", repairdate: "2024-08-17", repairstatus: "待处理" },
+                // { repairid: 1, RepairPhone: "789", repaircontent: "水管破裂", repairdate: "2024-08-10", repairstatus: "处理中" },
+                // { repairid: 2, RepairPhone: "123", repaircontent: "电梯故障", repairdate: "2024-08-12", repairstatus: "待处理" },
+                // { repairid: 3, RepairPhone: "456", repaircontent: "空调故障", repairdate: "2024-08-15", repairstatus: "处理中" },
+                // { repairid: 4, RepairPhone: "987", repaircontent: "屋顶漏水", repairdate: "2024-08-09", repairstatus: "已完成" },
+                // { repairid: 5, RepairPhone: "654", repaircontent: "电力系统故障", repairdate: "2024-08-13", repairstatus: "待处理" },
+                // { repairid: 6, RepairPhone: "321", repaircontent: "排水管堵塞", repairdate: "2024-08-11", repairstatus: "处理中" },
+                // { repairid: 7, RepairPhone: "741", repaircontent: "墙壁开裂", repairdate: "2024-08-16", repairstatus: "待处理" },
+                // { repairid: 8, RepairPhone: "852", repaircontent: "电梯按钮失灵", repairdate: "2024-08-18", repairstatus: "处理中" },
+                // { repairid: 9, RepairPhone: "963", repaircontent: "停车场门禁系统故障", repairdate: "2024-08-14", repairstatus: "已完成" },
+                // { repairid: 10, RepairPhone: "159", repaircontent: "监控摄像头故障", repairdate: "2024-08-17", repairstatus: "待处理" },
             ],
             currentPage: 1, // 当前页
             pageSize: 5, // 每页显示的数据条数
