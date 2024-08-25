@@ -1,7 +1,7 @@
 <template>
     <div class="web-container" style="display:flex;width:100%;height:100%;flex-direction: column;flex:0,0,1">
         <el-card style="margin: 10px;">
-            <h2>账号管理</h2>
+            <h2>车辆管理</h2>
         </el-card>
 
         <!-- 基本车辆信息 -->
