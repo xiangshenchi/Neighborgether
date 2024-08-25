@@ -37,7 +37,7 @@ export default {
                 }
             }).then(res => {
                 if (res.data.status == 1) {
-                    this.$message.success('报修提交成功');
+                    this.$message.success('投诉提交成功');
                     this.textarea = '';
                 }
                 else{

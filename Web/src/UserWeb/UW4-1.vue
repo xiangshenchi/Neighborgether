@@ -9,7 +9,7 @@
                 </el-input>
             </div>
             <div style="margin-top: 10px;">
-                <el-button v-slot="extra" type="primary"  @click="submit()">提 交</el-button>
+                <el-button v-slot="extra" type="primary" @click="submit()">提 交</el-button>
             </div>
         </el-card>
     </div>
@@ -26,7 +26,7 @@ export default {
         submit() {
             // 1. 检查是否填写完整
             if (this.textarea.trim() === '') {
-                this.$message.error('请填写投诉内容');
+                this.$message.error('请填写报修内容');
                 return;
             }
             // 2. 提交到后端接口
@@ -35,10 +35,10 @@ export default {
                 repaircontent: this.textarea
             }).then(res => {
                 if (res.data.status == 1) {
-                    this.$message.success('建议提交成功');
+                    this.$message.success('报修提交成功');
                     this.textarea = '';
                 }
-                else{
+                else {
                     this.$message.error('提交失败，请稍后重试');
                 }
             }).catch(error => {

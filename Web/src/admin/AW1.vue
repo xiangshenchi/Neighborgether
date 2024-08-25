@@ -94,7 +94,7 @@ export default {
             const chart = echarts.init(this.$refs.warrantyStatusChart);
             const option = {
                 title: {
-                    text: '保修处理状态',
+                    text: '报修处理状态',
                     left: 'center',
                 },
                 tooltip: {
@@ -107,7 +107,7 @@ export default {
                 color: ['#EE6666', '#73A373'], // 不同的颜色
                 series: [
                     {
-                        name: '保修状态',
+                        name: '报修状态',
                         type: 'pie',
                         radius: '50%',
                         data: data,

@@ -88,7 +88,7 @@ const onSubmit = () => {
     })
 }
 const contact = (text) => {
-    ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+    ElMessageBox.alert("联系方式:10086", '联系工作人员', {
         confirmButtonText: text
     });
 };

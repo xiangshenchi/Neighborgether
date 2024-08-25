@@ -7,12 +7,12 @@
             </div>
             <div style="width: 20%; margin-left: 20px; display: inline-block;">
                 <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                    end-placeholder="结束日期" size="mini" @change="filterByDate" @clear="selectedDate = []"/>
+                    end-placeholder="结束日期" size="mini" @change="filterByDate" @clear="selectedDate = []" />
             </div>
 
             <!-- 公告表格 -->
-            <el-table :data="filteredData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
-            :cell-style="{ 'text-align': 'center' }">
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+                :cell-style="{ 'text-align': 'center' }">
                 <el-table-column prop="visitid" label="访客ID"></el-table-column>
                 <el-table-column prop="visitname" label="访客名字"></el-table-column>
                 <!-- <el-table-column prop="sex" label="性别" width="80px"></el-table-column> -->
