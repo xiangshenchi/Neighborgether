@@ -44,7 +44,7 @@ const errorAlert = (text) => {
   })
 }
 const contact = (text) => {
-  ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+  ElMessageBox.alert("联系方式:10086", '联系工作人员', {
     confirmButtonText: text
   })
 }
@@ -145,7 +145,7 @@ export default defineComponent({
   },
   setup() {
     const contact = (text) => {
-      ElMessageBox.alert("联系方式:xxxxxxxxxxxxxxxx", '联系工作人员', {
+      ElMessageBox.alert("联系方式:10086", '联系工作人员', {
         confirmButtonText: text
       });
     };

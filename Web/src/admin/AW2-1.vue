@@ -165,7 +165,7 @@ export default {
             this.$axios.delete('/users/addelete', {
                 params:{phonenumber: this.deleteRow.phonenumber}
             }).then(response => {
-                if (response.data.status === '1') {
+                if (response.data === true) {
                     this.$message.success("删除用户信息成功！");
                     this.addDialogVisible = false;
                     window.location.reload();
