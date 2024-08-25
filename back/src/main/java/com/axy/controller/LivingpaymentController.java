@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.axy.service.UsersService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,6 @@ public class LivingpaymentController {
     private final LivingpaymentMapper livingpaymentMapper;
     @Resource
     private LivingpaymentService liv;
-    private UsersService usersService;
 
     public LivingpaymentController(UsersMapper usersMapper, LivingpaymentMapper livingpaymentMapper) {
         this.usersMapper = usersMapper;
