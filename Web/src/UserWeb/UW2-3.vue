@@ -86,7 +86,6 @@ export default {
                     vehicletype: this.formSub.vehicletype
                 }
             }).then(res => {
-                this.butisdisabled = true;
                 this.$message.success('修改成功,将于1s后刷新页面');
                 setTimeout(() => {
                     window.location.reload();
