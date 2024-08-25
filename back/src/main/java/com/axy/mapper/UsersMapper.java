@@ -24,6 +24,8 @@ public interface UsersMapper extends BaseMapper<Users> {
     Users findbyphone(String phonenumber);
     Integer findid(String phonenumber);
     Boolean delByPhonenumber(String phonenumber);
+
+    boolean removeByphonenumber(String phonenumber);
 }
 
 

@@ -151,21 +151,9 @@ public class UsersController {
         return response;
     }
     //管理员删除用户信息
-    @PostMapping("/addelete")
-    public Map<String, Object> addelete(@RequestParam String phonenumber) {
-        Map<String, Object> response = new HashMap<>();
-        // 调用UserService的方法来删除用户信息
-        boolean isDeleted = usersMapper.delByPhonenumber(phonenumber);
-        if (isDeleted) {
-            response.put("status", "1");
-            response.put("message", "用户信息删除成功");
-        } else {
-            response.put("status", "0");
-            response.put("message", "用户信息删除失败");
-        }
-        // 返回删除结果
-        return response;
+    @DeleteMapping("/addelete")
+    public boolean delete(@RequestParam String phonenumber) {
+        return usersMapper.removeByphonenumber(phonenumber);
     }
-
 
 }

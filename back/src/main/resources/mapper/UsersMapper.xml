@@ -23,6 +23,9 @@
     <delete id="delByPhonenumber">
         delete from users where phonenumber = #{phonenumber}
     </delete>
+    <delete id="removeByphonenumber">
+        delete from users where phonenumber = #{phonenumber}
+    </delete>
     <select id="listAll" resultType="com.axy.pojo.Users">
         select * from users
     </select>
