@@ -161,9 +161,9 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            this.$axios.post('/users/addelete', {
-                phonenumber: this.editForm.phonenumber,
-                role: this.editForm.role
+            console.log(this.editForm.phonenumber);
+            this.$axios.delete('/users/addelete', {
+                params:{phonenumber: this.deleteRow.phonenumber}
             }).then(response => {
                 if (response.data.status === '1') {
                     this.$message.success("删除用户信息成功！");

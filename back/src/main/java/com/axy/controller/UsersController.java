@@ -4,7 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Users;
@@ -151,7 +158,7 @@ public class UsersController {
         return response;
     }
     //管理员删除用户信息
-    @PostMapping("/addelete")
+    @DeleteMapping("/addelete")
     public Map<String, Object> addelete(@RequestParam String phonenumber) {
         Map<String, Object> response = new HashMap<>();
         // 调用UserService的方法来删除用户信息
