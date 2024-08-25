@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.axy.mapper.DemandMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.axy.common.DupdateRequest;
+import com.axy.mapper.DemandMapper;
 import com.axy.mapper.UsersMapper;
 import com.axy.pojo.Demand;
 import com.axy.service.DemandService;
@@ -29,7 +29,7 @@ public class DemandController {
     @Resource
     private DemandService demandService;
     private final UsersMapper usersMapper;
-    private DemandMapper demandMapper;
+    private final DemandMapper demandMapper;
 
     public DemandController(UsersMapper usersMapper, DemandMapper demandMapper) {
         this.usersMapper = usersMapper;

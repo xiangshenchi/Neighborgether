@@ -13,7 +13,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }``
 const axiosInstance=axios.create({
-  baseURL:"http://localhost:8090",
+  baseURL:"http://192.168.62.70:8090",
   timeout:3500
 });
 app.config.globalProperties.$axios=axiosInstance;

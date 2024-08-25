@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.axy.mapper.AnnouncementsMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.axy.mapper.AnnouncementsMapper;
 import com.axy.pojo.Announcements;
 import com.axy.service.AnnouncementsService;
 
@@ -26,7 +26,7 @@ import jakarta.annotation.Resource;
 public class AnnouncementsController {
     @Resource
     private AnnouncementsService announcementsService;
-    private AnnouncementsMapper announcementsMapper;
+    private final AnnouncementsMapper announcementsMapper;
 
     public AnnouncementsController(AnnouncementsMapper announcementsMapper) {
         this.announcementsMapper = announcementsMapper;

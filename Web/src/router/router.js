@@ -31,8 +31,8 @@ import AW2_1 from '../admin/AW2-1.vue';
 import AW3_1 from '../admin/AW3-1.vue';
 import AW3_2 from '../admin/AW3-2.vue';
 import AW3_3 from '../admin/AW3-3.vue';
-// import AW3_4 from '../admin/AW3-4.vue';
-import AW3_5 from '../admin/AW3-5.vue';
+import AW3_4 from '../admin/AW3-4.vue';
+// import AW3_5 from '../admin/AW3-4.vue';
 // import AW3_6 from '../admin/AW3-6.vue';
 import AW4 from '../admin/AW4.vue';
 import AW5 from '../admin/AW5.vue';
@@ -78,7 +78,7 @@ const routes = [
       { path: 'AW3-2', name: 'AW3-2', component: AW3_2 },
       { path: 'AW3-3', name: 'AW3-3', component: AW3_3 },
       // { path: 'AW3-4', name: 'AW3-4', component: AW3_4 },
-      { path: 'AW3-5', name: 'AW3-5', component: AW3_5 },
+      { path: 'AW3-4', name: 'AW3-4', component: AW3_4 },
       // { path: 'AW3-6', name: 'AW3-6', component: AW3_6 },
       { path: 'AW4', name: 'AW4', component: AW4 },
       { path: 'AW5', name: 'AW5', component: AW5 },

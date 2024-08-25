@@ -4,11 +4,12 @@
             <div style="display: flex; align-items: center;">
                 <!-- 搜索框和日期选择器 -->
                 <div style="margin-left: 10px;">
-                    <el-input v-model="search" placeholder="输入公告标题搜索"class="search" />
+                    <el-input v-model="search" placeholder="输入公告标题搜索" class="search" />
                 </div>
                 <div style="margin-left: 20px;">
-                    <el-date-picker v-model="selectedDate" type="daterange" range-separator="至" start-placeholder="开始日期"
-                        end-placeholder="结束日期"value-format="yyyy-MM-dd" @change="filterByDate" />
+                    <el-date-picker v-model="selectedDate" type="daterange" unlink-panels range-separator="至"
+                        start-placeholder="起始时间" end-placeholder="截至时间" @change="filterByDate"
+                        @clear="selectedDate = []" />
                 </div>
                 <!-- 添加公告按钮 -->
                 <div style="margin-left: 20px;">
@@ -17,11 +18,18 @@
             </div>
 
             <!-- 公告表格 -->
-            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }" :cell-style="{ 'text-align': 'center' }">
-                <el-table-column prop="announcementid" label="公告ID" width="80px"></el-table-column>
-                <el-table-column prop="title" label="公告标题" width="200px"></el-table-column>
-                <el-table-column prop="content" label="公告内容"></el-table-column>
-                <el-table-column label="发布日期" width="180px">
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+                :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="announcementid" label="公告ID"></el-table-column>
+                <el-table-column prop="title" label="公告标题"></el-table-column>
+                <el-table-column prop="content" label="公告内容">
+                    <template #default="scope">
+                        <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                            {{ scope.row.content }}
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="发布日期">
                     <template #default="scope">
                         {{ formatDate(scope.row.publishdate) }}
                     </template>
@@ -29,7 +37,7 @@
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
-                        <el-button  @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button @click="handleEdit(scope.row)">编辑</el-button>
                         <el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -49,9 +57,6 @@
                     <el-form-item label="公告内容">
                         <el-input type="textarea" v-model="addForm.content"></el-input>
                     </el-form-item>
-                    <el-form-item label="发布日期">
-                        <el-date-picker v-model="addForm.publishdate" type="date" value-format="yyyy-MM-dd" />
-                    </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addDialogVisible = false">取消</el-button>
@@ -67,9 +72,6 @@
                     </el-form-item>
                     <el-form-item label="公告内容">
                         <el-input type="textarea" v-model="editForm.content"></el-input>
-                    </el-form-item>
-                    <el-form-item label="发布日期">
-                        <el-date-picker v-model="editForm.publishDate" type="date" value-format="yyyy-MM-dd" />
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -95,8 +97,8 @@ export default {
     data() {
         return {
             search: '', // 搜索关键字
-            selectedDate: null, // 选中的日期范围
-            tableData: [],
+            selectedDate: [], // 选中的日期范围
+            tabledata: [],
             currentPage: 1, // 当前页
             pageSize: 10, // 每页显示的数据条数
             addDialogVisible: false, // 控制添加弹出框的显示
@@ -105,7 +107,6 @@ export default {
             addForm: { // 添加公告的信息
                 title: '',
                 content: '',
-                publishdate: ''
             },
             editForm: {}, // 编辑公告的信息
             deleteRow: null, // 待删除的行
@@ -113,18 +114,21 @@ export default {
     },
     computed: {
         filteredData() {
-            return this.tableData
+            return this.tabledata
                 .filter(data => {
                     const matchesSearch = !this.search || data.title.toLowerCase().includes(this.search.toLowerCase());
-                    const publishDate = this.formatDateToYMD(data.publishDate); // 截取日期部分
-                    const matchesDate = !this.selectedDate ||
-                        (publishDate >= this.formatDateToYMD(this.selectedDate[0]) &&
-                            publishDate <= this.formatDateToYMD(this.selectedDate[1]));
+                    const publishDate = new Date(data.publishdate);
+                    console.log(publishDate);
+                    const matchesDate = !this.selectedDate.length ||
+                        (publishDate >= this.selectedDate[0] &&
+                            publishDate <= this.selectedDate[1]);
                     return matchesSearch && matchesDate;
                 })
-                .sort((a, b) =>{return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime()}) // 按发布日期降序排序
+                .sort((a, b) => { return new Date(b.publishdate).getTime() - new Date(a.publishdate).getTime() }) // 按发布日期降序排序
         },
         paginatedData() {
+            console.log(this.tabledata);
+            console.log("selectedDate: ", this.selectedDate);
             const start = (this.currentPage - 1) * this.pageSize;
             const end = start + this.pageSize;
             return this.filteredData.slice(start, end);
@@ -133,9 +137,9 @@ export default {
     mounted() {
         this.$axios.get('/announcements/list')
             .then(response => {
-                console.log(this.tableData);
-                this.tableData = response.data;
-                console.log(this.tableData);
+                console.log(this.tabledata);
+                this.tabledata = response.data;
+                console.log(this.tabledata);
             })
             .catch(error => {
                 console.log(error);
@@ -154,8 +158,8 @@ export default {
             const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
             return new Date(date).toLocaleString('zh-CN', options);
         },
-        filterByDate(dates) {
-            this.selectedDate = dates;
+        filterByDate() {
+            this.currentPage = 1;
         },
         showAddDialog() {
             // 打开添加弹出框
@@ -165,12 +169,23 @@ export default {
             console.log(this.addDialogVisible);
         },
         addAnnouncement() {
-            // 添加公告到数据列表
-            const newId = Math.max(...this.tableData.map(item => item.announcementid)) + 1;
-            const newAnnouncement = { ...this.addForm, announcementid: newId, publishDate: `${this.addForm.publishDate} 00:00:00` };
-            this.tableData.push(newAnnouncement);
+            this.$axios.post('/announcements/add', {
+                title: this.addForm.title,
+                content: this.addForm.content
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("添加公告成功！");
+                    this.addDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("添加公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.addDialogVisible = false;
-            this.$message.success("公告添加成功！");
         },
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
@@ -179,10 +194,23 @@ export default {
         },
         saveEdit() {
             // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.announcementid === this.editForm.announcementid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
+            this.$axios.post('/announcements/edit', {
+                announcementid: this.editForm.announcementid,
+                title: this.editForm.title,
+                content: this.editForm.content,
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("编辑公告成功！");
+                    this.editDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("编辑公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.editDialogVisible = false;
         },
         handleDelete(row) {
@@ -191,11 +219,21 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.announcementid === this.deleteRow.announcementid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
+            this.$axios.delete('/announcements/delete', {
+                params: { announcementid: this.deleteRow.announcementid }
+            }).then(response => {
+                if (response.data === true) {
+                    this.$message.success("删除公告成功！");
+                    this.deleteDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("删除公告失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.deleteDialogVisible = false;
         },
         handlePageChange(page) {

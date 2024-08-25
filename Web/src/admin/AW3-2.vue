@@ -7,12 +7,17 @@
             </div>
 
             <!-- 车辆表格 -->
-            <el-table :data="paginatedData" style="width: 100%">
-                <el-table-column prop="vehicleid" label="车辆ID" width="80px"></el-table-column>
-                <el-table-column prop="userid" label="用户ID" width="80px"></el-table-column>
-                <el-table-column prop="licenseplate" label="车牌号" width="100px"></el-table-column>
-                <el-table-column prop="vehicletype" label="车辆类型" width="100px"></el-table-column>
-                <el-table-column prop="registrationdate" label="登记日期" width="160px"></el-table-column>
+            <el-table :data="paginatedData" style="width: 100%" :header-cell-style="{ 'text-align': 'center' }"
+            :cell-style="{ 'text-align': 'center' }">
+                <el-table-column prop="vehicleid" label="车辆ID"></el-table-column>
+                <el-table-column prop="userid" label="用户ID"></el-table-column>
+                <el-table-column prop="licenseplate" label="车牌号"></el-table-column>
+                <el-table-column prop="vehicletype" label="车辆类型" ></el-table-column>
+                <el-table-column prop="registrationdate" label="登记日期" >
+                    <template #default="scope">
+                        {{ formatDate(scope.row.registrationdate) }}
+                    </template>
+                </el-table-column>
 
                 <el-table-column label="操作" align="right">
                     <template #default="scope">
@@ -28,7 +33,7 @@
                 style="margin-top: 20px; text-align: right; margin-left: 10px;"></el-pagination>
 
             <!-- 编辑车辆信息弹出框 -->
-            <el-dialog title="编辑车辆信息" :visible.sync="editDialogVisible">
+            <el-dialog title="编辑车辆信息" v-model="editDialogVisible">
                 <el-form :model="editForm">
                     <el-form-item label="用户ID">
                         <el-input v-model="editForm.userid"></el-input>
@@ -50,7 +55,7 @@
             </el-dialog>
 
             <!-- 删除确认框 -->
-            <el-dialog title="确认删除" :visible.sync="deleteDialogVisible">
+            <el-dialog title="确认删除" v-model="deleteDialogVisible">
                 <span>确定要删除该车辆吗？</span>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="deleteDialogVisible = false">取消</el-button>
@@ -131,18 +136,49 @@ export default {
             return this.filteredData.slice(start, end);
         }
     },
+    mounted() {
+        this.$axios.get('/vehicles/list')
+            .then(response => {
+                console.log(this.tabledata);
+                this.tableData = response.data;
+                console.log(this.tabledata);
+            })
+            .catch(error => {
+                console.log(error);
+                this.$message.error("获取车辆列表失败！");
+            });
+    },
     methods: {
         handleEdit(row) {
             // 打开编辑弹出框并将选中的行数据赋值给编辑表单
             this.editForm = { ...row };
             this.editDialogVisible = true;
         },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
+        },
         saveEdit() {
             // 保存编辑后的数据
-            const index = this.tableData.findIndex(item => item.vehicleid === this.editForm.vehicleid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1, { ...this.editForm });
-            }
+            this.$axios.post('/vehicles/edit', {
+
+                vehicleid: this.editForm.vehicleid,
+                licenseplate: this.editForm.licenseplate,
+                vehicletype: this.editForm.vehicletype,
+            }).then(response => {
+                if (response.data.status === '1') {
+                    this.$message.success("编辑车辆成功！");
+                    this.editDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("编辑车辆失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.editDialogVisible = false;
         },
         handleDelete(row) {
@@ -151,11 +187,21 @@ export default {
             this.deleteDialogVisible = true;
         },
         confirmDelete() {
-            // 确认删除并从数据列表中移除
-            const index = this.tableData.findIndex(item => item.vehicleid === this.deleteRow.vehicleid);
-            if (index !== -1) {
-                this.tableData.splice(index, 1);
-            }
+            this.$axios.delete('/vehicles/delete', {
+                params: { vehicleid: this.deleteRow.vehicleid }
+            }).then(response => {
+                if (response.data===true) {
+                    this.$message.success("删除车辆成功！");
+                    this.deleteDialogVisible = false;
+                    window.location.reload();
+                }
+                else {
+                    this.$message.error("删除车辆失败！");
+                }
+            }).catch(error => {
+                console.log(error);
+                this.$message.error("未知错误！");
+            });
             this.deleteDialogVisible = false;
         },
         handlePageChange(page) {

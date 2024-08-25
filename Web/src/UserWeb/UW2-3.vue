@@ -9,7 +9,7 @@
             <el-descriptions class="margin-top" title="基本车辆信息" :column="1" :size="size">
                 <el-descriptions-item label="车牌号">{{ form.licenseplate }}</el-descriptions-item>
                 <el-descriptions-item label="车辆类型">{{ form.vehicletype }}</el-descriptions-item>
-                <el-descriptions-item label="登记时间">{{ form.registrationdate }}</el-descriptions-item>
+                <el-descriptions-item label="登记时间">{{ this.formatDate(form.registrationdate) }}</el-descriptions-item>
             </el-descriptions>
         </el-card>
 
@@ -73,6 +73,11 @@ export default {
                 this.$message.info('已取消');
             });
         },
+        formatDate(date) {
+            // 格式化日期时间，显示精确到小时和分钟
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+            return new Date(date).toLocaleString('zh-CN', options);
+        },
         onSubmit() {
             this.$axios.post('/vehicles/update', {
                 phonenumber: this.$store.getters.userInfo.phonenumber,
@@ -81,7 +86,6 @@ export default {
                     vehicletype: this.formSub.vehicletype
                 }
             }).then(res => {
-                this.butisdisabled = true;
                 this.$message.success('修改成功,将于1s后刷新页面');
                 setTimeout(() => {
                     window.location.reload();
